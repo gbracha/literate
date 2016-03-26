@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="generator" content="Madoko, version 1.0.0-rc6" />
+  <meta name="viewport" content="initial-scale=1.0" />
+  <meta name="author" content="Gilad Bracha" />
+  <title>Illiterate Programming</title>
+  <style type="text/css"  class="link">
+  /*# sourceURL=madoko.css */
+  
+  .madoko .toc>.tocblock .tocblock .tocblock {
+    margin-left: 2.25em;
+  }
+  .madoko .toc>.tocblock .tocblock {
+    margin-left: 1.5em;
+  }
+  .madoko .toc-contents>.tocblock>.tocitem {
+    font-weight: bold;
+  }
+  .madoko .toc {
+    margin-top: 1em;
+  }
+  .madoko p.para-continue {
+    margin-bottom: 0pt;
+  }
+  .madoko .para-block+p {
+    margin-top: 0pt;
+  }
+  .madoko ul.para-block, .madoko ol.para-block {
+    margin-top: 0pt;
+    margin-bottom: 0pt;
+  }
+  .madoko ul.para-end, .madoko ol.para-end {
+    margin-bottom: 1em;
+  }
+  .madoko dl {
+    margin-left: 0em;
+  }
+  .madoko blockquote {
+    font-style: italic;
+  }
+  .madoko a.localref {
+    text-decoration: none;
+  }
+  .madoko a.localref:hover {
+    text-decoration: underline;
+  }
+  .madoko .footnotes {
+    font-size: smaller;
+    margin-top: 2em;
+  }
+  .madoko .footnotes hr {
+    width: 50%;
+    text-align: left;
+  }
+  .madoko .footnote { 
+    margin-left: 1em;
+  }
+  .madoko .footnote-before {
+    margin-left: -1em;
+    width: 1em;
+    display: inline-block;
+  }
+  .madoko .align-center, .madoko .align-center>p {
+    text-align: center !important;
+  }
+  .madoko .align-center pre {
+    text-align: left;
+  }
+  .madoko .align-center>* {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .madoko .align-left, .madoko .align-left>p {
+    text-align: left !important;
+  }
+  .madoko .align-left>* {
+    margin-left: 0pt !important;
+    margin-right: auto !important;
+  }
+  .madoko .align-right, .madoko .align-right>p {
+    text-align: right !important;
+  }
+  .madoko .align-right>* {
+    margin-left: auto !important;
+    margin-right: 0pt !important;
+  }
+  .madoko .align-center>table,
+  .madoko .align-left>table,
+  .madoko .align-right>table {
+    text-align: left !important;
+  }
+  .madoko .equation-before {
+    float: right;
+  }
+  .madoko .bibitem {
+    font-size: smaller;
+  }
+  .madoko .bibsearch {
+    font-size: x-small;
+    text-decoration:none;
+    color: black;
+    font-family: "Segoe UI Symbol", Symbola, serif;
+  }
+  .madoko .block, .madoko .figure, .madoko .bibitem, .madoko .equation, .madoko div.math {
+    margin-top: 1ex;
+    margin-bottom: 1ex;
+  }
+  .madoko .figure {
+    padding: 0.5em;
+    margin-left: 0pt;
+    margin-right: 0pt;
+  }
+  .madoko .hidden {
+    display: none;
+  }
+  .madoko .invisible {
+    visibility: hidden;
+  }
+  .madoko.preview .invisible {
+    visibility: visible;
+    opacity: 0.5;
+  }
+  .madoko code.code, .madoko span.code {
+    white-space: pre-wrap;
+  }
+  .madoko hr, hr.madoko {
+    border: none;
+    border-bottom: black solid 1px;
+    margin-bottom: 0.5ex;
+  }
+  .madoko .framed>*:first-child {
+    margin-top: 0pt;
+  }
+  .madoko .framed>*:last-child {
+    margin-bottom: 0pt;
+  }
+  .madoko ul.list-style-type-dash {
+      list-style-type: none !important;
+  }
+  .madoko ul.list-style-type-dash > li:before {
+      content: "\2013"; 
+      position: absolute;
+      margin-left: -1em; 
+  }
+  .madoko table.madoko {
+    border-collapse: collapse;
+  }
+  .madoko td, .madoko th {
+    padding: 0ex 0.5ex;
+    margin: 0pt;
+    vertical-align: top;
+  }
+  .madoko .cell-border-left {
+    border-left: 1px solid black;
+  }
+  .madoko .cell-border-right {
+    border-right: 1px solid black;
+  }
+  .madoko thead>tr:first-child>.cell-line,
+  .madoko tbody:first-child>tr:first-child>.cell-line {
+    border-top: 1px solid black;
+    border-bottom: none;
+  }
+  .madoko .cell-line, .madoko .cell-double-line {
+    border-bottom: 1px solid black;
+    border-top: none;
+  }
+  .madoko .cell-double-line {
+    border-top: 1px solid black;
+    padding-top: 1.5px !important;
+  }
+  .madoko .input-mathpre .MathJax_Display {
+    text-align: left !important;
+  }
+  .madoko div.input-mathpre {
+    text-align: left;
+    margin-top: 1.5ex;
+    margin-bottom: 1ex;
+  }
+  .madoko .math-rendering {
+    color: gray;
+  }
+  .madoko .mathdisplay {
+    text-align: center;
+  }
+  .madoko .pretty table {
+    border-collapse: collapse;
+  }
+  .madoko .pretty td {
+    padding: 0em;
+  }
+  .madoko .pretty td.empty {
+    min-width: 1.5ex;
+  }
+  .madoko .pretty td.expander {
+    width: 100em;
+  }
+  body.madoko, .madoko .serif {
+    font-family: Cambria,"Times New Roman","Liberation Serif","Times",serif;
+  }
+  .madoko .sans-serif {
+    font-family: "Calibri", "Optima", sans-serif;
+  }
+  .madoko .symbol {
+    font-family: "Segoe UI Symbol", Symbola, serif;
+  }
+  body.madoko {  
+    -webkit-text-size-adjust: 100%;       
+    text-rendering: optimizeLegibility;
+  }
+  body.madoko {
+    max-width: 88ex; 
+    margin: 1em auto;
+    padding: 0em 2em;  
+  }
+  body.preview.madoko {
+    padding: 0em 1em;
+  }
+  .madoko p {
+    text-align: justify;
+  }
+  .madoko h1, .madoko h2, .madoko h3, .madoko h4 { 
+    margin-top: 1.22em; 
+    margin-bottom: 1ex;
+  }
+  .madoko h1+p, .madoko h2+p, .madoko h3+p, .madoko h4+p, .madoko h5+p  { 
+    margin-top: 1ex;    
+  }
+  .madoko h5, .madoko h6 { 
+    margin-top: 1ex;
+    font-size: 1em;
+  }
+  .madoko h5 { 
+    margin-bottom: 0.5ex;
+  }
+  .madoko h5 + p {
+    margin-top: 0.5ex;
+  }
+  .madoko h6 { 
+    margin-bottom: 0pt;
+  }
+  .madoko h6 + p {
+    margin-top: 0pt;
+  }
+  .madoko pre, .madoko code, .madoko kbd, .madoko samp, .madoko tt, 
+  .madoko .monospace, .madoko .token-indent, .madoko .reveal pre, .madoko .reveal code, .madoko .email {
+    font-family: Consolas,"Andale Mono WT","Andale Mono",Lucida Console,Monaco,monospace,monospace;
+    font-size: 0.85em;
+  }
+  .madoko pre code, .madoko .token-indent {
+    font-size: 0.95em;
+  }
+  .madoko pre code {
+    font-family: inherit !important;
+  }
+  .madoko ol.linenums li {
+    background-color: white;
+    list-style-type: decimal;
+  }
+  .madoko .remote {
+    background-color: #F0FFF0;
+  }
+  .madoko .remote + * {
+    margin-top: 0pt;
+  }
+  @media print {
+    body.madoko {
+      font-size: 10pt;
+    }
+    @page {
+      margin: 1in 1.5in;
+    }
+  }
+  @media only screen and (max-device-width:1024px) {
+    body.madoko {
+      padding: 0em 0.5em;    
+    }
+    .madoko li {
+      text-align: left;
+    }
+  }
+  
+    </style>
+  <style>
+                  .evaluator + pre {
+                    display: none; 
+                  }
+                  .preview .evaluator + pre {
+                    display: block;
+                  }
+                  </style>
+  </head>
+<body class="madoko">
+
+<div class="body madoko" style="line-adjust:0">
+
+<div class="titleblock align-center para-block" style="text-align:center;line-adjust:0">
+<div class="titleheader align-center" style="text-align:center;line-adjust:0">
+<div class="title para-block" style="font-size:xx-large;font-weight:bold;margin-bottom:0.5ex;line-adjust:0">Illiterate Programming</div></div>
+<div class="authors align-center" style="text-align:center;width:80%;line-adjust:0"><table class="authorrow columns block" style="margin-top:2ex;width:100%;line-adjust:0">
+<tbody><tr><td class="author column" style="text-align:center;line-adjust:0">
+<div class="authorname" style="font-size:large;line-adjust:0">Gilad Bracha</div></td></tr></tbody></table></div></div><h2 id="sec-overview" class="h1" data-heading-depth="1" style="display:block"><span class="heading-before"><span class="heading-label">1</span>.&#8194;</span>Overview</h2>
+<p class="p noindent"> 
+Donald Knuth’s concept of
+<a href="http://www-cs-faculty.stanford.edu/~uno/lp.html">literate programming</a> 
+has gained disappointingly little traction over the years.  The idea that a program tells a 
+story, a clear, well articulated story, elegantly presented, 
+is lost on most programmers. 
+</p>
+<p class="p indent">Here&#39;s an idea that is even more lost:
+<em class="em-star1">telling such a story is valuable for more than teaching and documentation</em>.
+You, the programmer/author, learn from the story telling, even if you
+are the only reader. 
+As you tell the story you may well understand
+what&#39;s wrong with it. 
+</p>
+<p class="p indent">And yet, very often programmers can hardly be bothered to write even 
+basic comments in their code. Expert programmers usually disregard comments, 
+because they are unlikely to be accurate. After all, if programmers don’t care 
+to write comments in the first place, what are the odds that they will 
+take the trouble to maintain them. 
+Of course, this is both self-fulfilling prophecy and protective rationalization.
+</p>
+<p class="p indent">Changing this mindset is one Sisyphean task I am not about to undertake. 
+Illiterate programming is the dominant paradigm and will likely remain so. 
+So what is the point of discussing literate programming, let alone building software to 
+support it? 
+</p>
+<p class="p indent">One answer is that literate programming is about literature 
+as well as programming. Knuth developed the concept when 
+developing&nbsp;<a href="http://www.tug.org/">TeX</a> and 
+<a href="http://www.math.utah.edu/~beebe/fonts/metafont.html">Metafont</a>, 
+which in turn were invented to support the writing of a book: 
+<a href="http://www-cs-faculty.stanford.edu/~uno/taocp.html">The Art of Computer Programming</a>. 
+Literate programming is particularly good for writing <em class="em-star1">about</em> programs. 
+Oddly, there are more people than ever writing about programs. 
+Books, blogs, tutorials are proliferating like memory usage. 
+So perhaps literate programming should focus on the literate 
+programmers - those who write about (their) programs. 
+</p>
+<p class="p indent">What should such
+a system look like? It has long been clear that one wants 
+something more than the tools used to build the 
+<a href="http://www-cs-faculty.stanford.edu/~uno/abcde.html">TeXBook</a>.  The 
+benefits of a literate program grow the more interactive it is,
+ the more one can experiment with it and play with it;
+  the more <em class="em-star1">live</em> it is. So it is natural to
+   seek <em class="em-star1">live literate programming</em>.
+</p>
+<p class="p indent">Ideally we&#39;d want an interactive editor that smoothly integrated writing and all manner of interactive content. We already see interactive graphics in online newspapers and in technical e-books. Interactive fiction, where games and writing overlap, is another example. 
+Systems that support that sort of thing, done right, would also support live literate programming. I&#39;ll probably return to this topic in another post. For now, I&#39;ll consider a much more modest experiment.
+</p>
+<p class="p indent">We’ve been working on integrating Newspeak 
+into Daan Leijen&#39;s&nbsp;<a href="https://www.madoko.net">Madoko</a>. The document 
+you are reading was created this way.
+</p>
+<p class="p indent">A literate programming system must provide a way for 
+creating high quality documents. Madoko does that, allowing us to 
+use LaTeX, Markdown and HTML in a useful mix.  A literate programming system also needs to 
+support programming. One has to be able to create and run programs. 
+</p>
+<p class="p indent">Conveniently, a fragment of the Newspeak IDE runs in a web browser. 
+This means that we can embed Newspeak development tools in HTML; 
+and we can embed HTML in Madoko documents. Presto, we have the 
+rudiments of a literate programming system for Newspeak. We&#39;ll call it <strong class="strong-star2">Ampleforth</strong>, for 
+obvious reasons.
+</p>
+<p class="p indent"><strong class="strong-star2">Tangent:</strong> <em class="em-star1">Ok, maybe they aren&#39;t so obvious. Ampleforth is a character in 1984 whose role is to convert works of Oldspeak literature into Newspeak. He&#39;s a literary editor conversant in Newspeak.</em>
+</p>
+<p class="p indent">Below is a Newspeak evaluator. It&#39;s live: you can edit the 
+expression and the result will recompute as you type. 
+The result is printed out; note that the print out is a link.  If you follow this link, it  takes you to an inspector on the underlying object that was computed.
+</p><div class="evaluator" expression = "3 + 4"> </div>
+
+<p class="p noindent">The object inspector is your gateway into the Newspeak IDE. 
+You can see that 3+4 evaluates to 7; once you inspect 7, you can 
+see that it is an instance of class <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:purple">Number</span></code>. Click on <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:purple">Number</span></code> and 
+you enter a class presenter where you can browse its methods and 
+link to its enclosing class.
+</p>
+<p class="p indent">You can also embed the IDE directly like so:
+</p><div class="minibrowser"> </div>
+
+<p class="p noindent">The above is the top level of the IDE; it shows you an object inspector on the Newspeak platform, which is itself an object (chew on that for a while). 
+You can use this browser to explore the IDE itself. Click on the link labeled <em class="em-star1">Inspect Presenter</em>. Now you see an inspector on the IDE object that is presenting the platform object. Its class is shown to be <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:purple">ObjectPresenter</span></code>. You can use that link to see the actual code used to present objects. In fact you can even change that code. 
+</p>
+<p class="p indent">How does it work? Well, in the spirit of self application and 
+dogfooding (it&#39;s a self-eating-dog-eat-self-eating dog world), let&#39;s 
+explain Ampleforth using itself. 
+</p><h2 id="sec-newspeak-lps-the-short-version" class="h1" data-heading-depth="1" style="display:block"><span class="heading-before"><span class="heading-label">2</span>.&#8194;</span>Newspeak LPs, the Short Version</h2>
+<p class="p noindent">In this section, I&#39;ll give a quick overview how Newspeak literate programs work. Some detail will be glossed over: how the IDE and GUI work in the browser, and what machinations are needed to handle the back button especially. 
+</p>
+<p class="p indent">You&#39;ll need some basic familiarity with Newspeak syntax. This&nbsp;<a href="http://bracha.org/Literate/literate.html">short tutorial</a> (also written with Ampleforth) covers the basics.
+</p><h3 id="sec-displaying-literate-programs" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">2.1</span>.&#8194;</span>Displaying Literate Programs</h3>
+<p class="p noindent">The <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:purple">Ampleforth</span></code> class implements the display of literate programs.
+</p><div class="classPresenter" className = "Ampleforth"> </div>
+
+<p class="p noindent"> 
+<code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:purple">Ampleforth</span></code> is a Newspeak application, which just means it follows certain conventions to make it deployable. The convention you need to understand right now is that execution of a Newspeak app always starts with the method <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:teal">main</span>:<span style="color:teal">args</span>:</code>.
+</p>
+<p class="p indent">Open  <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:teal">main</span>:<span style="color:teal">args</span>:</code>. You&#39;ll see that we start out by instantiating the class <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:purple">BrowsingForHTML</span></code>, which implements the subset of the IDE that runs on the web. <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:purple">Ampleforth</span></code> then adds itself to the IDE namespace, so we can browse it from within itself. The next step is to instantiate the nested class <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:purple">Embedder</span></code>, which is responsible for embedding Newspeak widgets into the text of the surrounding web page. We then send the embedder a series of messages - <code class="code code1 language-newspeak lang-newspeak newspeak colorized">processEvaluators</code>, <code class="code code1 language-newspeak lang-newspeak newspeak colorized">processMinibrowsers</code> and <code class="code code1 language-newspeak lang-newspeak newspeak colorized">processClassPresenters</code>. Let&#39;s look at <code class="code code1 language-newspeak lang-newspeak newspeak colorized">processEvaluator</code>.
+</p>
+<p class="p indent">To do this, click on the nested class <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:purple">Embedder</span></code> and open the <code class="code code1 language-newspeak lang-newspeak newspeak colorized">processEvaluators</code> method. Using  aliens (Newspeak&#39;s FFI) we obtain a reference to the DOM in the local variable <code class="code code1 language-newspeak lang-newspeak newspeak colorized">document</code>. We then query the document for all elements with a <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:navy">class</span></code> attribute with value  <code class="code code1 language-newspeak lang-newspeak newspeak colorized">evaluator</code>. We go through each such element and insert a <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:purple">HopscotchWindow</span></code> into it, opened on an evaluator for the element&#39;s expression, as given in its <code class="code code1 language-newspeak lang-newspeak newspeak colorized">expression</code> attribute.
+</p>
+<p class="p indent">A similar process is used for <code class="code code1 language-newspeak lang-newspeak newspeak colorized">processMinibrowsers</code> and for  <code class="code code1 language-newspeak lang-newspeak newspeak colorized">processClassPresenters</code>. You can check those out if you wish.
+</p>
+<p class="p indent">When a web page representing an LP starts up, it includes <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:purple">Ampleforth</span></code> (more precisely, <code class="code code1 language-newspeak lang-newspeak newspeak colorized">ampleforth<span style="color:blue">.</span>js</code>, the translation of <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:purple">Ampleforth</span></code> into Javascript). If you view the source of this page, you&#39;ll see the reference to the script at the very end of the source code. The script runs <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:purple">Ampleforth</span></code>&#39;s <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:teal">main</span>:<span style="color:teal">args</span>:</code> method. As we just saw, this will have the effect of modifying the page&#39;s DOM to include Newspeak presenters for viewing the relevant code.
+</p><h3 id="sec-creating-literate-programs" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">2.2</span>.&#8194;</span>Creating Literate Programs</h3>
+<p class="p noindent">Now we can understand what Madoko has to do to help us create literate programs.  We need to be able to embed HTML elements marked with <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span style="color:navy">class</span> = &quot;evaluator&quot;</code>, with an <code class="code code1 language-newspeak lang-newspeak newspeak colorized">expression</code> attribute of our choice. The example we started with, <code class="code code1 language-newspeak lang-newspeak newspeak colorized"><span class="constant" style="color:purple">3</span>+<span class="constant" style="color:purple">4</span></code>, is represented as
+</p>
+<p class="p indent"><code class="code code1 language-newspeak lang-newspeak newspeak colorized">&lt;div <span style="color:navy">class</span>=&quot;evaluator&quot; expression=&quot;<span class="constant" style="color:purple">3</span>+<span class="constant" style="color:purple">4</span>&quot;&gt; &lt;/div&gt;</code>
+</p>
+<p class="p indent">(if you check the source, you&#39;ll see some additional webcrap Madoko puts in as well). For presenters other than evaluators, we would similarly use divs with the appropriate class and attributes. To embed a top level IDE browser (aka Minibrowser) we&#39;d write
+</p>
+<p class="p indent"><code class="code code1 language-newspeak lang-newspeak newspeak colorized">&lt;div <span style="color:navy">class</span>=&quot;minibrowser&quot;&gt; &lt;/div&gt;</code>
+</p>
+<p class="p indent">We also need to put a reference to <code class="code code1 language-newspeak lang-newspeak newspeak colorized">ampleforth<span style="color:blue">.</span>js</code> at the end of the HTML page produced.  It&#39;s important that the script goes at the end of the page, so that all elements of class evaluator are already in the DOM when the script runs.
+</p>
+<p class="p indent">To get Madoko to do this for us, we put <code class="code code1 language-newspeak lang-newspeak newspeak colorized">[<span style="color:purple">INCLUDE</span>=newspeak]</code> at the top of our Madoko file, which is the source for the literate program. This tells Madoko that we are in newspeak mode. Newspeak mode is due to Daan Leijen, and it is full of Madoko magic that we won&#39;t discuss further in this section.
+</p>
+<p class="p indent">To make this work smoothly, we&#39;d want to teach newspeak mode about these special divs, so we can easily insert them into our document. Otherwise we have to insert the HTML into the doc ourselves. Currently Madoko&#39;s newspeak mode only knows about evaluators.
+</p>
+<p class="p indent">All this is quite nice, but a good deal more needs to be done to create a workable system.  The biggest hurdle is getting the full functionality of the Newspeak IDE to run in the browser. Minibrowser doesn&#39;t have the debugger, or the ability to create new classes, and lacks many other features like integrated version control, unit test support and so on. We know how to fix these things, but we lack  time and resources.
+</p>
+<p class="p indent">Of course, one need not implement Ampleforth on top of the web, but it does seem to be the most attractive means of widely distributing such live program documents.
+</p>
+<p class="p indent">Finally, the current approach has one glaring architectural flaw, but I won&#39;t tell you what it is. It should be obvious.
+</p><span data-line=""></span></div>
+</body>
+<script type="text/javascript" class="preview" src="Ampleforth.js"></script> <script type="text/javascript" class="preview" src="Ampleforth.sources.js"></script>
+</html>
