@@ -10774,7 +10774,7 @@ var mixins = new function () {
    this.$at$ = function ($key) {
     var self = this;
     return self._$at$ifAbsent$($key, function () {
-     return self._$error$("key not found");
+     return self._$Error().$signal$("key not found");
     });
    };
    this.$at$ifAbsent$ = function ($key, $f) {
@@ -20927,6 +20927,7 @@ var mixins = new function () {
   this.header = 1091;
   this.slots = [
    new SM("List", false, false),
+   new SM("Map", false, false),
    new SM("Mixin", false, false),
    new SM("CharacterReadStream", false, false),
    new SM("CharacterWriteStream", false, false),
@@ -20957,7 +20958,9 @@ var mixins = new function () {
    new MM("superInit`MirrorsForV8", true, 1092),
    new MM("instance`initializer", true, 1093),
    new MM("classDeclIRFor:within:", false, 1094),
-   new MM("updateMixin:from:by:", false, 1095),
+   new MM("sourceForMethod:ofMixin:", false, 1095),
+   new MM("sourceIndexForMethod:ofMixin:", false, 1096),
+   new MM("updateMixin:from:by:", false, 1097),
    new MM("ClassDeclarationBuilder", true, 0),
    new MM("ClassDeclarationMirror", true, 0),
    new MM("ClassHeaderMirror", true, 0),
@@ -20973,6 +20976,8 @@ var mixins = new function () {
    new MM("SlotDeclarationMirror", true, 0),
    new MM("init`List:", true, 0),
    new MM("List", true, 0),
+   new MM("init`Map:", true, 0),
+   new MM("Map", true, 0),
    new MM("init`Mixin:", true, 0),
    new MM("Mixin", true, 0),
    new MM("init`CharacterReadStream:", true, 0),
@@ -21062,6 +21067,7 @@ var mixins = new function () {
    var self = this;
    self._$superInit$MirrorsForV8($p, $vmm);
    $0.$init$List$(self, $p.$collections().$OrderedCollection());
+   $0.$init$Map$(self, $p.$collections().$Dictionary());
    $0.$init$Mixin$(self, $p.$kernel().$Mixin());
    $0.$init$CharacterReadStream$(self, $p.$streams().$CharacterReadStream());
    $0.$init$CharacterWriteStream$(self, $p.$streams().$CharacterReadWriteStream());
@@ -21095,6 +21101,24 @@ var mixins = new function () {
    var $source = nil;
    $source = "Newspeak3 'Uncategorized' ".$$comma(self._$ClassDeclarationMirror().$reflecting$($mixin).$source());
    return $0.$compiler(self).$compileClassSource$within$($source, $enclosing);
+  };
+  this.$sourceForMethod$ofMixin$ = function ($methodName, $m) {
+   var self = this;
+   var $js = nil;
+   var $sourceIndex = nil;
+   $js = $0.$generation(self).$factory();
+   $sourceIndex = self._$sourceIndexForMethod$ofMixin$($methodName, $m);
+   return $js.$propertyOf$at$($js.$ident$("sources"), $sourceIndex);
+  };
+  this.$sourceIndexForMethod$ofMixin$ = function ($methodName, $m) {
+   var self = this;
+   var $js = nil;
+   var $methodMetadata = nil;
+   $js = $0.$generation(self).$factory();
+   $methodMetadata = $js.$propertyOf$at$($m, $js.$literal$("methods")).$select$(function ($e) {
+    return $js.$propertyOf$at$($e, "name").$$equal($methodName);
+   });
+   return $js.$propertyOf$at$($methodMetadata, "source");
   };
   this.$updateMixin$from$by$ = function ($oldMixin, $newRuntimeMixin, $classDeclIR) {
    var self = this;
@@ -21307,6 +21331,13 @@ var mixins = new function () {
   };
   this.$List = function (self) {
    return self.$List$slot;
+  };
+  this.$init$Map$ = function (self, v) {
+   self.$Map$slot = v;
+   return self;
+  };
+  this.$Map = function (self) {
+   return self.$Map$slot;
   };
   this.$init$Mixin$ = function (self, v) {
    self.$Mixin$slot = v;
@@ -21540,7 +21571,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for MirrorsForV8`ClassDeclarationBuilder";
    this.name = "MirrorsForV8`ClassDeclarationBuilder";
-   this.header = 1096;
+   this.header = 1098;
    this.slots = [
     new SM("prvtExistingMixin", true, false),
     new SM("prvtClassDeclIR", true, false),
@@ -21549,12 +21580,13 @@ var mixins = new function () {
     new SM("classSide", false, false)
    ];
    this.methods = [
-    new MM("superInit`MirrorsForV8`ClassDeclarationBuilder", true, 1097),
-    new MM("instance`initializer", true, 1098),
-    new MM("accessModifier", false, 1099),
-    new MM("install", false, 1100),
-    new MM("name", false, 1101),
-    new MM("simpleName", false, 1102),
+    new MM("superInit`MirrorsForV8`ClassDeclarationBuilder", true, 1099),
+    new MM("instance`initializer", true, 1100),
+    new MM("accessModifier", false, 1101),
+    new MM("install", false, 1102),
+    new MM("name", false, 1103),
+    new MM("simpleName", false, 1104),
+    new MM("updateMixinFrom:", false, 1105),
     new MM("init`prvtExistingMixin:", true, 0),
     new MM("prvtExistingMixin", true, 0),
     new MM("prvtExistingMixin:", true, 0),
@@ -21605,7 +21637,7 @@ var mixins = new function () {
     if ($1.$prvtExistingMixin(self).$isNil()) {
      $1.$prvtExistingMixin$(self, $0.$Mixin(self.$enclosingObjects$MirrorsForV8$ClassDeclarationBuilder[0]).$fromRuntimeMixin$($runtimeMixin));
     } else {
-     self.$enclosingObjects$MirrorsForV8$ClassDeclarationBuilder[0]._$updateMixin$from$by$($1.$prvtExistingMixin(self), $runtimeMixin, $1.$prvtClassDeclIR(self));
+     self._$updateMixinFrom$($runtimeMixin);
     };
     return self.$enclosingObjects$MirrorsForV8$ClassDeclarationBuilder[0]._$ClassDeclarationMirror().$reflecting$($1.$prvtExistingMixin(self));
    };
@@ -21616,6 +21648,65 @@ var mixins = new function () {
    this.$simpleName = function () {
     var self = this;
     return $0.$compilation(self.$enclosingObjects$MirrorsForV8$ClassDeclarationBuilder[0]).$names().$fullyQualifiedNameToSimple$($1.$prvtClassDeclIR(self).$qualifiedName());
+   };
+   this.$updateMixinFrom$ = function ($runtimeMixin) {
+    var self = this;
+    var $instanceMethodSourceIndices = nil;
+    var $classMethodSourceIndices = nil;
+    var $runtimeMetamixin = nil;
+    var $existingMixin = nil;
+    var $existingMetamixin = nil;
+    var $newSourceIndex = nil;
+    $instanceMethodSourceIndices = $0.$Map(self.$enclosingObjects$MirrorsForV8$ClassDeclarationBuilder[0]).$new();
+    $classMethodSourceIndices = $0.$Map(self.$enclosingObjects$MirrorsForV8$ClassDeclarationBuilder[0]).$new();
+    $runtimeMetamixin = $runtimeMixin.meta;
+    $existingMixin = $1.$prvtExistingMixin(self).runtimeMixin;
+    $existingMetamixin = $existingMixin.meta;
+    $newSourceIndex = sources.length;
+    $existingMixin.methods.$do$(function ($ea) {
+     return $instanceMethodSourceIndices.$at$put$($ea.name, $ea.source);
+    });
+    $existingMetamixin.methods.$do$(function ($ea) {
+     return $classMethodSourceIndices.$at$put$($ea.name, $ea.source);
+    });
+    $runtimeMixin.methods.$do$(function ($e) {
+     var $selector = nil;
+     $selector = $e.name;
+     $instanceMethodSourceIndices.$at$ifAbsent$($selector, function () {
+      return $instanceMethodSourceIndices.$at$put$($selector, $newSourceIndex);
+     });
+     return $newSourceIndex = $newSourceIndex + 1;
+    });
+    $runtimeMetamixin.methods.$do$(function ($e) {
+     var $selector = nil;
+     $selector = $e.name;
+     $classMethodSourceIndices.$at$ifAbsent$($selector, function () {
+      return $classMethodSourceIndices.$at$put$($selector, $newSourceIndex);
+     });
+     return $newSourceIndex = $newSourceIndex + 1;
+    });
+    self._$instanceSide().$methods().$do$(function ($m) {
+     var $sourceIndex = nil;
+     $sourceIndex = $instanceMethodSourceIndices.$at$($m.$name());
+     return $m.$source().$$tilde$equal(nil).$ifTrue$(function () {
+      return sources[$sourceIndex] = $m.$source();
+     });
+    });
+    self._$classSide().$methods().$do$(function ($m) {
+     var $sourceIndex = nil;
+     $sourceIndex = $classMethodSourceIndices.$at$($m.$name());
+     return $m.$source().$$tilde$equal(nil).$ifTrue$(function () {
+      return sources[$sourceIndex] = $m.$source();
+     });
+    });
+    $runtimeMixin.methods.$do$(function ($mm) {
+     return $mm.source = $instanceMethodSourceIndices.$at$($mm.name);
+    });
+    $runtimeMetamixin.methods.$do$(function ($mm) {
+     return $mm.source = $classMethodSourceIndices.$at$($mm.name);
+    });
+    self.$enclosingObjects$MirrorsForV8$ClassDeclarationBuilder[0]._$updateMixin$from$by$($1.$prvtExistingMixin(self), $runtimeMixin, $1.$prvtClassDeclIR(self));
+    return self;
    };
    this.$init$prvtExistingMixin$ = function (self, v) {
     self.$prvtExistingMixin$slot = v;
@@ -21670,6 +21761,8 @@ var mixins = new function () {
      this.$install = this._$install = $.$install;
      this.$name = this._$name = $.$name;
      this.$simpleName = this._$simpleName = $.$simpleName;
+     this._$updateMixinFrom$ = $.$updateMixinFrom$;
+     this.$updateMixinFrom$ = dnuCatcher("$updateMixinFrom$");
      this.$init$enclosingClass$ = this._$init$enclosingClass$ = $.$init$enclosingClass$;
      this.$enclosingClass = this._$enclosingClass = $.$enclosingClass;
      this.$init$instanceSide$ = this._$init$instanceSide$ = $.$init$instanceSide$;
@@ -21700,9 +21793,9 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("fromIR:forExistingMixin:within:", true, 0),
-     new MM("fromSource:", false, 1103),
-     new MM("fromUnitSource:", false, 1104),
-     new MM("reflecting:", false, 1105)
+     new MM("fromSource:", false, 1106),
+     new MM("fromUnitSource:", false, 1107),
+     new MM("reflecting:", false, 1108)
     ];
     this.nestedClasses = [];
     this.$fromIR$forExistingMixin$within$ = function ($ir, $m, $enclosing) {
@@ -21754,7 +21847,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for MirrorsForV8`ClassDeclarationMirror";
    this.name = "MirrorsForV8`ClassDeclarationMirror";
-   this.header = 1106;
+   this.header = 1109;
    this.slots = [
     new SM("reflectee", false, false),
     new SM("instanceSide", false, false),
@@ -21762,13 +21855,13 @@ var mixins = new function () {
     new SM("accessModifier", false, false)
    ];
    this.methods = [
-    new MM("superInit`MirrorsForV8`ClassDeclarationMirror", true, 1107),
-    new MM("instance`initializer", true, 1108),
-    new MM("enclosingClass", false, 1109),
-    new MM("header", false, 1110),
-    new MM("name", false, 1111),
-    new MM("simpleName", false, 1112),
-    new MM("source", false, 1113),
+    new MM("superInit`MirrorsForV8`ClassDeclarationMirror", true, 1110),
+    new MM("instance`initializer", true, 1111),
+    new MM("enclosingClass", false, 1112),
+    new MM("header", false, 1113),
+    new MM("name", false, 1114),
+    new MM("simpleName", false, 1115),
+    new MM("source", false, 1116),
     new MM("init`reflectee:", true, 0),
     new MM("reflectee", true, 0),
     new MM("init`instanceSide:", true, 0),
@@ -21949,12 +22042,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for MirrorsForV8`ClassHeaderMirror";
    this.name = "MirrorsForV8`ClassHeaderMirror";
-   this.header = 1114;
+   this.header = 1117;
    this.slots = [new SM("reflectee", false, false)];
    this.methods = [
-    new MM("superInit`MirrorsForV8`ClassHeaderMirror", true, 1115),
-    new MM("instance`initializer", true, 1116),
-    new MM("source", false, 1117),
+    new MM("superInit`MirrorsForV8`ClassHeaderMirror", true, 1118),
+    new MM("instance`initializer", true, 1119),
+    new MM("source", false, 1120),
     new MM("init`reflectee:", true, 0),
     new MM("reflectee", true, 0)
    ];
@@ -22040,21 +22133,21 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for MirrorsForV8`ClassMirror";
    this.name = "MirrorsForV8`ClassMirror";
-   this.header = 1118;
+   this.header = 1121;
    this.slots = [new SM("reflectee", false, false)];
    this.methods = [
-    new MM("superInit`MirrorsForV8`ClassMirror", true, 1119),
-    new MM("instance`initializer", true, 1120),
-    new MM("allSuperclasses", false, 1121),
-    new MM("computeMirrorGroup:", false, 1122),
-    new MM("enclosingObject", false, 1123),
-    new MM("methods", false, 1124),
-    new MM("mixin", false, 1125),
-    new MM("name", false, 1126),
-    new MM("nestedClasses", false, 1127),
-    new MM("simpleName", false, 1128),
-    new MM("slots", false, 1129),
-    new MM("superclass", false, 1130),
+    new MM("superInit`MirrorsForV8`ClassMirror", true, 1122),
+    new MM("instance`initializer", true, 1123),
+    new MM("allSuperclasses", false, 1124),
+    new MM("computeMirrorGroup:", false, 1125),
+    new MM("enclosingObject", false, 1126),
+    new MM("methods", false, 1127),
+    new MM("mixin", false, 1128),
+    new MM("name", false, 1129),
+    new MM("nestedClasses", false, 1130),
+    new MM("simpleName", false, 1131),
+    new MM("slots", false, 1132),
+    new MM("superclass", false, 1133),
     new MM("init`reflectee:", true, 0),
     new MM("reflectee", true, 0)
    ];
@@ -22211,34 +22304,38 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for MirrorsForV8`MethodBuilder";
    this.name = "MirrorsForV8`MethodBuilder";
-   this.header = 1131;
+   this.header = 1134;
    this.slots = [
     new SM("reflecteeX", false, false),
-    new SM("definingMixinX", false, false)
+    new SM("definingMixinX", false, false),
+    new SM("source", false, false)
    ];
    this.methods = [
-    new MM("superInit`MirrorsForV8`MethodBuilder", true, 1132),
-    new MM("instance`initializer", true, 1133),
-    new MM("accessModifier", false, 1134),
-    new MM("name", false, 1135),
-    new MM("simpleName", false, 1136),
+    new MM("superInit`MirrorsForV8`MethodBuilder", true, 1135),
+    new MM("instance`initializer", true, 1136),
+    new MM("accessModifier", false, 1137),
+    new MM("name", false, 1138),
+    new MM("simpleName", false, 1139),
     new MM("init`reflecteeX:", true, 0),
     new MM("reflecteeX", true, 0),
     new MM("init`definingMixinX:", true, 0),
-    new MM("definingMixinX", true, 0)
+    new MM("definingMixinX", true, 0),
+    new MM("init`source:", true, 0),
+    new MM("source", true, 0)
    ];
    this.nestedClasses = [];
    this.applications = [];
-   this.$superInit$MirrorsForV8$MethodBuilder = function ($mir, $mb) {
+   this.$superInit$MirrorsForV8$MethodBuilder = function ($mir, $mb, $s) {
     var self = this;
     self.$super$MirrorsForV8$MethodBuilder$slot._$instance$initializer.call(self);
     return self;
    };
-   this.$instance$initializer = function ($mir, $mb) {
+   this.$instance$initializer = function ($mir, $mb, $s) {
     var self = this;
-    self._$superInit$MirrorsForV8$MethodBuilder($mir, $mb);
+    self._$superInit$MirrorsForV8$MethodBuilder($mir, $mb, $s);
     self._$init$reflecteeX$($mir);
     self._$init$definingMixinX$($mb);
+    self._$init$source$($s);
     return self;
    };
    this.$accessModifier = function () {
@@ -22267,6 +22364,13 @@ var mixins = new function () {
    this.$definingMixinX = function () {
     return this.$definingMixinX$slot;
    };
+   this.$init$source$ = function (v) {
+    this.$source$slot = v;
+    return this;
+   };
+   this.$source = function () {
+    return this.$source$slot;
+   };
    this.invoke = function (runtimeSuperclass, enclosingObjects) {
     function constructRuntimeClass (superBasicNew) {
      this.debug = "Runtime class for MirrorsForV8`MethodBuilder";
@@ -22284,12 +22388,15 @@ var mixins = new function () {
      this.$init$definingMixinX$ = dnuCatcher("$init$definingMixinX$");
      this._$definingMixinX = $.$definingMixinX;
      this.$definingMixinX = dnuCatcher("$definingMixinX");
+     this.$init$source$ = this._$init$source$ = $.$init$source$;
+     this.$source = this._$source = $.$source;
      this.$enclosingObjects$MirrorsForV8$MethodBuilder = enclosingObjects;
      this.$super$MirrorsForV8$MethodBuilder$slot = runtimeSuperclass;
      this["MirrorsForV8`MethodBuilder"] = function () {
       superBasicNew.call(this);
       this.$reflecteeX$slot = nil;
       this.$definingMixinX$slot = nil;
+      this.$source$slot = nil;
      };
      this.basicNew = this["MirrorsForV8`MethodBuilder"];
      this.basicNew.prototype = this;
@@ -22303,15 +22410,15 @@ var mixins = new function () {
     var $ = this;
     this.debug = "Runtime meta mixin for MirrorsForV8`MethodBuilder";
     this.slots = [];
-    this.methods = [new MM("reflecting:in:", true, 0)];
+    this.methods = [new MM("reflecting:in:source:", true, 0)];
     this.nestedClasses = [];
-    this.$reflecting$in$ = function ($mir, $mb) {
-     return (new this.nonMeta.basicNew()).$instance$initializer($mir, $mb);
+    this.$reflecting$in$source$ = function ($mir, $mb, $s) {
+     return (new this.nonMeta.basicNew()).$instance$initializer($mir, $mb, $s);
     };
     this.invoke = function (runtimeSuperclass, enclosingObjects) {
      function constructRuntimeClass (superBasicNew) {
       this.debug = "Runtime meta class for MirrorsForV8`MethodBuilder";
-      this.$reflecting$in$ = this._$reflecting$in$ = $.$reflecting$in$;
+      this.$reflecting$in$source$ = this._$reflecting$in$source$ = $.$reflecting$in$source$;
       this.$enclosingObjects$MirrorsForV8$MethodBuilder = enclosingObjects;
       this.$super$MirrorsForV8$MethodBuilder = runtimeSuperclass;
       this.basicNew = function () {
@@ -22332,7 +22439,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for MirrorsForV8`MethodMirror";
    this.name = "MirrorsForV8`MethodMirror";
-   this.header = 1137;
+   this.header = 1140;
    this.slots = [
     new SM("name", false, false),
     new SM("definingMixin", false, false),
@@ -22340,10 +22447,10 @@ var mixins = new function () {
     new SM("accessModifier", false, false)
    ];
    this.methods = [
-    new MM("superInit`MirrorsForV8`MethodMirror", true, 1138),
-    new MM("instance`initializer", true, 1139),
-    new MM("simpleName", false, 1140),
-    new MM("source", false, 1141),
+    new MM("superInit`MirrorsForV8`MethodMirror", true, 1141),
+    new MM("instance`initializer", true, 1142),
+    new MM("simpleName", false, 1143),
+    new MM("source", false, 1144),
     new MM("init`name:", true, 0),
     new MM("name", true, 0),
     new MM("init`definingMixin:", true, 0),
@@ -22469,7 +22576,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for MirrorsForV8`MixinBuilder";
    this.name = "MirrorsForV8`MixinBuilder";
-   this.header = 1142;
+   this.header = 1145;
    this.slots = [
     new SM("mixinIR", false, false),
     new SM("declaration", false, false),
@@ -22479,10 +22586,10 @@ var mixins = new function () {
     new SM("nestedClasses", false, false)
    ];
    this.methods = [
-    new MM("superInit`MirrorsForV8`MixinBuilder", true, 1143),
-    new MM("instance`initializer", true, 1144),
-    new MM("find:in:", false, 1145),
-    new MM("isMixinMirror", false, 1146),
+    new MM("superInit`MirrorsForV8`MixinBuilder", true, 1146),
+    new MM("instance`initializer", true, 1147),
+    new MM("find:in:", false, 1148),
+    new MM("isMixinMirror", false, 1149),
     new MM("init`mixinIR:", true, 0),
     new MM("mixinIR", true, 0),
     new MM("init`declaration:", true, 0),
@@ -22515,7 +22622,7 @@ var mixins = new function () {
     self._$init$methods$(self.$enclosingObjects$MirrorsForV8$MixinBuilder[0]._$MutableMethodGroup().$group$within$ir$($ir.$methods().$reject$(function ($ea) {
      return $ea.$isSynthetic();
     }).$collect$(function ($ea) {
-     return self.$enclosingObjects$MirrorsForV8$MixinBuilder[0]._$MethodBuilder().$reflecting$in$($ea, self);
+     return self.$enclosingObjects$MirrorsForV8$MixinBuilder[0]._$MethodBuilder().$reflecting$in$source$($ea, self, nil);
     }), self, $ir));
     self._$init$nestedClasses$(self.$enclosingObjects$MirrorsForV8$MixinBuilder[0]._$MutableNestedClassGroup().$group$within$ir$($ir.$nestedClasses().$collect$(function ($ea) {
      return self.$enclosingObjects$MirrorsForV8$MixinBuilder[0]._$ClassDeclarationBuilder().$fromIR$forExistingMixin$within$($ea, self._$find$in$($ea.$qualifiedName(), $em), $cdb);
@@ -22620,7 +22727,7 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("forClassDeclaration:ir:em:", true, 0),
-     new MM("reflecting:", false, 1147)
+     new MM("reflecting:", false, 1150)
     ];
     this.nestedClasses = [];
     this.$forClassDeclaration$ir$em$ = function ($cdb, $ir, $em) {
@@ -22659,16 +22766,16 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for MirrorsForV8`MixinMirror";
    this.name = "MirrorsForV8`MixinMirror";
-   this.header = 1148;
+   this.header = 1151;
    this.slots = [new SM("reflectee", false, false)];
    this.methods = [
-    new MM("superInit`MirrorsForV8`MixinMirror", true, 1149),
-    new MM("instance`initializer", true, 1150),
-    new MM("declaration", false, 1151),
-    new MM("isMixinMirror", false, 1152),
-    new MM("methods", false, 1153),
-    new MM("nestedClasses", false, 1154),
-    new MM("slots", false, 1155),
+    new MM("superInit`MirrorsForV8`MixinMirror", true, 1152),
+    new MM("instance`initializer", true, 1153),
+    new MM("declaration", false, 1154),
+    new MM("isMixinMirror", false, 1155),
+    new MM("methods", false, 1156),
+    new MM("nestedClasses", false, 1157),
+    new MM("slots", false, 1158),
     new MM("init`reflectee:", true, 0),
     new MM("reflectee", true, 0)
    ];
@@ -22792,12 +22899,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for MirrorsForV8`MutableMethodGroup";
    this.name = "MirrorsForV8`MutableMethodGroup";
-   this.header = 1156;
+   this.header = 1159;
    this.slots = [];
    this.methods = [
-    new MM("superInit`MirrorsForV8`MutableMethodGroup", true, 1157),
-    new MM("instance`initializer", true, 1158),
-    new MM("addFromSource:", false, 1159)
+    new MM("superInit`MirrorsForV8`MutableMethodGroup", true, 1160),
+    new MM("instance`initializer", true, 1161),
+    new MM("addFromSource:", false, 1162)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -22814,15 +22921,21 @@ var mixins = new function () {
    this.$addFromSource$ = function ($s) {
     var self = this;
     var $result = nil;
-    var $cat = nil;
     var $newM = nil;
+    var $sourceIndex = nil;
+    var $oldMirror = nil;
     $result = $0.$compiler(self.$enclosingObjects$MirrorsForV8$MutableMethodGroup[0]).$compileMethodSource$within$($s, self._$enclosingMixin());
-    $newM = self.$enclosingObjects$MirrorsForV8$MutableMethodGroup[0]._$MethodBuilder().$reflecting$in$($result, self._$enclosingMixin());
-    self._$mixinIR().$methods().$removeAllSuchThat$(function ($ea) {
-     return $ea.$name().$$equal($result.$name());
-    });
+    $newM = self.$enclosingObjects$MirrorsForV8$MutableMethodGroup[0]._$MethodBuilder().$reflecting$in$source$($result, self._$enclosingMixin(), $s);
+    $oldMirror = self._$removeMirrorNamed$($result.$name());
+    if ($oldMirror.$$tilde$equal(self)) {
+     self._$mixinIR().$methods().$removeAllSuchThat$(function ($ea) {
+      return $ea.$name().$$equal($result.$name());
+     });
+    } else {
+     nil;
+    };
     self._$mixinIR().$methods().$add$($result);
-    self.$super$MirrorsForV8$MutableMethodGroup$slot._$addMirror$.call(self, $newM);
+    self._$addMirror$($newM);
     return $newM;
    };
    this.invoke = function (runtimeSuperclass, enclosingObjects) {
@@ -22878,15 +22991,16 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for MirrorsForV8`MutableMirrorGroup";
    this.name = "MirrorsForV8`MutableMirrorGroup";
-   this.header = 1160;
+   this.header = 1163;
    this.slots = [
     new SM("enclosingMixin", false, false),
     new SM("mixinIR", false, false)
    ];
    this.methods = [
-    new MM("superInit`MirrorsForV8`MutableMirrorGroup", true, 1161),
-    new MM("instance`initializer", true, 1162),
-    new MM("addMirror:", false, 1163),
+    new MM("superInit`MirrorsForV8`MutableMirrorGroup", true, 1164),
+    new MM("instance`initializer", true, 1165),
+    new MM("addMirror:", false, 1166),
+    new MM("removeMirrorNamed:", false, 1167),
     new MM("init`enclosingMixin:", true, 0),
     new MM("enclosingMixin", true, 0),
     new MM("init`mixinIR:", true, 0),
@@ -22927,6 +23041,27 @@ var mixins = new function () {
      };
     };
    };
+   this.$removeMirrorNamed$ = function ($m) {
+    var self = this;
+    var NLR = new Object();
+    try {
+     self._$mirrors().$keysAndValuesDo$(function ($index, $mirror) {
+      return $mirror.$simpleName().$$equal($m).$ifTrue$(function () {
+       {
+        NLR.value = self._$mirrors().$remove$($mirror);
+        throw NLR;
+       };
+      });
+     });
+     return self;
+    } catch (NLR_exception) {
+     if (NLR === NLR_exception) {
+      return NLR_exception.value;
+     } else {
+      throw NLR_exception;
+     };
+    };
+   };
    this.$init$enclosingMixin$ = function (v) {
     this.$enclosingMixin$slot = v;
     return this;
@@ -22949,6 +23084,7 @@ var mixins = new function () {
      this.$instance$initializer = this._$instance$initializer = $.$instance$initializer;
      this._$addMirror$ = $.$addMirror$;
      this.$addMirror$ = dnuCatcher("$addMirror$");
+     this.$removeMirrorNamed$ = this._$removeMirrorNamed$ = $.$removeMirrorNamed$;
      this.$init$enclosingMixin$ = this._$init$enclosingMixin$ = $.$init$enclosingMixin$;
      this.$enclosingMixin = this._$enclosingMixin = $.$enclosingMixin;
      this._$init$mixinIR$ = $.$init$mixinIR$;
@@ -23003,11 +23139,11 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for MirrorsForV8`MutableNestedClassGroup";
    this.name = "MirrorsForV8`MutableNestedClassGroup";
-   this.header = 1164;
+   this.header = 1168;
    this.slots = [];
    this.methods = [
-    new MM("superInit`MirrorsForV8`MutableNestedClassGroup", true, 1165),
-    new MM("instance`initializer", true, 1166)
+    new MM("superInit`MirrorsForV8`MutableNestedClassGroup", true, 1169),
+    new MM("instance`initializer", true, 1170)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -23073,18 +23209,18 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for MirrorsForV8`ObjectMirror";
    this.name = "MirrorsForV8`ObjectMirror";
-   this.header = 1167;
+   this.header = 1171;
    this.slots = [new SM("reflectee", false, false)];
    this.methods = [
-    new MM("superInit`MirrorsForV8`ObjectMirror", true, 1168),
-    new MM("instance`initializer", true, 1169),
-    new MM("evaluate:ifCompilerError:ifError:", false, 1170),
-    new MM("getClass", false, 1171),
-    new MM("getClassIfFail:", false, 1172),
-    new MM("getSlot:", false, 1173),
-    new MM("getSlot:ifFail:", false, 1174),
-    new MM("setSlot:to:", false, 1175),
-    new MM("setSlot:to:ifFail:", false, 1176),
+    new MM("superInit`MirrorsForV8`ObjectMirror", true, 1172),
+    new MM("instance`initializer", true, 1173),
+    new MM("evaluate:ifCompilerError:ifError:", false, 1174),
+    new MM("getClass", false, 1175),
+    new MM("getClassIfFail:", false, 1176),
+    new MM("getSlot:", false, 1177),
+    new MM("getSlot:ifFail:", false, 1178),
+    new MM("setSlot:to:", false, 1179),
+    new MM("setSlot:to:ifFail:", false, 1180),
     new MM("init`reflectee:", true, 0),
     new MM("reflectee", true, 0)
    ];
@@ -23285,14 +23421,14 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for MirrorsForV8`SlotDeclarationMirror";
    this.name = "MirrorsForV8`SlotDeclarationMirror";
-   this.header = 1177;
+   this.header = 1181;
    this.slots = [
     new SM("name", false, false),
     new SM("accessModifier", false, false)
    ];
    this.methods = [
-    new MM("superInit`MirrorsForV8`SlotDeclarationMirror", true, 1178),
-    new MM("instance`initializer", true, 1179),
+    new MM("superInit`MirrorsForV8`SlotDeclarationMirror", true, 1182),
+    new MM("instance`initializer", true, 1183),
     new MM("init`name:", true, 0),
     new MM("name", true, 0),
     new MM("init`accessModifier:", true, 0),
@@ -23400,6 +23536,10 @@ var mixins = new function () {
     this.$instance$initializer = this._$instance$initializer = $.$instance$initializer;
     this._$classDeclIRFor$within$ = $.$classDeclIRFor$within$;
     this.$classDeclIRFor$within$ = dnuCatcher("$classDeclIRFor$within$");
+    this._$sourceForMethod$ofMixin$ = $.$sourceForMethod$ofMixin$;
+    this.$sourceForMethod$ofMixin$ = dnuCatcher("$sourceForMethod$ofMixin$");
+    this._$sourceIndexForMethod$ofMixin$ = $.$sourceIndexForMethod$ofMixin$;
+    this.$sourceIndexForMethod$ofMixin$ = dnuCatcher("$sourceIndexForMethod$ofMixin$");
     this._$updateMixin$from$by$ = $.$updateMixin$from$by$;
     this.$updateMixin$from$by$ = dnuCatcher("$updateMixin$from$by$");
     this.$ClassDeclarationBuilder = this._$ClassDeclarationBuilder = $.$ClassDeclarationBuilder;
@@ -23459,6 +23599,7 @@ var mixins = new function () {
     this.MirrorsForV8 = function () {
      superBasicNew.call(this);
      this.$List$slot = nil;
+     this.$Map$slot = nil;
      this.$Mixin$slot = nil;
      this.$CharacterReadStream$slot = nil;
      this.$CharacterWriteStream$slot = nil;
@@ -23526,7 +23667,7 @@ var mixins = new function () {
   var $0 = this;
   this.debug = "Runtime mixin for MirrorGroups";
   this.name = "MirrorGroups";
-  this.header = 1180;
+  this.header = 1184;
   this.slots = [
    new SM("Collection", false, false),
    new SM("OrderedCollection", false, false),
@@ -23534,8 +23675,8 @@ var mixins = new function () {
    new SM("MirrorGroups`MirrorGroup", true, true)
   ];
   this.methods = [
-   new MM("superInit`MirrorGroups", true, 1181),
-   new MM("instance`initializer", true, 1182),
+   new MM("superInit`MirrorGroups", true, 1185),
+   new MM("instance`initializer", true, 1186),
    new MM("ImmutableMirrorGroup", true, 0),
    new MM("MirrorGroup", true, 0),
    new MM("init`Collection:", true, 0),
@@ -23627,19 +23768,19 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for MirrorGroups`ImmutableMirrorGroup";
    this.name = "MirrorGroups`ImmutableMirrorGroup";
-   this.header = 1183;
+   this.header = 1187;
    this.slots = [new SM("mirrors", false, false)];
    this.methods = [
-    new MM("superInit`MirrorGroups`ImmutableMirrorGroup", true, 1184),
-    new MM("instance`initializer", true, 1185),
-    new MM("addFromSource:", false, 1186),
-    new MM("addMirror:", false, 1187),
-    new MM("do:", false, 1188),
-    new MM("findMirrorNamed:", false, 1189),
-    new MM("includesMirrorNamed:", false, 1190),
-    new MM("removeMirror:", false, 1191),
-    new MM("removeMirrorNamed:", false, 1192),
-    new MM("size", false, 1193),
+    new MM("superInit`MirrorGroups`ImmutableMirrorGroup", true, 1188),
+    new MM("instance`initializer", true, 1189),
+    new MM("addFromSource:", false, 1190),
+    new MM("addMirror:", false, 1191),
+    new MM("do:", false, 1192),
+    new MM("findMirrorNamed:", false, 1193),
+    new MM("includesMirrorNamed:", false, 1194),
+    new MM("removeMirror:", false, 1195),
+    new MM("removeMirrorNamed:", false, 1196),
+    new MM("size", false, 1197),
     new MM("init`mirrors:", true, 0),
     new MM("mirrors", true, 0)
    ];
@@ -23795,17 +23936,17 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for MirrorGroups`MirrorGroup";
    this.name = "MirrorGroups`MirrorGroup";
-   this.header = 1194;
+   this.header = 1198;
    this.slots = [];
    this.methods = [
-    new MM("superInit`MirrorGroups`MirrorGroup", true, 1195),
-    new MM("instance`initializer", true, 1196),
-    new MM("addFromSource:", false, 1197),
-    new MM("addMirror:", false, 1198),
-    new MM("removeAll", false, 1199),
-    new MM("removeAllSuchThat:", false, 1200),
-    new MM("removeMirror:", false, 1201),
-    new MM("removeMirrorNamed:", false, 1202)
+    new MM("superInit`MirrorGroups`MirrorGroup", true, 1199),
+    new MM("instance`initializer", true, 1200),
+    new MM("addFromSource:", false, 1201),
+    new MM("addMirror:", false, 1202),
+    new MM("removeAll", false, 1203),
+    new MM("removeAllSuchThat:", false, 1204),
+    new MM("removeMirror:", false, 1205),
+    new MM("removeMirrorNamed:", false, 1206)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -23995,7 +24136,7 @@ var mixins = new function () {
   var $0 = this;
   this.debug = "Runtime mixin for Streams";
   this.name = "Streams";
-  this.header = 1203;
+  this.header = 1207;
   this.slots = [
    new SM("String", false, false),
    new SM("BasicOutputReadStream", false, false),
@@ -24032,9 +24173,9 @@ var mixins = new function () {
    new SM("Streams`TempTranscript", true, true)
   ];
   this.methods = [
-   new MM("superInit`Streams", true, 1204),
-   new MM("instance`initializer", true, 1205),
-   new MM("usingCrLfConvention", false, 1206),
+   new MM("superInit`Streams", true, 1208),
+   new MM("instance`initializer", true, 1209),
+   new MM("usingCrLfConvention", false, 1210),
    new MM("BasicInputStream", true, 0),
    new MM("BasicOutputStream", true, 0),
    new MM("BasicReadStream", true, 0),
@@ -24708,40 +24849,40 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`BasicInputStream";
    this.name = "Streams`BasicInputStream";
-   this.header = 1207;
+   this.header = 1211;
    this.slots = [
     new SM("havePeeked_0", true, false),
     new SM("peekVal", true, false)
    ];
    this.methods = [
-    new MM("superInit`Streams`BasicInputStream", true, 1208),
-    new MM("instance`initializer", true, 1209),
-    new MM("atEnd", false, 1210),
-    new MM("contentsRemaining", false, 1211),
-    new MM("do:", false, 1212),
-    new MM("next", false, 1213),
-    new MM("next:", false, 1214),
-    new MM("nextIfAbsent:", false, 1215),
-    new MM("nextMatchFor:", false, 1216),
-    new MM("peek", false, 1217),
-    new MM("peekFor:", false, 1218),
-    new MM("peekIfAbsent:", false, 1219),
-    new MM("skip:", false, 1220),
-    new MM("skipTo:", false, 1221),
-    new MM("upTo:", false, 1222),
-    new MM("close", false, 1223),
-    new MM("printOn:", false, 1224),
-    new MM("accumulateUntil:", false, 1225),
-    new MM("actualAtEnd", false, 1226),
-    new MM("actualNext", false, 1227),
-    new MM("atEndOrPeekIs:", false, 1228),
-    new MM("havePeeked", false, 1229),
-    new MM("havePeeked:", false, 1230),
-    new MM("newBuildStream", false, 1231),
-    new MM("newCollectionOfSize:", false, 1232),
-    new MM("nextFromPeek", false, 1233),
-    new MM("noPeekVal", false, 1234),
-    new MM("defaultExpected", false, 1235),
+    new MM("superInit`Streams`BasicInputStream", true, 1212),
+    new MM("instance`initializer", true, 1213),
+    new MM("atEnd", false, 1214),
+    new MM("contentsRemaining", false, 1215),
+    new MM("do:", false, 1216),
+    new MM("next", false, 1217),
+    new MM("next:", false, 1218),
+    new MM("nextIfAbsent:", false, 1219),
+    new MM("nextMatchFor:", false, 1220),
+    new MM("peek", false, 1221),
+    new MM("peekFor:", false, 1222),
+    new MM("peekIfAbsent:", false, 1223),
+    new MM("skip:", false, 1224),
+    new MM("skipTo:", false, 1225),
+    new MM("upTo:", false, 1226),
+    new MM("close", false, 1227),
+    new MM("printOn:", false, 1228),
+    new MM("accumulateUntil:", false, 1229),
+    new MM("actualAtEnd", false, 1230),
+    new MM("actualNext", false, 1231),
+    new MM("atEndOrPeekIs:", false, 1232),
+    new MM("havePeeked", false, 1233),
+    new MM("havePeeked:", false, 1234),
+    new MM("newBuildStream", false, 1235),
+    new MM("newCollectionOfSize:", false, 1236),
+    new MM("nextFromPeek", false, 1237),
+    new MM("noPeekVal", false, 1238),
+    new MM("defaultExpected", false, 1239),
     new MM("init`havePeeked_0:", true, 0),
     new MM("havePeeked_0", true, 0),
     new MM("havePeeked_0:", true, 0),
@@ -25132,19 +25273,19 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`BasicOutputStream";
    this.name = "Streams`BasicOutputStream";
-   this.header = 1236;
+   this.header = 1240;
    this.slots = [];
    this.methods = [
-    new MM("superInit`Streams`BasicOutputStream", true, 1237),
-    new MM("instance`initializer", true, 1238),
-    new MM("externalFlush", false, 1239),
-    new MM("flush", false, 1240),
-    new MM("next:put:", false, 1241),
-    new MM("nextPut:", false, 1242),
-    new MM("nextPutAll:", false, 1243),
-    new MM("put:", false, 1244),
-    new MM("putAll:", false, 1245),
-    new MM("show:", false, 1246)
+    new MM("superInit`Streams`BasicOutputStream", true, 1241),
+    new MM("instance`initializer", true, 1242),
+    new MM("externalFlush", false, 1243),
+    new MM("flush", false, 1244),
+    new MM("next:put:", false, 1245),
+    new MM("nextPut:", false, 1246),
+    new MM("nextPutAll:", false, 1247),
+    new MM("put:", false, 1248),
+    new MM("putAll:", false, 1249),
+    new MM("show:", false, 1250)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -25275,29 +25416,29 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`BasicReadStream";
    this.name = "Streams`BasicReadStream";
-   this.header = 1247;
+   this.header = 1251;
    this.slots = [new SM("actualPosition_slot", true, false)];
    this.methods = [
-    new MM("superInit`Streams`BasicReadStream", true, 1248),
-    new MM("instance`initializer", true, 1249),
-    new MM("at:", false, 1250),
-    new MM("collection", false, 1251),
-    new MM("contents", false, 1252),
-    new MM("contentsRemaining", false, 1253),
-    new MM("copyFrom:to:", false, 1254),
-    new MM("isEmpty", false, 1255),
-    new MM("position", false, 1256),
-    new MM("position:", false, 1257),
-    new MM("repositioningAt:", false, 1258),
-    new MM("reset", false, 1259),
-    new MM("setToEnd", false, 1260),
-    new MM("size", false, 1261),
-    new MM("skip:", false, 1262),
-    new MM("skipTo:", false, 1263),
-    new MM("upTo:", false, 1264),
-    new MM("actualPosition", false, 1265),
-    new MM("actualPosition:", false, 1266),
-    new MM("actualAtEnd", false, 1267),
+    new MM("superInit`Streams`BasicReadStream", true, 1252),
+    new MM("instance`initializer", true, 1253),
+    new MM("at:", false, 1254),
+    new MM("collection", false, 1255),
+    new MM("contents", false, 1256),
+    new MM("contentsRemaining", false, 1257),
+    new MM("copyFrom:to:", false, 1258),
+    new MM("isEmpty", false, 1259),
+    new MM("position", false, 1260),
+    new MM("position:", false, 1261),
+    new MM("repositioningAt:", false, 1262),
+    new MM("reset", false, 1263),
+    new MM("setToEnd", false, 1264),
+    new MM("size", false, 1265),
+    new MM("skip:", false, 1266),
+    new MM("skipTo:", false, 1267),
+    new MM("upTo:", false, 1268),
+    new MM("actualPosition", false, 1269),
+    new MM("actualPosition:", false, 1270),
+    new MM("actualAtEnd", false, 1271),
     new MM("init`actualPosition_slot:", true, 0),
     new MM("actualPosition_slot", true, 0),
     new MM("actualPosition_slot:", true, 0)
@@ -25562,8 +25703,8 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("on:", false, 1268),
-     new MM("on:from:to:", false, 1269)
+     new MM("on:", false, 1272),
+     new MM("on:from:to:", false, 1273)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -25605,14 +25746,14 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`BasicReadWriteStream";
    this.name = "Streams`BasicReadWriteStream";
-   this.header = 1270;
+   this.header = 1274;
    this.slots = [new SM("size", true, false)];
    this.methods = [
-    new MM("superInit`Streams`BasicReadWriteStream", true, 1271),
-    new MM("instance`initializer", true, 1272),
-    new MM("contents", false, 1273),
-    new MM("contentsWritten", false, 1274),
-    new MM("nextPut:", false, 1275),
+    new MM("superInit`Streams`BasicReadWriteStream", true, 1275),
+    new MM("instance`initializer", true, 1276),
+    new MM("contents", false, 1277),
+    new MM("contentsWritten", false, 1278),
+    new MM("nextPut:", false, 1279),
     new MM("init`size:", true, 0),
     new MM("size", true, 0),
     new MM("size:", true, 0)
@@ -25712,8 +25853,8 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("on:", false, 1276),
-     new MM("on:numElements:", false, 1277)
+     new MM("on:", false, 1280),
+     new MM("on:numElements:", false, 1281)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -25755,15 +25896,15 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`CharacterInput";
    this.name = "Streams`CharacterInput";
-   this.header = 1278;
+   this.header = 1282;
    this.slots = [];
    this.methods = [
-    new MM("superInit`Streams`CharacterInput", true, 1279),
-    new MM("instance`initializer", true, 1280),
-    new MM("contentsRemaining", false, 1281),
-    new MM("next:", false, 1282),
-    new MM("upTo:", false, 1283),
-    new MM("newCollectionOfSize:", false, 1284)
+    new MM("superInit`Streams`CharacterInput", true, 1283),
+    new MM("instance`initializer", true, 1284),
+    new MM("contentsRemaining", false, 1285),
+    new MM("next:", false, 1286),
+    new MM("upTo:", false, 1287),
+    new MM("newCollectionOfSize:", false, 1288)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -25871,16 +26012,16 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`CharacterInputConverter";
    this.name = "Streams`CharacterInputConverter";
-   this.header = 1285;
+   this.header = 1289;
    this.slots = [new SM("binaryStream", true, false)];
    this.methods = [
-    new MM("superInit`Streams`CharacterInputConverter", true, 1286),
-    new MM("instance`initializer", true, 1287),
-    new MM("upTo:", false, 1288),
-    new MM("close", false, 1289),
-    new MM("initBinaryStream:", false, 1290),
-    new MM("actualAtEnd", false, 1291),
-    new MM("actualNext", false, 1292),
+    new MM("superInit`Streams`CharacterInputConverter", true, 1290),
+    new MM("instance`initializer", true, 1291),
+    new MM("upTo:", false, 1292),
+    new MM("close", false, 1293),
+    new MM("initBinaryStream:", false, 1294),
+    new MM("actualAtEnd", false, 1295),
+    new MM("actualNext", false, 1296),
     new MM("init`binaryStream:", true, 0),
     new MM("binaryStream", true, 0),
     new MM("binaryStream:", true, 0)
@@ -26046,7 +26187,7 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("on:", false, 1293)
+     new MM("on:", false, 1297)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -26082,17 +26223,17 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`CharacterInputOutputConverter";
    this.name = "Streams`CharacterInputOutputConverter";
-   this.header = 1294;
+   this.header = 1298;
    this.slots = [];
    this.methods = [
-    new MM("superInit`Streams`CharacterInputOutputConverter", true, 1295),
-    new MM("instance`initializer", true, 1296),
-    new MM("nextPut:", false, 1297),
-    new MM("position", false, 1298),
-    new MM("position:", false, 1299),
-    new MM("setToEnd", false, 1300),
-    new MM("externalFlush", false, 1301),
-    new MM("flush", false, 1302)
+    new MM("superInit`Streams`CharacterInputOutputConverter", true, 1299),
+    new MM("instance`initializer", true, 1300),
+    new MM("nextPut:", false, 1301),
+    new MM("position", false, 1302),
+    new MM("position:", false, 1303),
+    new MM("setToEnd", false, 1304),
+    new MM("externalFlush", false, 1305),
+    new MM("flush", false, 1306)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -26174,7 +26315,7 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("on:", false, 1303)
+     new MM("on:", false, 1307)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -26209,17 +26350,17 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`CharacterOutput";
    this.name = "Streams`CharacterOutput";
-   this.header = 1304;
+   this.header = 1308;
    this.slots = [];
    this.methods = [
-    new MM("superInit`Streams`CharacterOutput", true, 1305),
-    new MM("instance`initializer", true, 1306),
-    new MM("cr", false, 1307),
-    new MM("crTab", false, 1308),
-    new MM("crTab:", false, 1309),
-    new MM("print:", false, 1310),
-    new MM("space", false, 1311),
-    new MM("tab", false, 1312)
+    new MM("superInit`Streams`CharacterOutput", true, 1309),
+    new MM("instance`initializer", true, 1310),
+    new MM("cr", false, 1311),
+    new MM("crTab", false, 1312),
+    new MM("crTab:", false, 1313),
+    new MM("print:", false, 1314),
+    new MM("space", false, 1315),
+    new MM("tab", false, 1316)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -26334,16 +26475,16 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`CharacterOutputConverter";
    this.name = "Streams`CharacterOutputConverter";
-   this.header = 1313;
+   this.header = 1317;
    this.slots = [new SM("binaryStream", true, false)];
    this.methods = [
-    new MM("superInit`Streams`CharacterOutputConverter", true, 1314),
-    new MM("instance`initializer", true, 1315),
-    new MM("nextPut:", false, 1316),
-    new MM("close", false, 1317),
-    new MM("externalFlush", false, 1318),
-    new MM("flush", false, 1319),
-    new MM("initBinaryStream:", false, 1320),
+    new MM("superInit`Streams`CharacterOutputConverter", true, 1318),
+    new MM("instance`initializer", true, 1319),
+    new MM("nextPut:", false, 1320),
+    new MM("close", false, 1321),
+    new MM("externalFlush", false, 1322),
+    new MM("flush", false, 1323),
+    new MM("initBinaryStream:", false, 1324),
     new MM("init`binaryStream:", true, 0),
     new MM("binaryStream", true, 0),
     new MM("binaryStream:", true, 0)
@@ -26440,7 +26581,7 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("on:", false, 1321)
+     new MM("on:", false, 1325)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -26475,13 +26616,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`CharacterReadConverter";
    this.name = "Streams`CharacterReadConverter";
-   this.header = 1322;
+   this.header = 1326;
    this.slots = [];
    this.methods = [
-    new MM("superInit`Streams`CharacterReadConverter", true, 1323),
-    new MM("instance`initializer", true, 1324),
-    new MM("upTo:", false, 1325),
-    new MM("numCharsUpToAscii:", false, 1326)
+    new MM("superInit`Streams`CharacterReadConverter", true, 1327),
+    new MM("instance`initializer", true, 1328),
+    new MM("upTo:", false, 1329),
+    new MM("numCharsUpToAscii:", false, 1330)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -26604,7 +26745,7 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("on:", false, 1327)
+     new MM("on:", false, 1331)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -26639,12 +26780,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`CharacterReadStream";
    this.name = "Streams`CharacterReadStream";
-   this.header = 1328;
+   this.header = 1332;
    this.slots = [];
    this.methods = [
-    new MM("superInit`Streams`CharacterReadStream", true, 1329),
-    new MM("instance`initializer", true, 1330),
-    new MM("copyFrom:to:", false, 1331)
+    new MM("superInit`Streams`CharacterReadStream", true, 1333),
+    new MM("instance`initializer", true, 1334),
+    new MM("copyFrom:to:", false, 1335)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -26708,8 +26849,8 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("on:", false, 1332),
-     new MM("over:", false, 1333)
+     new MM("on:", false, 1336),
+     new MM("over:", false, 1337)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -26749,18 +26890,18 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`CharacterReadWriteStream";
    this.name = "Streams`CharacterReadWriteStream";
-   this.header = 1334;
+   this.header = 1338;
    this.slots = [];
    this.methods = [
-    new MM("superInit`Streams`CharacterReadWriteStream", true, 1335),
-    new MM("instance`initializer", true, 1336),
-    new MM("copyFrom:to:", false, 1337),
-    new MM("cr", false, 1338),
-    new MM("crTab", false, 1339),
-    new MM("crTab:", false, 1340),
-    new MM("print:", false, 1341),
-    new MM("space", false, 1342),
-    new MM("tab", false, 1343)
+    new MM("superInit`Streams`CharacterReadWriteStream", true, 1339),
+    new MM("instance`initializer", true, 1340),
+    new MM("copyFrom:to:", false, 1341),
+    new MM("cr", false, 1342),
+    new MM("crTab", false, 1343),
+    new MM("crTab:", false, 1344),
+    new MM("print:", false, 1345),
+    new MM("space", false, 1346),
+    new MM("tab", false, 1347)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -26873,9 +27014,9 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("on:", false, 1344),
-     new MM("on:numElements:", false, 1345),
-     new MM("over:", false, 1346)
+     new MM("on:", false, 1348),
+     new MM("on:numElements:", false, 1349),
+     new MM("over:", false, 1350)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -26920,22 +27061,22 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`ExternalInputStream";
    this.name = "Streams`ExternalInputStream";
-   this.header = 1347;
+   this.header = 1351;
    this.slots = [];
    this.methods = [
-    new MM("superInit`Streams`ExternalInputStream", true, 1348),
-    new MM("instance`initializer", true, 1349),
-    new MM("atEnd", false, 1350),
-    new MM("next", false, 1351),
-    new MM("peek", false, 1352),
-    new MM("peekIfAbsent:", false, 1353),
-    new MM("close", false, 1354),
-    new MM("initDescriptor:", false, 1355),
-    new MM("actualAtEnd", false, 1356),
-    new MM("actualNext", false, 1357),
-    new MM("arrangeForFinalization", false, 1358),
-    new MM("fillBuffer", false, 1359),
-    new MM("newCollectionOfSize:", false, 1360)
+    new MM("superInit`Streams`ExternalInputStream", true, 1352),
+    new MM("instance`initializer", true, 1353),
+    new MM("atEnd", false, 1354),
+    new MM("next", false, 1355),
+    new MM("peek", false, 1356),
+    new MM("peekIfAbsent:", false, 1357),
+    new MM("close", false, 1358),
+    new MM("initDescriptor:", false, 1359),
+    new MM("actualAtEnd", false, 1360),
+    new MM("actualNext", false, 1361),
+    new MM("arrangeForFinalization", false, 1362),
+    new MM("fillBuffer", false, 1363),
+    new MM("newCollectionOfSize:", false, 1364)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -27093,21 +27234,21 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`ExternalOutputStream";
    this.name = "Streams`ExternalOutputStream";
-   this.header = 1361;
+   this.header = 1365;
    this.slots = [new SM("dirty", true, false)];
    this.methods = [
-    new MM("superInit`Streams`ExternalOutputStream", true, 1362),
-    new MM("instance`initializer", true, 1363),
-    new MM("close", false, 1364),
-    new MM("externalFlush", false, 1365),
-    new MM("flush", false, 1366),
-    new MM("logicalFlush", false, 1367),
-    new MM("advanceBufferLocation", false, 1368),
-    new MM("arrangeForFinalization", false, 1369),
-    new MM("finalize", false, 1370),
-    new MM("nextPut:", false, 1371),
-    new MM("updateBufferLocationAfterFlush", false, 1372),
-    new MM("writeBuffer", false, 1373),
+    new MM("superInit`Streams`ExternalOutputStream", true, 1366),
+    new MM("instance`initializer", true, 1367),
+    new MM("close", false, 1368),
+    new MM("externalFlush", false, 1369),
+    new MM("flush", false, 1370),
+    new MM("logicalFlush", false, 1371),
+    new MM("advanceBufferLocation", false, 1372),
+    new MM("arrangeForFinalization", false, 1373),
+    new MM("finalize", false, 1374),
+    new MM("nextPut:", false, 1375),
+    new MM("updateBufferLocationAfterFlush", false, 1376),
+    new MM("writeBuffer", false, 1377),
     new MM("init`dirty:", true, 0),
     new MM("dirty", true, 0),
     new MM("dirty:", true, 0)
@@ -27283,7 +27424,7 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("onDescriptor:", false, 1374)
+     new MM("onDescriptor:", false, 1378)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -27318,20 +27459,20 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`ExternalReadStream";
    this.name = "Streams`ExternalReadStream";
-   this.header = 1375;
+   this.header = 1379;
    this.slots = [];
    this.methods = [
-    new MM("superInit`Streams`ExternalReadStream", true, 1376),
-    new MM("instance`initializer", true, 1377),
-    new MM("at:", false, 1378),
-    new MM("repositioningAt:", false, 1379),
-    new MM("size", false, 1380),
-    new MM("initializeActualPosition", false, 1381),
-    new MM("actualAtEnd", false, 1382),
-    new MM("actualPosition", false, 1383),
-    new MM("actualPosition:", false, 1384),
-    new MM("goodBufferOriginForPosition:", false, 1385),
-    new MM("writeIfNeededBeforePositionChange", false, 1386)
+    new MM("superInit`Streams`ExternalReadStream", true, 1380),
+    new MM("instance`initializer", true, 1381),
+    new MM("at:", false, 1382),
+    new MM("repositioningAt:", false, 1383),
+    new MM("size", false, 1384),
+    new MM("initializeActualPosition", false, 1385),
+    new MM("actualAtEnd", false, 1386),
+    new MM("actualPosition", false, 1387),
+    new MM("actualPosition:", false, 1388),
+    new MM("goodBufferOriginForPosition:", false, 1389),
+    new MM("writeIfNeededBeforePositionChange", false, 1390)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -27456,7 +27597,7 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("onDescriptor:", false, 1387)
+     new MM("onDescriptor:", false, 1391)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -27491,16 +27632,16 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`ExternalReadWriteStream";
    this.name = "Streams`ExternalReadWriteStream";
-   this.header = 1388;
+   this.header = 1392;
    this.slots = [];
    this.methods = [
-    new MM("superInit`Streams`ExternalReadWriteStream", true, 1389),
-    new MM("instance`initializer", true, 1390),
-    new MM("contents", false, 1391),
-    new MM("contentsWritten", false, 1392),
-    new MM("size", false, 1393),
-    new MM("updateBufferLocationAfterFlush", false, 1394),
-    new MM("writeIfNeededBeforePositionChange", false, 1395)
+    new MM("superInit`Streams`ExternalReadWriteStream", true, 1393),
+    new MM("instance`initializer", true, 1394),
+    new MM("contents", false, 1395),
+    new MM("contentsWritten", false, 1396),
+    new MM("size", false, 1397),
+    new MM("updateBufferLocationAfterFlush", false, 1398),
+    new MM("writeIfNeededBeforePositionChange", false, 1399)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -27593,7 +27734,7 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("onDescriptor:", false, 1396)
+     new MM("onDescriptor:", false, 1400)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -27628,7 +27769,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`ExternalStream";
    this.name = "Streams`ExternalStream";
-   this.header = 1397;
+   this.header = 1401;
    this.slots = [
     new SM("descriptor", true, false),
     new SM("buffer", true, false),
@@ -27638,16 +27779,16 @@ var mixins = new function () {
     new SM("bufferNumElements", true, false)
    ];
    this.methods = [
-    new MM("superInit`Streams`ExternalStream", true, 1398),
-    new MM("instance`initializer", true, 1399),
-    new MM("close", false, 1400),
-    new MM("initBuffer", false, 1401),
-    new MM("initDescriptor:", false, 1402),
-    new MM("advanceBuffer", false, 1403),
-    new MM("arrangeForFinalization", false, 1404),
-    new MM("doClose", false, 1405),
-    new MM("fillBuffer", false, 1406),
-    new MM("postCopy", false, 1407),
+    new MM("superInit`Streams`ExternalStream", true, 1402),
+    new MM("instance`initializer", true, 1403),
+    new MM("close", false, 1404),
+    new MM("initBuffer", false, 1405),
+    new MM("initDescriptor:", false, 1406),
+    new MM("advanceBuffer", false, 1407),
+    new MM("arrangeForFinalization", false, 1408),
+    new MM("doClose", false, 1409),
+    new MM("fillBuffer", false, 1410),
+    new MM("postCopy", false, 1411),
     new MM("init`descriptor:", true, 0),
     new MM("descriptor", true, 0),
     new MM("descriptor:", true, 0),
@@ -27872,7 +28013,7 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("onDescriptor:", false, 1408)
+     new MM("onDescriptor:", false, 1412)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -27908,25 +28049,25 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`SeqCltnReadStream";
    this.name = "Streams`SeqCltnReadStream";
-   this.header = 1409;
+   this.header = 1413;
    this.slots = [new SM("collection", true, false)];
    this.methods = [
-    new MM("superInit`Streams`SeqCltnReadStream", true, 1410),
-    new MM("instance`initializer", true, 1411),
-    new MM("at:", false, 1412),
-    new MM("atEnd", false, 1413),
-    new MM("next", false, 1414),
-    new MM("nextIfAbsent:", false, 1415),
-    new MM("peek", false, 1416),
-    new MM("peekIfAbsent:", false, 1417),
-    new MM("position:", false, 1418),
-    new MM("size", false, 1419),
-    new MM("initCollection:", false, 1420),
-    new MM("printOn:", false, 1421),
-    new MM("accumulateUntil:", false, 1422),
-    new MM("actualNext", false, 1423),
-    new MM("nextFromPeek", false, 1424),
-    new MM("peekVal", false, 1425),
+    new MM("superInit`Streams`SeqCltnReadStream", true, 1414),
+    new MM("instance`initializer", true, 1415),
+    new MM("at:", false, 1416),
+    new MM("atEnd", false, 1417),
+    new MM("next", false, 1418),
+    new MM("nextIfAbsent:", false, 1419),
+    new MM("peek", false, 1420),
+    new MM("peekIfAbsent:", false, 1421),
+    new MM("position:", false, 1422),
+    new MM("size", false, 1423),
+    new MM("initCollection:", false, 1424),
+    new MM("printOn:", false, 1425),
+    new MM("accumulateUntil:", false, 1426),
+    new MM("actualNext", false, 1427),
+    new MM("nextFromPeek", false, 1428),
+    new MM("peekVal", false, 1429),
     new MM("init`collection:", true, 0),
     new MM("collection", true, 0),
     new MM("collection:", true, 0)
@@ -28115,8 +28256,8 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("on:", false, 1426),
-     new MM("over:", false, 1427)
+     new MM("on:", false, 1430),
+     new MM("over:", false, 1431)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -28157,27 +28298,27 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`SeqCltnReadWriteStream";
    this.name = "Streams`SeqCltnReadWriteStream";
-   this.header = 1428;
+   this.header = 1432;
    this.slots = [new SM("buffer", true, false)];
    this.methods = [
-    new MM("superInit`Streams`SeqCltnReadWriteStream", true, 1429),
-    new MM("instance`initializer", true, 1430),
-    new MM("at:", false, 1431),
-    new MM("atEnd", false, 1432),
-    new MM("contents", false, 1433),
-    new MM("next", false, 1434),
-    new MM("nextIfAbsent:", false, 1435),
-    new MM("nextPut:", false, 1436),
-    new MM("peek", false, 1437),
-    new MM("peekIfAbsent:", false, 1438),
-    new MM("position:", false, 1439),
-    new MM("initBuffer:", false, 1440),
-    new MM("printOn:", false, 1441),
-    new MM("accumulateUntil:", false, 1442),
-    new MM("actualNext", false, 1443),
-    new MM("collection", false, 1444),
-    new MM("nextFromPeek", false, 1445),
-    new MM("peekVal", false, 1446),
+    new MM("superInit`Streams`SeqCltnReadWriteStream", true, 1433),
+    new MM("instance`initializer", true, 1434),
+    new MM("at:", false, 1435),
+    new MM("atEnd", false, 1436),
+    new MM("contents", false, 1437),
+    new MM("next", false, 1438),
+    new MM("nextIfAbsent:", false, 1439),
+    new MM("nextPut:", false, 1440),
+    new MM("peek", false, 1441),
+    new MM("peekIfAbsent:", false, 1442),
+    new MM("position:", false, 1443),
+    new MM("initBuffer:", false, 1444),
+    new MM("printOn:", false, 1445),
+    new MM("accumulateUntil:", false, 1446),
+    new MM("actualNext", false, 1447),
+    new MM("collection", false, 1448),
+    new MM("nextFromPeek", false, 1449),
+    new MM("peekVal", false, 1450),
     new MM("init`buffer:", true, 0),
     new MM("buffer", true, 0),
     new MM("buffer:", true, 0)
@@ -28393,9 +28534,9 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("on:", false, 1447),
-     new MM("on:numElements:", false, 1448),
-     new MM("over:", false, 1449)
+     new MM("on:", false, 1451),
+     new MM("on:numElements:", false, 1452),
+     new MM("over:", false, 1453)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -28443,14 +28584,14 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Streams`TempTranscript";
    this.name = "Streams`TempTranscript";
-   this.header = 1450;
+   this.header = 1454;
    this.slots = [];
    this.methods = [
-    new MM("superInit`Streams`TempTranscript", true, 1451),
-    new MM("instance`initializer", true, 1452),
-    new MM("cr", false, 1453),
-    new MM("nextPut:", false, 1454),
-    new MM("show:", false, 1455)
+    new MM("superInit`Streams`TempTranscript", true, 1455),
+    new MM("instance`initializer", true, 1456),
+    new MM("cr", false, 1457),
+    new MM("nextPut:", false, 1458),
+    new MM("show:", false, 1459)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -28729,7 +28870,7 @@ var mixins = new function () {
   var $0 = this;
   this.debug = "Runtime mixin for CombinatorialParsing";
   this.name = "CombinatorialParsing";
-  this.header = 1456;
+  this.header = 1460;
   this.slots = [
    new SM("OrderedCollection", false, false),
    new SM("Dictionary", false, false),
@@ -28762,8 +28903,8 @@ var mixins = new function () {
    new SM("CombinatorialParsing`WrappingParser", true, true)
   ];
   this.methods = [
-   new MM("superInit`CombinatorialParsing", true, 1457),
-   new MM("instance`initializer", true, 1458),
+   new MM("superInit`CombinatorialParsing", true, 1461),
+   new MM("instance`initializer", true, 1462),
    new MM("AlternatingParser", true, 0),
    new MM("CharParser", true, 0),
    new MM("CollectingCommentParser", true, 0),
@@ -29489,16 +29630,16 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`AlternatingParser";
    this.name = "CombinatorialParsing`AlternatingParser";
-   this.header = 1459;
+   this.header = 1463;
    this.slots = [
     new SM("p", false, false),
     new SM("q", false, false)
    ];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`AlternatingParser", true, 1460),
-    new MM("instance`initializer", true, 1461),
-    new MM("parse:inContext:ifError:", false, 1462),
-    new MM("combineErrors:and:at:with:", false, 1463),
+    new MM("superInit`CombinatorialParsing`AlternatingParser", true, 1464),
+    new MM("instance`initializer", true, 1465),
+    new MM("parse:inContext:ifError:", false, 1466),
+    new MM("combineErrors:and:at:with:", false, 1467),
     new MM("init`p:", true, 0),
     new MM("p", true, 0),
     new MM("init`q:", true, 0),
@@ -29663,12 +29804,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`CharParser";
    this.name = "CombinatorialParsing`CharParser";
-   this.header = 1464;
+   this.header = 1468;
    this.slots = [];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`CharParser", true, 1465),
-    new MM("instance`initializer", true, 1466),
-    new MM("for:", false, 1467)
+    new MM("superInit`CombinatorialParsing`CharParser", true, 1469),
+    new MM("instance`initializer", true, 1470),
+    new MM("for:", false, 1471)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -29743,12 +29884,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`CollectingCommentParser";
    this.name = "CombinatorialParsing`CollectingCommentParser";
-   this.header = 1468;
+   this.header = 1472;
    this.slots = [];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`CollectingCommentParser", true, 1469),
-    new MM("instance`initializer", true, 1470),
-    new MM("parse:inContext:ifError:", false, 1471)
+    new MM("superInit`CombinatorialParsing`CollectingCommentParser", true, 1473),
+    new MM("instance`initializer", true, 1474),
+    new MM("parse:inContext:ifError:", false, 1475)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -29837,48 +29978,48 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`CombinatorialParser";
    this.name = "CombinatorialParsing`CombinatorialParser";
-   this.header = 1472;
+   this.header = 1476;
    this.slots = [new SM("name", true, false)];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`CombinatorialParser", true, 1473),
-    new MM("instance`initializer", true, 1474),
-    new MM("assert:", false, 1475),
-    new MM("isKindOfCombinatorialParser", false, 1476),
-    new MM("parseString:", false, 1477),
-    new MM("parseString:ifError:", false, 1478),
-    new MM("printOn:", false, 1479),
-    new MM("recordFailure:", false, 1480),
-    new MM("ultimateParser", false, 1481),
-    new MM("value", false, 1482),
-    new MM("&", false, 1483),
-    new MM(",", false, 1484),
-    new MM("empty", false, 1485),
-    new MM("eoi", false, 1486),
-    new MM("fail", false, 1487),
-    new MM("not", false, 1488),
-    new MM("opt", false, 1489),
-    new MM("plus", false, 1490),
-    new MM("plusSeparatedBy:", false, 1491),
-    new MM("plusSeparatedOrTerminatedBy:", false, 1492),
-    new MM("star", false, 1493),
-    new MM("starSeparatedBy:", false, 1494),
-    new MM("starSeparatedOrTerminatedBy:", false, 1495),
-    new MM("|", false, 1496),
-    new MM("parse:", false, 1497),
-    new MM("parse:ifError:", false, 1498),
-    new MM("parse:ifErrorNoContext:", false, 1499),
-    new MM("parse:inContext:ifError:", false, 1500),
-    new MM("char:", false, 1501),
-    new MM("charBetween:and:", false, 1502),
-    new MM("comment", false, 1503),
-    new MM("tokenFor:", false, 1504),
-    new MM("tokenFromChar:", false, 1505),
-    new MM("tokenFromSymbol:", false, 1506),
-    new MM("whitespace", false, 1507),
-    new MM("wrap:", false, 1508),
-    new MM("wrap:name:", false, 1509),
-    new MM("wrapper:", false, 1510),
-    new MM("wrapper:name:", false, 1511),
+    new MM("superInit`CombinatorialParsing`CombinatorialParser", true, 1477),
+    new MM("instance`initializer", true, 1478),
+    new MM("assert:", false, 1479),
+    new MM("isKindOfCombinatorialParser", false, 1480),
+    new MM("parseString:", false, 1481),
+    new MM("parseString:ifError:", false, 1482),
+    new MM("printOn:", false, 1483),
+    new MM("recordFailure:", false, 1484),
+    new MM("ultimateParser", false, 1485),
+    new MM("value", false, 1486),
+    new MM("&", false, 1487),
+    new MM(",", false, 1488),
+    new MM("empty", false, 1489),
+    new MM("eoi", false, 1490),
+    new MM("fail", false, 1491),
+    new MM("not", false, 1492),
+    new MM("opt", false, 1493),
+    new MM("plus", false, 1494),
+    new MM("plusSeparatedBy:", false, 1495),
+    new MM("plusSeparatedOrTerminatedBy:", false, 1496),
+    new MM("star", false, 1497),
+    new MM("starSeparatedBy:", false, 1498),
+    new MM("starSeparatedOrTerminatedBy:", false, 1499),
+    new MM("|", false, 1500),
+    new MM("parse:", false, 1501),
+    new MM("parse:ifError:", false, 1502),
+    new MM("parse:ifErrorNoContext:", false, 1503),
+    new MM("parse:inContext:ifError:", false, 1504),
+    new MM("char:", false, 1505),
+    new MM("charBetween:and:", false, 1506),
+    new MM("comment", false, 1507),
+    new MM("tokenFor:", false, 1508),
+    new MM("tokenFromChar:", false, 1509),
+    new MM("tokenFromSymbol:", false, 1510),
+    new MM("whitespace", false, 1511),
+    new MM("wrap:", false, 1512),
+    new MM("wrap:name:", false, 1513),
+    new MM("wrapper:", false, 1514),
+    new MM("wrapper:name:", false, 1515),
     new MM("init`name:", true, 0),
     new MM("name", true, 0),
     new MM("name:", true, 0)
@@ -30224,12 +30365,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`CommentParser";
    this.name = "CombinatorialParsing`CommentParser";
-   this.header = 1512;
+   this.header = 1516;
    this.slots = [new SM("termBlock", true, false)];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`CommentParser", true, 1513),
-    new MM("instance`initializer", true, 1514),
-    new MM("parse:inContext:ifError:", false, 1515),
+    new MM("superInit`CombinatorialParsing`CommentParser", true, 1517),
+    new MM("instance`initializer", true, 1518),
+    new MM("parse:inContext:ifError:", false, 1519),
     new MM("init`termBlock:", true, 0),
     new MM("termBlock", true, 0),
     new MM("termBlock:", true, 0)
@@ -30326,12 +30467,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`EOIParser";
    this.name = "CombinatorialParsing`EOIParser";
-   this.header = 1516;
+   this.header = 1520;
    this.slots = [];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`EOIParser", true, 1517),
-    new MM("instance`initializer", true, 1518),
-    new MM("parse:inContext:ifError:", false, 1519)
+    new MM("superInit`CombinatorialParsing`EOIParser", true, 1521),
+    new MM("instance`initializer", true, 1522),
+    new MM("parse:inContext:ifError:", false, 1523)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -30407,12 +30548,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`EmptyParser";
    this.name = "CombinatorialParsing`EmptyParser";
-   this.header = 1520;
+   this.header = 1524;
    this.slots = [];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`EmptyParser", true, 1521),
-    new MM("instance`initializer", true, 1522),
-    new MM("parse:inContext:ifError:", false, 1523)
+    new MM("superInit`CombinatorialParsing`EmptyParser", true, 1525),
+    new MM("instance`initializer", true, 1526),
+    new MM("parse:inContext:ifError:", false, 1527)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -30483,18 +30624,18 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`ExecutableGrammar";
    this.name = "CombinatorialParsing`ExecutableGrammar";
-   this.header = 1524;
+   this.header = 1528;
    this.slots = [
     new SM("forwardReferenceTable", true, false),
     new SM("selfMirror", false, false)
    ];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`ExecutableGrammar", true, 1525),
-    new MM("instance`initializer", true, 1526),
-    new MM("nameProductions", false, 1527),
-    new MM("bindForwardReferences", false, 1528),
-    new MM("finalBindForwardReferences", false, 1529),
-    new MM("setupForwardReferences", false, 1530),
+    new MM("superInit`CombinatorialParsing`ExecutableGrammar", true, 1529),
+    new MM("instance`initializer", true, 1530),
+    new MM("nameProductions", false, 1531),
+    new MM("bindForwardReferences", false, 1532),
+    new MM("finalBindForwardReferences", false, 1533),
+    new MM("setupForwardReferences", false, 1534),
     new MM("init`forwardReferenceTable:", true, 0),
     new MM("forwardReferenceTable", true, 0),
     new MM("forwardReferenceTable:", true, 0),
@@ -30652,12 +30793,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`FailingParser";
    this.name = "CombinatorialParsing`FailingParser";
-   this.header = 1531;
+   this.header = 1535;
    this.slots = [];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`FailingParser", true, 1532),
-    new MM("instance`initializer", true, 1533),
-    new MM("parse:inContext:ifError:", false, 1534)
+    new MM("superInit`CombinatorialParsing`FailingParser", true, 1536),
+    new MM("instance`initializer", true, 1537),
+    new MM("parse:inContext:ifError:", false, 1538)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -30728,22 +30869,22 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`ForwardReferenceParser";
    this.name = "CombinatorialParsing`ForwardReferenceParser";
-   this.header = 1535;
+   this.header = 1539;
    this.slots = [
     new SM("forwardee", true, false),
     new SM("bindingRoutine", true, false)
    ];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`ForwardReferenceParser", true, 1536),
-    new MM("instance`initializer", true, 1537),
-    new MM("bind:", false, 1538),
-    new MM("parserToForwardTo", false, 1539),
-    new MM("ultimateParser", false, 1540),
-    new MM("&", false, 1541),
-    new MM("opt", false, 1542),
-    new MM("wrapper:", false, 1543),
-    new MM("|", false, 1544),
-    new MM("parse:inContext:ifError:", false, 1545),
+    new MM("superInit`CombinatorialParsing`ForwardReferenceParser", true, 1540),
+    new MM("instance`initializer", true, 1541),
+    new MM("bind:", false, 1542),
+    new MM("parserToForwardTo", false, 1543),
+    new MM("ultimateParser", false, 1544),
+    new MM("&", false, 1545),
+    new MM("opt", false, 1546),
+    new MM("wrapper:", false, 1547),
+    new MM("|", false, 1548),
+    new MM("parse:inContext:ifError:", false, 1549),
     new MM("init`forwardee:", true, 0),
     new MM("forwardee", true, 0),
     new MM("forwardee:", true, 0),
@@ -30910,13 +31051,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`ForwardingWrappingParser";
    this.name = "CombinatorialParsing`ForwardingWrappingParser";
-   this.header = 1546;
+   this.header = 1550;
    this.slots = [new SM("wrappingParser", true, false)];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`ForwardingWrappingParser", true, 1547),
-    new MM("instance`initializer", true, 1548),
-    new MM("parse:inContext:ifError:", false, 1549),
-    new MM("trueWrappingParser", false, 1550),
+    new MM("superInit`CombinatorialParsing`ForwardingWrappingParser", true, 1551),
+    new MM("instance`initializer", true, 1552),
+    new MM("parse:inContext:ifError:", false, 1553),
+    new MM("trueWrappingParser", false, 1554),
     new MM("init`wrappingParser:", true, 0),
     new MM("wrappingParser", true, 0),
     new MM("wrappingParser:", true, 0)
@@ -31019,12 +31160,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`NamedWrappingParser";
    this.name = "CombinatorialParsing`NamedWrappingParser";
-   this.header = 1551;
+   this.header = 1555;
    this.slots = [];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`NamedWrappingParser", true, 1552),
-    new MM("instance`initializer", true, 1553),
-    new MM("parse:inContext:ifError:", false, 1554)
+    new MM("superInit`CombinatorialParsing`NamedWrappingParser", true, 1556),
+    new MM("instance`initializer", true, 1557),
+    new MM("parse:inContext:ifError:", false, 1558)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -31095,12 +31236,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`NegatingParser";
    this.name = "CombinatorialParsing`NegatingParser";
-   this.header = 1555;
+   this.header = 1559;
    this.slots = [new SM("subparser", false, false)];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`NegatingParser", true, 1556),
-    new MM("instance`initializer", true, 1557),
-    new MM("parse:inContext:ifError:", false, 1558),
+    new MM("superInit`CombinatorialParsing`NegatingParser", true, 1560),
+    new MM("instance`initializer", true, 1561),
+    new MM("parse:inContext:ifError:", false, 1562),
     new MM("init`subparser:", true, 0),
     new MM("subparser", true, 0)
    ];
@@ -31205,14 +31346,14 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`ParserContext";
    this.name = "CombinatorialParsing`ParserContext";
-   this.header = 1559;
+   this.header = 1563;
    this.slots = [new SM("failures", true, false)];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`ParserContext", true, 1560),
-    new MM("instance`initializer", true, 1561),
-    new MM("errorMessage", false, 1562),
-    new MM("errorPosition", false, 1563),
-    new MM("recordFailure:", false, 1564),
+    new MM("superInit`CombinatorialParsing`ParserContext", true, 1564),
+    new MM("instance`initializer", true, 1565),
+    new MM("errorMessage", false, 1566),
+    new MM("errorPosition", false, 1567),
+    new MM("recordFailure:", false, 1568),
     new MM("init`failures:", true, 0),
     new MM("failures", true, 0),
     new MM("failures:", true, 0)
@@ -31333,15 +31474,15 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`ParserError";
    this.name = "CombinatorialParsing`ParserError";
-   this.header = 1565;
+   this.header = 1569;
    this.slots = [
     new SM("message", false, false),
     new SM("position", false, false)
    ];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`ParserError", true, 1566),
-    new MM("instance`initializer", true, 1567),
-    new MM("description", false, 1568),
+    new MM("superInit`CombinatorialParsing`ParserError", true, 1570),
+    new MM("instance`initializer", true, 1571),
+    new MM("description", false, 1572),
     new MM("init`message:", true, 0),
     new MM("message", true, 0),
     new MM("init`position:", true, 0),
@@ -31438,17 +31579,17 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`ParserStream";
    this.name = "CombinatorialParsing`ParserStream";
-   this.header = 1569;
+   this.header = 1573;
    this.slots = [
     new SM("contents", false, false),
     new SM("position", true, false)
    ];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`ParserStream", true, 1570),
-    new MM("instance`initializer", true, 1571),
-    new MM("atEnd", false, 1572),
-    new MM("next", false, 1573),
-    new MM("peek", false, 1574),
+    new MM("superInit`CombinatorialParsing`ParserStream", true, 1574),
+    new MM("instance`initializer", true, 1575),
+    new MM("atEnd", false, 1576),
+    new MM("next", false, 1577),
+    new MM("peek", false, 1578),
     new MM("init`contents:", true, 0),
     new MM("contents", true, 0),
     new MM("init`position:", true, 0),
@@ -31572,12 +31713,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`PlusParser";
    this.name = "CombinatorialParsing`PlusParser";
-   this.header = 1575;
+   this.header = 1579;
    this.slots = [new SM("subparser", false, false)];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`PlusParser", true, 1576),
-    new MM("instance`initializer", true, 1577),
-    new MM("parse:inContext:ifError:", false, 1578),
+    new MM("superInit`CombinatorialParsing`PlusParser", true, 1580),
+    new MM("instance`initializer", true, 1581),
+    new MM("parse:inContext:ifError:", false, 1582),
     new MM("init`subparser:", true, 0),
     new MM("subparser", true, 0)
    ];
@@ -31701,16 +31842,16 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`PredicateTokenParser";
    this.name = "CombinatorialParsing`PredicateTokenParser";
-   this.header = 1579;
+   this.header = 1583;
    this.slots = [
     new SM("predicate", true, false),
     new SM("errMsg", true, false)
    ];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`PredicateTokenParser", true, 1580),
-    new MM("instance`initializer", true, 1581),
-    new MM("accept:errorMsg:", false, 1582),
-    new MM("parse:inContext:ifError:", false, 1583),
+    new MM("superInit`CombinatorialParsing`PredicateTokenParser", true, 1584),
+    new MM("instance`initializer", true, 1585),
+    new MM("accept:errorMsg:", false, 1586),
+    new MM("parse:inContext:ifError:", false, 1587),
     new MM("init`predicate:", true, 0),
     new MM("predicate", true, 0),
     new MM("predicate:", true, 0),
@@ -31842,14 +31983,14 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`SequentialParser";
    this.name = "CombinatorialParsing`SequentialParser";
-   this.header = 1584;
+   this.header = 1588;
    this.slots = [new SM("subparsers", false, false)];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`SequentialParser", true, 1585),
-    new MM("instance`initializer", true, 1586),
-    new MM(",", false, 1587),
-    new MM("parse:inContext:ifError:", false, 1588),
-    new MM("wrapper:", false, 1589),
+    new MM("superInit`CombinatorialParsing`SequentialParser", true, 1589),
+    new MM("instance`initializer", true, 1590),
+    new MM(",", false, 1591),
+    new MM("parse:inContext:ifError:", false, 1592),
+    new MM("wrapper:", false, 1593),
     new MM("init`subparsers:", true, 0),
     new MM("subparsers", true, 0)
    ];
@@ -31952,12 +32093,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`StarParser";
    this.name = "CombinatorialParsing`StarParser";
-   this.header = 1590;
+   this.header = 1594;
    this.slots = [new SM("subparser", false, false)];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`StarParser", true, 1591),
-    new MM("instance`initializer", true, 1592),
-    new MM("parse:inContext:ifError:", false, 1593),
+    new MM("superInit`CombinatorialParsing`StarParser", true, 1595),
+    new MM("instance`initializer", true, 1596),
+    new MM("parse:inContext:ifError:", false, 1597),
     new MM("init`subparser:", true, 0),
     new MM("subparser", true, 0)
    ];
@@ -32080,13 +32221,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`SymbolicTokenParser";
    this.name = "CombinatorialParsing`SymbolicTokenParser";
-   this.header = 1594;
+   this.header = 1598;
    this.slots = [new SM("symbol", true, false)];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`SymbolicTokenParser", true, 1595),
-    new MM("instance`initializer", true, 1596),
-    new MM("forSymbol:", false, 1597),
-    new MM("parse:inContext:ifError:", false, 1598),
+    new MM("superInit`CombinatorialParsing`SymbolicTokenParser", true, 1599),
+    new MM("instance`initializer", true, 1600),
+    new MM("forSymbol:", false, 1601),
+    new MM("parse:inContext:ifError:", false, 1602),
     new MM("init`symbol:", true, 0),
     new MM("symbol", true, 0),
     new MM("symbol:", true, 0)
@@ -32208,18 +32349,18 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`Token";
    this.name = "CombinatorialParsing`Token";
-   this.header = 1599;
+   this.header = 1603;
    this.slots = [
     new SM("token", true, false),
     new SM("start", true, false),
     new SM("end", true, false)
    ];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`Token", true, 1600),
-    new MM("instance`initializer", true, 1601),
-    new MM("concreteEnd", false, 1602),
-    new MM("concreteStart", false, 1603),
-    new MM("for:start:end:", false, 1604),
+    new MM("superInit`CombinatorialParsing`Token", true, 1604),
+    new MM("instance`initializer", true, 1605),
+    new MM("concreteEnd", false, 1606),
+    new MM("concreteStart", false, 1607),
+    new MM("for:start:end:", false, 1608),
     new MM("init`token:", true, 0),
     new MM("token", true, 0),
     new MM("token:", true, 0),
@@ -32357,12 +32498,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`TokenParser";
    this.name = "CombinatorialParsing`TokenParser";
-   this.header = 1605;
+   this.header = 1609;
    this.slots = [];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`TokenParser", true, 1606),
-    new MM("instance`initializer", true, 1607),
-    new MM("for:", false, 1608)
+    new MM("superInit`CombinatorialParsing`TokenParser", true, 1610),
+    new MM("instance`initializer", true, 1611),
+    new MM("for:", false, 1612)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -32436,12 +32577,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`TokenizingParser";
    this.name = "CombinatorialParsing`TokenizingParser";
-   this.header = 1609;
+   this.header = 1613;
    this.slots = [new SM("subparser", false, false)];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`TokenizingParser", true, 1610),
-    new MM("instance`initializer", true, 1611),
-    new MM("parse:inContext:ifError:", false, 1612),
+    new MM("superInit`CombinatorialParsing`TokenizingParser", true, 1614),
+    new MM("instance`initializer", true, 1615),
+    new MM("parse:inContext:ifError:", false, 1616),
     new MM("init`subparser:", true, 0),
     new MM("subparser", true, 0)
    ];
@@ -32531,12 +32672,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`WhitespaceParser";
    this.name = "CombinatorialParsing`WhitespaceParser";
-   this.header = 1613;
+   this.header = 1617;
    this.slots = [];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`WhitespaceParser", true, 1614),
-    new MM("instance`initializer", true, 1615),
-    new MM("parse:inContext:ifError:", false, 1616)
+    new MM("superInit`CombinatorialParsing`WhitespaceParser", true, 1618),
+    new MM("instance`initializer", true, 1619),
+    new MM("parse:inContext:ifError:", false, 1620)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -32625,16 +32766,16 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for CombinatorialParsing`WrappingParser";
    this.name = "CombinatorialParsing`WrappingParser";
-   this.header = 1617;
+   this.header = 1621;
    this.slots = [
     new SM("parser", true, false),
     new SM("wrapperBlock", true, false)
    ];
    this.methods = [
-    new MM("superInit`CombinatorialParsing`WrappingParser", true, 1618),
-    new MM("instance`initializer", true, 1619),
-    new MM("wrapParser:withWrapper:", false, 1620),
-    new MM("parse:inContext:ifError:", false, 1621),
+    new MM("superInit`CombinatorialParsing`WrappingParser", true, 1622),
+    new MM("instance`initializer", true, 1623),
+    new MM("wrapParser:withWrapper:", false, 1624),
+    new MM("parse:inContext:ifError:", false, 1625),
     new MM("init`parser:", true, 0),
     new MM("parser", true, 0),
     new MM("parser:", true, 0),
@@ -32978,7 +33119,7 @@ var mixins = new function () {
   var $0 = this;
   this.debug = "Runtime mixin for NewspeakGrammar";
   this.name = "NewspeakGrammar";
-  this.header = 1622;
+  this.header = 1626;
   this.slots = [
    new SM("OrderedCollection", false, false),
    new SM("ExecutableGrammar", false, false),
@@ -32993,8 +33134,8 @@ var mixins = new function () {
    new SM("NewspeakGrammar`UnarySelectorParser", true, true)
   ];
   this.methods = [
-   new MM("superInit`NewspeakGrammar", true, 1623),
-   new MM("instance`initializer", true, 1624),
+   new MM("superInit`NewspeakGrammar", true, 1627),
+   new MM("instance`initializer", true, 1628),
    new MM("NS3Grammar", true, 0),
    new MM("NSCommentParser", true, 0),
    new MM("TypedNS3Grammar", true, 0),
@@ -33188,7 +33329,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakGrammar`NS3Grammar";
    this.name = "NewspeakGrammar`NS3Grammar";
-   this.header = 1625;
+   this.header = 1629;
    this.slots = [
     new SM("whitespace", false, false),
     new SM("colon", false, false),
@@ -33333,10 +33474,10 @@ var mixins = new function () {
     new SM("doItExpression", false, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakGrammar`NS3Grammar", true, 1626),
-    new MM("instance`initializer", true, 1627),
-    new MM("_", false, 1628),
-    new MM("stringBody", false, 1629),
+    new MM("superInit`NewspeakGrammar`NS3Grammar", true, 1630),
+    new MM("instance`initializer", true, 1631),
+    new MM("_", false, 1632),
+    new MM("stringBody", false, 1633),
     new MM("init`whitespace:", true, 0),
     new MM("whitespace", true, 0),
     new MM("init`colon:", true, 0),
@@ -35549,12 +35690,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakGrammar`NSCommentParser";
    this.name = "NewspeakGrammar`NSCommentParser";
-   this.header = 1630;
+   this.header = 1634;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakGrammar`NSCommentParser", true, 1631),
-    new MM("instance`initializer", true, 1632),
-    new MM("parse:inContext:ifError:", false, 1633)
+    new MM("superInit`NewspeakGrammar`NSCommentParser", true, 1635),
+    new MM("instance`initializer", true, 1636),
+    new MM("parse:inContext:ifError:", false, 1637)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -35790,7 +35931,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakGrammar`TypedNS3Grammar";
    this.name = "NewspeakGrammar`TypedNS3Grammar";
-   this.header = 1634;
+   this.header = 1638;
    this.slots = [
     new SM("arg", false, false),
     new SM("for", false, false),
@@ -35830,10 +35971,10 @@ var mixins = new function () {
     new SM("typeArgInferenceClause", false, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakGrammar`TypedNS3Grammar", true, 1635),
-    new MM("instance`initializer", true, 1636),
-    new MM("messagePattern", false, 1637),
-    new MM("slotDecl", false, 1638),
+    new MM("superInit`NewspeakGrammar`TypedNS3Grammar", true, 1639),
+    new MM("instance`initializer", true, 1640),
+    new MM("messagePattern", false, 1641),
+    new MM("slotDecl", false, 1642),
     new MM("init`arg:", true, 0),
     new MM("arg", true, 0),
     new MM("init`for:", true, 0),
@@ -36451,13 +36592,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakGrammar`UnarySelectorParser";
    this.name = "NewspeakGrammar`UnarySelectorParser";
-   this.header = 1639;
+   this.header = 1643;
    this.slots = [new SM("p", true, false)];
    this.methods = [
-    new MM("superInit`NewspeakGrammar`UnarySelectorParser", true, 1640),
-    new MM("instance`initializer", true, 1641),
-    new MM("on:", false, 1642),
-    new MM("parse:inContext:ifError:", false, 1643),
+    new MM("superInit`NewspeakGrammar`UnarySelectorParser", true, 1644),
+    new MM("instance`initializer", true, 1645),
+    new MM("on:", false, 1646),
+    new MM("parse:inContext:ifError:", false, 1647),
     new MM("init`p:", true, 0),
     new MM("p", true, 0),
     new MM("p:", true, 0)
@@ -36658,7 +36799,7 @@ var mixins = new function () {
   var $0 = this;
   this.debug = "Runtime mixin for NewspeakASTs";
   this.name = "NewspeakASTs";
-  this.header = 1644;
+  this.header = 1648;
   this.slots = [
    new SM("OrderedCollection", false, false),
    new SM("NewspeakASTs`AST", true, true),
@@ -36710,8 +36851,8 @@ var mixins = new function () {
    new SM("NewspeakASTs`WildcardPatternAST", true, true)
   ];
   this.methods = [
-   new MM("superInit`NewspeakASTs", true, 1645),
-   new MM("instance`initializer", true, 1646),
+   new MM("superInit`NewspeakASTs", true, 1649),
+   new MM("instance`initializer", true, 1650),
    new MM("AST", true, 0),
    new MM("ASTCopier", true, 0),
    new MM("ASTTool", true, 0),
@@ -37963,7 +38104,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`AST";
    this.name = "NewspeakASTs`AST";
-   this.header = 1647;
+   this.header = 1651;
    this.slots = [
     new SM("start", true, false),
     new SM("end", true, false),
@@ -37971,18 +38112,18 @@ var mixins = new function () {
     new SM("_concreteEnd", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`AST", true, 1648),
-    new MM("instance`initializer", true, 1649),
-    new MM("assert:", false, 1650),
-    new MM("copyPositionFrom:", false, 1651),
-    new MM("concreteEnd", false, 1652),
-    new MM("concreteEnd:", false, 1653),
-    new MM("concreteStart", false, 1654),
-    new MM("concreteStart:", false, 1655),
-    new MM("left:", false, 1656),
-    new MM("right:", false, 1657),
-    new MM("isAST", false, 1658),
-    new MM("apply:", false, 1659),
+    new MM("superInit`NewspeakASTs`AST", true, 1652),
+    new MM("instance`initializer", true, 1653),
+    new MM("assert:", false, 1654),
+    new MM("copyPositionFrom:", false, 1655),
+    new MM("concreteEnd", false, 1656),
+    new MM("concreteEnd:", false, 1657),
+    new MM("concreteStart", false, 1658),
+    new MM("concreteStart:", false, 1659),
+    new MM("left:", false, 1660),
+    new MM("right:", false, 1661),
+    new MM("isAST", false, 1662),
+    new MM("apply:", false, 1663),
     new MM("init`start:", true, 0),
     new MM("start", true, 0),
     new MM("start:", true, 0),
@@ -38212,42 +38353,42 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`ASTCopier";
    this.name = "NewspeakASTs`ASTCopier";
-   this.header = 1660;
+   this.header = 1664;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakASTs`ASTCopier", true, 1661),
-    new MM("instance`initializer", true, 1662),
-    new MM("assignmentNode:", false, 1663),
-    new MM("binaryTypeOpNode:", false, 1664),
-    new MM("blockNode:", false, 1665),
-    new MM("blockTypeNode:", false, 1666),
-    new MM("cascadedSendNode:", false, 1667),
-    new MM("categoryNode:", false, 1668),
-    new MM("charNode:", false, 1669),
-    new MM("classHeaderNode:", false, 1670),
-    new MM("classNode:", false, 1671),
-    new MM("classPrefix:", false, 1672),
-    new MM("codeBodyNode:", false, 1673),
-    new MM("genericInvocationNode:", false, 1674),
-    new MM("messageNode:", false, 1675),
-    new MM("messagePatternNode:", false, 1676),
-    new MM("methodNode:", false, 1677),
-    new MM("mixinApplication:", false, 1678),
-    new MM("mixinApplicationClass:", false, 1679),
-    new MM("normalSendNode:", false, 1680),
-    new MM("numberNode:", false, 1681),
-    new MM("returnStatNode:", false, 1682),
-    new MM("setterSendNode:", false, 1683),
-    new MM("sideNode:", false, 1684),
-    new MM("slotDefNode:", false, 1685),
-    new MM("stringNode:", false, 1686),
-    new MM("symbolNode:", false, 1687),
-    new MM("tupleNode:", false, 1688),
-    new MM("typeIdNode:", false, 1689),
-    new MM("typePatternNode:", false, 1690),
-    new MM("unaryTypeOpNode:", false, 1691),
-    new MM("varDeclNode:", false, 1692),
-    new MM("variableNode:", false, 1693)
+    new MM("superInit`NewspeakASTs`ASTCopier", true, 1665),
+    new MM("instance`initializer", true, 1666),
+    new MM("assignmentNode:", false, 1667),
+    new MM("binaryTypeOpNode:", false, 1668),
+    new MM("blockNode:", false, 1669),
+    new MM("blockTypeNode:", false, 1670),
+    new MM("cascadedSendNode:", false, 1671),
+    new MM("categoryNode:", false, 1672),
+    new MM("charNode:", false, 1673),
+    new MM("classHeaderNode:", false, 1674),
+    new MM("classNode:", false, 1675),
+    new MM("classPrefix:", false, 1676),
+    new MM("codeBodyNode:", false, 1677),
+    new MM("genericInvocationNode:", false, 1678),
+    new MM("messageNode:", false, 1679),
+    new MM("messagePatternNode:", false, 1680),
+    new MM("methodNode:", false, 1681),
+    new MM("mixinApplication:", false, 1682),
+    new MM("mixinApplicationClass:", false, 1683),
+    new MM("normalSendNode:", false, 1684),
+    new MM("numberNode:", false, 1685),
+    new MM("returnStatNode:", false, 1686),
+    new MM("setterSendNode:", false, 1687),
+    new MM("sideNode:", false, 1688),
+    new MM("slotDefNode:", false, 1689),
+    new MM("stringNode:", false, 1690),
+    new MM("symbolNode:", false, 1691),
+    new MM("tupleNode:", false, 1692),
+    new MM("typeIdNode:", false, 1693),
+    new MM("typePatternNode:", false, 1694),
+    new MM("unaryTypeOpNode:", false, 1695),
+    new MM("varDeclNode:", false, 1696),
+    new MM("variableNode:", false, 1697)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -38691,31 +38832,31 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`ASTTool";
    this.name = "NewspeakASTs`ASTTool";
-   this.header = 1694;
+   this.header = 1698;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakASTs`ASTTool", true, 1695),
-    new MM("instance`initializer", true, 1696),
-    new MM("blockNode:", false, 1697),
-    new MM("cascadedSendNode:", false, 1698),
-    new MM("charNode:", false, 1699),
-    new MM("classNode:", false, 1700),
-    new MM("codeBodyNode:", false, 1701),
-    new MM("messageNode:", false, 1702),
-    new MM("messagePatternNode:", false, 1703),
-    new MM("methodNode:", false, 1704),
-    new MM("mixinApplication:", false, 1705),
-    new MM("mixinApplicationClass:", false, 1706),
-    new MM("normalSendNode:", false, 1707),
-    new MM("numberNode:", false, 1708),
-    new MM("returnStatNode:", false, 1709),
-    new MM("setterSendNode:", false, 1710),
-    new MM("sideNode:", false, 1711),
-    new MM("stringNode:", false, 1712),
-    new MM("symbolNode:", false, 1713),
-    new MM("tupleNode:", false, 1714),
-    new MM("varDeclNode:", false, 1715),
-    new MM("variableNode:", false, 1716)
+    new MM("superInit`NewspeakASTs`ASTTool", true, 1699),
+    new MM("instance`initializer", true, 1700),
+    new MM("blockNode:", false, 1701),
+    new MM("cascadedSendNode:", false, 1702),
+    new MM("charNode:", false, 1703),
+    new MM("classNode:", false, 1704),
+    new MM("codeBodyNode:", false, 1705),
+    new MM("messageNode:", false, 1706),
+    new MM("messagePatternNode:", false, 1707),
+    new MM("methodNode:", false, 1708),
+    new MM("mixinApplication:", false, 1709),
+    new MM("mixinApplicationClass:", false, 1710),
+    new MM("normalSendNode:", false, 1711),
+    new MM("numberNode:", false, 1712),
+    new MM("returnStatNode:", false, 1713),
+    new MM("setterSendNode:", false, 1714),
+    new MM("sideNode:", false, 1715),
+    new MM("stringNode:", false, 1716),
+    new MM("symbolNode:", false, 1717),
+    new MM("tupleNode:", false, 1718),
+    new MM("varDeclNode:", false, 1719),
+    new MM("variableNode:", false, 1720)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -38901,27 +39042,27 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`ASTTraverser";
    this.name = "NewspeakASTs`ASTTraverser";
-   this.header = 1717;
+   this.header = 1721;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakASTs`ASTTraverser", true, 1718),
-    new MM("instance`initializer", true, 1719),
-    new MM("blockNode:", false, 1720),
-    new MM("cascadedSendNode:", false, 1721),
-    new MM("charNode:", false, 1722),
-    new MM("keywordPatternNode:", false, 1723),
-    new MM("literalPatternNode:", false, 1724),
-    new MM("messageNode:", false, 1725),
-    new MM("mixinClassNode:", false, 1726),
-    new MM("normalSendNode:", false, 1727),
-    new MM("numberNode:", false, 1728),
-    new MM("returnStatNode:", false, 1729),
-    new MM("setterSendNode:", false, 1730),
-    new MM("stringNode:", false, 1731),
-    new MM("symbolNode:", false, 1732),
-    new MM("tupleNode:", false, 1733),
-    new MM("variablePatternNode:", false, 1734),
-    new MM("wildcardPatternNode:", false, 1735)
+    new MM("superInit`NewspeakASTs`ASTTraverser", true, 1722),
+    new MM("instance`initializer", true, 1723),
+    new MM("blockNode:", false, 1724),
+    new MM("cascadedSendNode:", false, 1725),
+    new MM("charNode:", false, 1726),
+    new MM("keywordPatternNode:", false, 1727),
+    new MM("literalPatternNode:", false, 1728),
+    new MM("messageNode:", false, 1729),
+    new MM("mixinClassNode:", false, 1730),
+    new MM("normalSendNode:", false, 1731),
+    new MM("numberNode:", false, 1732),
+    new MM("returnStatNode:", false, 1733),
+    new MM("setterSendNode:", false, 1734),
+    new MM("stringNode:", false, 1735),
+    new MM("symbolNode:", false, 1736),
+    new MM("tupleNode:", false, 1737),
+    new MM("variablePatternNode:", false, 1738),
+    new MM("wildcardPatternNode:", false, 1739)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -39084,18 +39225,18 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`AssignmentAST";
    this.name = "NewspeakASTs`AssignmentAST";
-   this.header = 1736;
+   this.header = 1740;
    this.slots = [
     new SM("variable", true, false),
     new SM("expression", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`AssignmentAST", true, 1737),
-    new MM("instance`initializer", true, 1738),
-    new MM("to:assign:", false, 1739),
-    new MM("isAssignmentNode", false, 1740),
-    new MM("isExpressionNode", false, 1741),
-    new MM("apply:", false, 1742),
+    new MM("superInit`NewspeakASTs`AssignmentAST", true, 1741),
+    new MM("instance`initializer", true, 1742),
+    new MM("to:assign:", false, 1743),
+    new MM("isAssignmentNode", false, 1744),
+    new MM("isExpressionNode", false, 1745),
+    new MM("apply:", false, 1746),
     new MM("init`variable:", true, 0),
     new MM("variable", true, 0),
     new MM("variable:", true, 0),
@@ -39229,16 +39370,16 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`BinaryTypeOpAST";
    this.name = "NewspeakASTs`BinaryTypeOpAST";
-   this.header = 1743;
+   this.header = 1747;
    this.slots = [
     new SM("leftOperand", true, false),
     new SM("rightOperand", true, false),
     new SM("operator", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`BinaryTypeOpAST", true, 1744),
-    new MM("instance`initializer", true, 1745),
-    new MM("apply:", false, 1746),
+    new MM("superInit`NewspeakASTs`BinaryTypeOpAST", true, 1748),
+    new MM("instance`initializer", true, 1749),
+    new MM("apply:", false, 1750),
     new MM("init`leftOperand:", true, 0),
     new MM("leftOperand", true, 0),
     new MM("leftOperand:", true, 0),
@@ -39363,15 +39504,15 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`BlockAST";
    this.name = "NewspeakASTs`BlockAST";
-   this.header = 1747;
+   this.header = 1751;
    this.slots = [new SM("body", true, false)];
    this.methods = [
-    new MM("superInit`NewspeakASTs`BlockAST", true, 1748),
-    new MM("instance`initializer", true, 1749),
-    new MM("parameters", false, 1750),
-    new MM("isBlockNode", false, 1751),
-    new MM("isExpressionNode", false, 1752),
-    new MM("apply:", false, 1753),
+    new MM("superInit`NewspeakASTs`BlockAST", true, 1752),
+    new MM("instance`initializer", true, 1753),
+    new MM("parameters", false, 1754),
+    new MM("isBlockNode", false, 1755),
+    new MM("isExpressionNode", false, 1756),
+    new MM("apply:", false, 1757),
     new MM("init`body:", true, 0),
     new MM("body", true, 0),
     new MM("body:", true, 0)
@@ -39475,16 +39616,16 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`BlockTypeAST";
    this.name = "NewspeakASTs`BlockTypeAST";
-   this.header = 1754;
+   this.header = 1758;
    this.slots = [
     new SM("formals", false, false),
     new SM("return", false, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`BlockTypeAST", true, 1755),
-    new MM("instance`initializer", true, 1756),
-    new MM("apply:", false, 1757),
-    new MM("isTypeNode", false, 1758),
+    new MM("superInit`NewspeakASTs`BlockTypeAST", true, 1759),
+    new MM("instance`initializer", true, 1760),
+    new MM("apply:", false, 1761),
+    new MM("isTypeNode", false, 1762),
     new MM("init`formals:", true, 0),
     new MM("formals", true, 0),
     new MM("init`return:", true, 0),
@@ -39586,17 +39727,17 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`CascadedSendAST";
    this.name = "NewspeakASTs`CascadedSendAST";
-   this.header = 1759;
+   this.header = 1763;
    this.slots = [new SM("previousSend", true, false)];
    this.methods = [
-    new MM("superInit`NewspeakASTs`CascadedSendAST", true, 1760),
-    new MM("instance`initializer", true, 1761),
-    new MM("receiver", false, 1762),
-    new MM("end", false, 1763),
-    new MM("start", false, 1764),
-    new MM("to:cascade:", false, 1765),
-    new MM("isCascadedSendNode", false, 1766),
-    new MM("apply:", false, 1767),
+    new MM("superInit`NewspeakASTs`CascadedSendAST", true, 1764),
+    new MM("instance`initializer", true, 1765),
+    new MM("receiver", false, 1766),
+    new MM("end", false, 1767),
+    new MM("start", false, 1768),
+    new MM("to:cascade:", false, 1769),
+    new MM("isCascadedSendNode", false, 1770),
+    new MM("apply:", false, 1771),
     new MM("init`previousSend:", true, 0),
     new MM("previousSend", true, 0),
     new MM("previousSend:", true, 0)
@@ -39728,15 +39869,15 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`CategoryAST";
    this.name = "NewspeakASTs`CategoryAST";
-   this.header = 1768;
+   this.header = 1772;
    this.slots = [
     new SM("name", true, false),
     new SM("methods", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`CategoryAST", true, 1769),
-    new MM("instance`initializer", true, 1770),
-    new MM("apply:", false, 1771),
+    new MM("superInit`NewspeakASTs`CategoryAST", true, 1773),
+    new MM("instance`initializer", true, 1774),
+    new MM("apply:", false, 1775),
     new MM("init`name:", true, 0),
     new MM("name", true, 0),
     new MM("name:", true, 0),
@@ -39843,13 +39984,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`CharAST";
    this.name = "NewspeakASTs`CharAST";
-   this.header = 1772;
+   this.header = 1776;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakASTs`CharAST", true, 1773),
-    new MM("instance`initializer", true, 1774),
-    new MM("isCharNode", false, 1775),
-    new MM("apply:", false, 1776)
+    new MM("superInit`NewspeakASTs`CharAST", true, 1777),
+    new MM("instance`initializer", true, 1778),
+    new MM("isCharNode", false, 1779),
+    new MM("apply:", false, 1780)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -39925,15 +40066,15 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`ClassBodyAST";
    this.name = "NewspeakASTs`ClassBodyAST";
-   this.header = 1777;
+   this.header = 1781;
    this.slots = [
     new SM("instanceInitializer", false, false),
     new SM("instanceSide", false, false),
     new SM("classSide", false, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`ClassBodyAST", true, 1778),
-    new MM("instance`initializer", true, 1779),
+    new MM("superInit`NewspeakASTs`ClassBodyAST", true, 1782),
+    new MM("instance`initializer", true, 1783),
     new MM("init`instanceInitializer:", true, 0),
     new MM("instanceInitializer", true, 0),
     new MM("init`instanceSide:", true, 0),
@@ -40040,24 +40181,24 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`ClassDeclarationAST";
    this.name = "NewspeakASTs`ClassDeclarationAST";
-   this.header = 1780;
+   this.header = 1784;
    this.slots = [
     new SM("header", true, false),
     new SM("instanceSide", true, false),
     new SM("classSide", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`ClassDeclarationAST", true, 1781),
-    new MM("instance`initializer", true, 1782),
-    new MM("accessModifier", false, 1783),
-    new MM("apply:", false, 1784),
-    new MM("category:", false, 1785),
-    new MM("clone", false, 1786),
-    new MM("isClassDeclarationNode", false, 1787),
-    new MM("category", false, 1788),
-    new MM("classComment", false, 1789),
-    new MM("name", false, 1790),
-    new MM("superclassName", false, 1791),
+    new MM("superInit`NewspeakASTs`ClassDeclarationAST", true, 1785),
+    new MM("instance`initializer", true, 1786),
+    new MM("accessModifier", false, 1787),
+    new MM("apply:", false, 1788),
+    new MM("category:", false, 1789),
+    new MM("clone", false, 1790),
+    new MM("isClassDeclarationNode", false, 1791),
+    new MM("category", false, 1792),
+    new MM("classComment", false, 1793),
+    new MM("name", false, 1794),
+    new MM("superclassName", false, 1795),
     new MM("init`header:", true, 0),
     new MM("header", true, 0),
     new MM("header:", true, 0),
@@ -40204,8 +40345,8 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("makeMixinNamed:factoryMsg:inheriting:body:", false, 1792),
-     new MM("named:factoryMsg:inheriting:body:", false, 1793)
+     new MM("makeMixinNamed:factoryMsg:inheriting:body:", false, 1796),
+     new MM("named:factoryMsg:inheriting:body:", false, 1797)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -40272,7 +40413,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`ClassHeaderAST";
    this.name = "NewspeakASTs`ClassHeaderAST";
-   this.header = 1794;
+   this.header = 1798;
    this.slots = [
     new SM("accessModifier", true, false),
     new SM("name", true, false),
@@ -40288,11 +40429,11 @@ var mixins = new function () {
     new SM("inheritanceChain", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`ClassHeaderAST", true, 1795),
-    new MM("instance`initializer", true, 1796),
-    new MM("clone", false, 1797),
-    new MM("superCall", false, 1798),
-    new MM("apply:", false, 1799),
+    new MM("superInit`NewspeakASTs`ClassHeaderAST", true, 1799),
+    new MM("instance`initializer", true, 1800),
+    new MM("clone", false, 1801),
+    new MM("superCall", false, 1802),
+    new MM("apply:", false, 1803),
     new MM("init`accessModifier:", true, 0),
     new MM("accessModifier", true, 0),
     new MM("accessModifier:", true, 0),
@@ -40606,7 +40747,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`ClassPrefixAST";
    this.name = "NewspeakASTs`ClassPrefixAST";
-   this.header = 1800;
+   this.header = 1804;
    this.slots = [
     new SM("name", false, false),
     new SM("constructor", false, false),
@@ -40616,9 +40757,9 @@ var mixins = new function () {
     new SM("category", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`ClassPrefixAST", true, 1801),
-    new MM("instance`initializer", true, 1802),
-    new MM("apply:", false, 1803),
+    new MM("superInit`NewspeakASTs`ClassPrefixAST", true, 1805),
+    new MM("instance`initializer", true, 1806),
+    new MM("apply:", false, 1807),
     new MM("init`name:", true, 0),
     new MM("name", true, 0),
     new MM("init`constructor:", true, 0),
@@ -40772,7 +40913,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`CodeBodyAST";
    this.name = "NewspeakASTs`CodeBodyAST";
-   this.header = 1804;
+   this.header = 1808;
    this.slots = [
     new SM("parameters", true, false),
     new SM("temporaries", true, false),
@@ -40781,13 +40922,13 @@ var mixins = new function () {
     new SM("literalMessages", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`CodeBodyAST", true, 1805),
-    new MM("instance`initializer", true, 1806),
-    new MM("isExpressionNode", false, 1807),
-    new MM("parameters:temporaries:statements:", false, 1808),
-    new MM("temporaries:statements:", false, 1809),
-    new MM("isCodeBodyNode", false, 1810),
-    new MM("apply:", false, 1811),
+    new MM("superInit`NewspeakASTs`CodeBodyAST", true, 1809),
+    new MM("instance`initializer", true, 1810),
+    new MM("isExpressionNode", false, 1811),
+    new MM("parameters:temporaries:statements:", false, 1812),
+    new MM("temporaries:statements:", false, 1813),
+    new MM("isCodeBodyNode", false, 1814),
+    new MM("apply:", false, 1815),
     new MM("init`parameters:", true, 0),
     new MM("parameters", true, 0),
     new MM("parameters:", true, 0),
@@ -40980,12 +41121,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`ImmutableSlotDefAST";
    this.name = "NewspeakASTs`ImmutableSlotDefAST";
-   this.header = 1812;
+   this.header = 1816;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakASTs`ImmutableSlotDefAST", true, 1813),
-    new MM("instance`initializer", true, 1814),
-    new MM("isMutable", false, 1815)
+    new MM("superInit`NewspeakASTs`ImmutableSlotDefAST", true, 1817),
+    new MM("instance`initializer", true, 1818),
+    new MM("isMutable", false, 1819)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -41056,7 +41197,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`InitializerAST";
    this.name = "NewspeakASTs`InitializerAST";
-   this.header = 1816;
+   this.header = 1820;
    this.slots = [
     new SM("slots", false, false),
     new SM("initializationExpressions", false, false),
@@ -41064,8 +41205,8 @@ var mixins = new function () {
     new SM("isSeq", false, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`InitializerAST", true, 1817),
-    new MM("instance`initializer", true, 1818),
+    new MM("superInit`NewspeakASTs`InitializerAST", true, 1821),
+    new MM("instance`initializer", true, 1822),
     new MM("init`slots:", true, 0),
     new MM("slots", true, 0),
     new MM("init`initializationExpressions:", true, 0),
@@ -41183,16 +41324,16 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`KeywordPatternAST";
    this.name = "NewspeakASTs`KeywordPatternAST";
-   this.header = 1819;
+   this.header = 1823;
    this.slots = [
     new SM("keywords", true, false),
     new SM("patterns", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`KeywordPatternAST", true, 1820),
-    new MM("instance`initializer", true, 1821),
-    new MM("apply:", false, 1822),
-    new MM("isKeywordPatternNode", false, 1823),
+    new MM("superInit`NewspeakASTs`KeywordPatternAST", true, 1824),
+    new MM("instance`initializer", true, 1825),
+    new MM("apply:", false, 1826),
+    new MM("isKeywordPatternNode", false, 1827),
     new MM("init`keywords:", true, 0),
     new MM("keywords", true, 0),
     new MM("keywords:", true, 0),
@@ -41304,15 +41445,15 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`KeywordPatternPairAST";
    this.name = "NewspeakASTs`KeywordPatternPairAST";
-   this.header = 1824;
+   this.header = 1828;
    this.slots = [
     new SM("keyword", true, false),
     new SM("pattern", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`KeywordPatternPairAST", true, 1825),
-    new MM("instance`initializer", true, 1826),
-    new MM("isKeywordPatternPairNode", false, 1827),
+    new MM("superInit`NewspeakASTs`KeywordPatternPairAST", true, 1829),
+    new MM("instance`initializer", true, 1830),
+    new MM("isKeywordPatternPairNode", false, 1831),
     new MM("init`keyword:", true, 0),
     new MM("keyword", true, 0),
     new MM("keyword:", true, 0),
@@ -41425,13 +41566,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`LiteralAST";
    this.name = "NewspeakASTs`LiteralAST";
-   this.header = 1828;
+   this.header = 1832;
    this.slots = [new SM("value", true, false)];
    this.methods = [
-    new MM("superInit`NewspeakASTs`LiteralAST", true, 1829),
-    new MM("instance`initializer", true, 1830),
-    new MM("isExpressionNode", false, 1831),
-    new MM("isLiteralNode", false, 1832),
+    new MM("superInit`NewspeakASTs`LiteralAST", true, 1833),
+    new MM("instance`initializer", true, 1834),
+    new MM("isExpressionNode", false, 1835),
+    new MM("isLiteralNode", false, 1836),
     new MM("init`value:", true, 0),
     new MM("value", true, 0),
     new MM("value:", true, 0)
@@ -41525,13 +41666,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`LiteralPatternAST";
    this.name = "NewspeakASTs`LiteralPatternAST";
-   this.header = 1833;
+   this.header = 1837;
    this.slots = [new SM("literal", true, false)];
    this.methods = [
-    new MM("superInit`NewspeakASTs`LiteralPatternAST", true, 1834),
-    new MM("instance`initializer", true, 1835),
-    new MM("apply:", false, 1836),
-    new MM("isLiteralPatternNode", false, 1837),
+    new MM("superInit`NewspeakASTs`LiteralPatternAST", true, 1838),
+    new MM("instance`initializer", true, 1839),
+    new MM("apply:", false, 1840),
+    new MM("isLiteralPatternNode", false, 1841),
     new MM("init`literal:", true, 0),
     new MM("literal", true, 0),
     new MM("literal:", true, 0)
@@ -41625,18 +41766,18 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`MessageAST";
    this.name = "NewspeakASTs`MessageAST";
-   this.header = 1838;
+   this.header = 1842;
    this.slots = [
     new SM("selector", true, false),
     new SM("arguments", true, false),
     new SM("isEventual", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`MessageAST", true, 1839),
-    new MM("instance`initializer", true, 1840),
-    new MM("send:with:", false, 1841),
-    new MM("isMessageNode", false, 1842),
-    new MM("apply:", false, 1843),
+    new MM("superInit`NewspeakASTs`MessageAST", true, 1843),
+    new MM("instance`initializer", true, 1844),
+    new MM("send:with:", false, 1845),
+    new MM("isMessageNode", false, 1846),
+    new MM("apply:", false, 1847),
     new MM("init`selector:", true, 0),
     new MM("selector", true, 0),
     new MM("selector:", true, 0),
@@ -41776,7 +41917,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`MessagePatternAST";
    this.name = "NewspeakASTs`MessagePatternAST";
-   this.header = 1844;
+   this.header = 1848;
    this.slots = [
     new SM("selector", true, false),
     new SM("parameters", true, false),
@@ -41785,15 +41926,15 @@ var mixins = new function () {
     new SM("accessModifier", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`MessagePatternAST", true, 1845),
-    new MM("instance`initializer", true, 1846),
-    new MM("selector:parameters:", false, 1847),
-    new MM("selector:parameters:returnType:", false, 1848),
-    new MM("selector:parameters:returnType:typePattern:", false, 1849),
-    new MM("selector:returnType:", false, 1850),
-    new MM("concreteEnd", false, 1851),
-    new MM("isMessagePatternNode", false, 1852),
-    new MM("apply:", false, 1853),
+    new MM("superInit`NewspeakASTs`MessagePatternAST", true, 1849),
+    new MM("instance`initializer", true, 1850),
+    new MM("selector:parameters:", false, 1851),
+    new MM("selector:parameters:returnType:", false, 1852),
+    new MM("selector:parameters:returnType:typePattern:", false, 1853),
+    new MM("selector:returnType:", false, 1854),
+    new MM("concreteEnd", false, 1855),
+    new MM("isMessagePatternNode", false, 1856),
+    new MM("apply:", false, 1857),
     new MM("init`selector:", true, 0),
     new MM("selector", true, 0),
     new MM("selector:", true, 0),
@@ -42018,20 +42159,20 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`MethodAST";
    this.name = "NewspeakASTs`MethodAST";
-   this.header = 1854;
+   this.header = 1858;
    this.slots = [
     new SM("pattern", true, false),
     new SM("body", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`MethodAST", true, 1855),
-    new MM("instance`initializer", true, 1856),
-    new MM("selector", false, 1857),
-    new MM("accessModifier", false, 1858),
-    new MM("accessModifier:", false, 1859),
-    new MM("pattern:body:accessModifier:", false, 1860),
-    new MM("isMethodNode", false, 1861),
-    new MM("apply:", false, 1862),
+    new MM("superInit`NewspeakASTs`MethodAST", true, 1859),
+    new MM("instance`initializer", true, 1860),
+    new MM("selector", false, 1861),
+    new MM("accessModifier", false, 1862),
+    new MM("accessModifier:", false, 1863),
+    new MM("pattern:body:accessModifier:", false, 1864),
+    new MM("isMethodNode", false, 1865),
+    new MM("apply:", false, 1866),
     new MM("init`pattern:", true, 0),
     new MM("pattern", true, 0),
     new MM("pattern:", true, 0),
@@ -42175,17 +42316,17 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`MixinApplicationAST";
    this.name = "NewspeakASTs`MixinApplicationAST";
-   this.header = 1863;
+   this.header = 1867;
    this.slots = [
     new SM("mixinExpression", true, false),
     new SM("superclassExpression", true, false),
     new SM("classPrefix", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`MixinApplicationAST", true, 1864),
-    new MM("instance`initializer", true, 1865),
-    new MM("isExpressionNode", false, 1866),
-    new MM("apply:", false, 1867),
+    new MM("superInit`NewspeakASTs`MixinApplicationAST", true, 1868),
+    new MM("instance`initializer", true, 1869),
+    new MM("isExpressionNode", false, 1870),
+    new MM("apply:", false, 1871),
     new MM("init`mixinExpression:", true, 0),
     new MM("mixinExpression", true, 0),
     new MM("mixinExpression:", true, 0),
@@ -42288,7 +42429,7 @@ var mixins = new function () {
     this.slots = [];
     this.methods = [
      new MM("new", true, 0),
-     new MM("prefix:mixin:", false, 1868)
+     new MM("prefix:mixin:", false, 1872)
     ];
     this.nestedClasses = [];
     this.$new = function () {
@@ -42328,7 +42469,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`MixinApplicationClassAST";
    this.name = "NewspeakASTs`MixinApplicationClassAST";
-   this.header = 1869;
+   this.header = 1873;
    this.slots = [
     new SM("accessModifier", true, false),
     new SM("name", false, false),
@@ -42337,10 +42478,10 @@ var mixins = new function () {
     new SM("category", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`MixinApplicationClassAST", true, 1870),
-    new MM("instance`initializer", true, 1871),
-    new MM("apply:", false, 1872),
-    new MM("isMixinApplicationClassAST", false, 1873),
+    new MM("superInit`NewspeakASTs`MixinApplicationClassAST", true, 1874),
+    new MM("instance`initializer", true, 1875),
+    new MM("apply:", false, 1876),
+    new MM("isMixinApplicationClassAST", false, 1877),
     new MM("init`accessModifier:", true, 0),
     new MM("accessModifier", true, 0),
     new MM("accessModifier:", true, 0),
@@ -42491,12 +42632,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`MutableSlotDefAST";
    this.name = "NewspeakASTs`MutableSlotDefAST";
-   this.header = 1874;
+   this.header = 1878;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakASTs`MutableSlotDefAST", true, 1875),
-    new MM("instance`initializer", true, 1876),
-    new MM("isMutable", false, 1877)
+    new MM("superInit`NewspeakASTs`MutableSlotDefAST", true, 1879),
+    new MM("instance`initializer", true, 1880),
+    new MM("isMutable", false, 1881)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -42567,11 +42708,11 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`NSSideAST";
    this.name = "NewspeakASTs`NSSideAST";
-   this.header = 1878;
+   this.header = 1882;
    this.slots = [new SM("nestedClasses", true, false)];
    this.methods = [
-    new MM("superInit`NewspeakASTs`NSSideAST", true, 1879),
-    new MM("instance`initializer", true, 1880),
+    new MM("superInit`NewspeakASTs`NSSideAST", true, 1883),
+    new MM("instance`initializer", true, 1884),
     new MM("init`nestedClasses:", true, 0),
     new MM("nestedClasses", true, 0),
     new MM("nestedClasses:", true, 0)
@@ -42655,15 +42796,15 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`NormalSendAST";
    this.name = "NewspeakASTs`NormalSendAST";
-   this.header = 1881;
+   this.header = 1885;
    this.slots = [new SM("receiver", true, false)];
    this.methods = [
-    new MM("superInit`NewspeakASTs`NormalSendAST", true, 1882),
-    new MM("instance`initializer", true, 1883),
-    new MM("to:send:with:", false, 1884),
-    new MM("to:send:", false, 1885),
-    new MM("isNormalSendNode", false, 1886),
-    new MM("apply:", false, 1887),
+    new MM("superInit`NewspeakASTs`NormalSendAST", true, 1886),
+    new MM("instance`initializer", true, 1887),
+    new MM("to:send:with:", false, 1888),
+    new MM("to:send:", false, 1889),
+    new MM("isNormalSendNode", false, 1890),
+    new MM("apply:", false, 1891),
     new MM("init`receiver:", true, 0),
     new MM("receiver", true, 0),
     new MM("receiver:", true, 0)
@@ -42772,13 +42913,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`NumberAST";
    this.name = "NewspeakASTs`NumberAST";
-   this.header = 1888;
+   this.header = 1892;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakASTs`NumberAST", true, 1889),
-    new MM("instance`initializer", true, 1890),
-    new MM("isNumberNode", false, 1891),
-    new MM("apply:", false, 1892)
+    new MM("superInit`NewspeakASTs`NumberAST", true, 1893),
+    new MM("instance`initializer", true, 1894),
+    new MM("isNumberNode", false, 1895),
+    new MM("apply:", false, 1896)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -42854,16 +42995,16 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`ParameterizedTypeAST";
    this.name = "NewspeakASTs`ParameterizedTypeAST";
-   this.header = 1893;
+   this.header = 1897;
    this.slots = [
     new SM("generic", true, false),
     new SM("arguments", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`ParameterizedTypeAST", true, 1894),
-    new MM("instance`initializer", true, 1895),
-    new MM("apply:", false, 1896),
-    new MM("isTypeNode", false, 1897),
+    new MM("superInit`NewspeakASTs`ParameterizedTypeAST", true, 1898),
+    new MM("instance`initializer", true, 1899),
+    new MM("apply:", false, 1900),
+    new MM("isTypeNode", false, 1901),
     new MM("init`generic:", true, 0),
     new MM("generic", true, 0),
     new MM("generic:", true, 0),
@@ -42975,12 +43116,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`PatternAST";
    this.name = "NewspeakASTs`PatternAST";
-   this.header = 1898;
+   this.header = 1902;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakASTs`PatternAST", true, 1899),
-    new MM("instance`initializer", true, 1900),
-    new MM("isPatternNode", false, 1901)
+    new MM("superInit`NewspeakASTs`PatternAST", true, 1903),
+    new MM("instance`initializer", true, 1904),
+    new MM("isPatternNode", false, 1905)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -43051,13 +43192,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`ReturnStatAST";
    this.name = "NewspeakASTs`ReturnStatAST";
-   this.header = 1902;
+   this.header = 1906;
    this.slots = [new SM("expression", true, false)];
    this.methods = [
-    new MM("superInit`NewspeakASTs`ReturnStatAST", true, 1903),
-    new MM("instance`initializer", true, 1904),
-    new MM("isReturnStatNode", false, 1905),
-    new MM("apply:", false, 1906),
+    new MM("superInit`NewspeakASTs`ReturnStatAST", true, 1907),
+    new MM("instance`initializer", true, 1908),
+    new MM("isReturnStatNode", false, 1909),
+    new MM("apply:", false, 1910),
     new MM("init`expression:", true, 0),
     new MM("expression", true, 0),
     new MM("expression:", true, 0)
@@ -43151,14 +43292,14 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`SendAST";
    this.name = "NewspeakASTs`SendAST";
-   this.header = 1907;
+   this.header = 1911;
    this.slots = [new SM("message", true, false)];
    this.methods = [
-    new MM("superInit`NewspeakASTs`SendAST", true, 1908),
-    new MM("instance`initializer", true, 1909),
-    new MM("receiver", false, 1910),
-    new MM("isExpressionNode", false, 1911),
-    new MM("isSendNode", false, 1912),
+    new MM("superInit`NewspeakASTs`SendAST", true, 1912),
+    new MM("instance`initializer", true, 1913),
+    new MM("receiver", false, 1914),
+    new MM("isExpressionNode", false, 1915),
+    new MM("isSendNode", false, 1916),
     new MM("init`message:", true, 0),
     new MM("message", true, 0),
     new MM("message:", true, 0)
@@ -43258,13 +43399,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`SetterSendAST";
    this.name = "NewspeakASTs`SetterSendAST";
-   this.header = 1913;
+   this.header = 1917;
    this.slots = [new SM("receiver", true, false)];
    this.methods = [
-    new MM("superInit`NewspeakASTs`SetterSendAST", true, 1914),
-    new MM("instance`initializer", true, 1915),
-    new MM("apply:", false, 1916),
-    new MM("isSetterSendNode", false, 1917),
+    new MM("superInit`NewspeakASTs`SetterSendAST", true, 1918),
+    new MM("instance`initializer", true, 1919),
+    new MM("apply:", false, 1920),
+    new MM("isSetterSendNode", false, 1921),
     new MM("init`receiver:", true, 0),
     new MM("receiver", true, 0),
     new MM("receiver:", true, 0)
@@ -43364,19 +43505,19 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`SideAST";
    this.name = "NewspeakASTs`SideAST";
-   this.header = 1918;
+   this.header = 1922;
    this.slots = [
     new SM("variables", true, false),
     new SM("categories", true, false),
     new SM("classComment", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`SideAST", true, 1919),
-    new MM("instance`initializer", true, 1920),
-    new MM("nestedClasses", false, 1921),
-    new MM("variables:categories:", false, 1922),
-    new MM("isSideNode", false, 1923),
-    new MM("apply:", false, 1924),
+    new MM("superInit`NewspeakASTs`SideAST", true, 1923),
+    new MM("instance`initializer", true, 1924),
+    new MM("nestedClasses", false, 1925),
+    new MM("variables:categories:", false, 1926),
+    new MM("isSideNode", false, 1927),
+    new MM("apply:", false, 1928),
     new MM("init`variables:", true, 0),
     new MM("variables", true, 0),
     new MM("variables:", true, 0),
@@ -43520,20 +43661,20 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`SlotDefAST";
    this.name = "NewspeakASTs`SlotDefAST";
-   this.header = 1925;
+   this.header = 1929;
    this.slots = [
     new SM("slotDecl", true, false),
     new SM("initializer", true, false),
     new SM("accessModifier", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`SlotDefAST", true, 1926),
-    new MM("instance`initializer", true, 1927),
-    new MM("isMutable", false, 1928),
-    new MM("name", false, 1929),
-    new MM("isSlotDefNode", false, 1930),
-    new MM("type", false, 1931),
-    new MM("apply:", false, 1932),
+    new MM("superInit`NewspeakASTs`SlotDefAST", true, 1930),
+    new MM("instance`initializer", true, 1931),
+    new MM("isMutable", false, 1932),
+    new MM("name", false, 1933),
+    new MM("isSlotDefNode", false, 1934),
+    new MM("type", false, 1935),
+    new MM("apply:", false, 1936),
     new MM("init`slotDecl:", true, 0),
     new MM("slotDecl", true, 0),
     new MM("slotDecl:", true, 0),
@@ -43679,13 +43820,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`StringAST";
    this.name = "NewspeakASTs`StringAST";
-   this.header = 1933;
+   this.header = 1937;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakASTs`StringAST", true, 1934),
-    new MM("instance`initializer", true, 1935),
-    new MM("isStringNode", false, 1936),
-    new MM("apply:", false, 1937)
+    new MM("superInit`NewspeakASTs`StringAST", true, 1938),
+    new MM("instance`initializer", true, 1939),
+    new MM("isStringNode", false, 1940),
+    new MM("apply:", false, 1941)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -43761,13 +43902,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`SymbolAST";
    this.name = "NewspeakASTs`SymbolAST";
-   this.header = 1938;
+   this.header = 1942;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakASTs`SymbolAST", true, 1939),
-    new MM("instance`initializer", true, 1940),
-    new MM("isSymbolNode", false, 1941),
-    new MM("apply:", false, 1942)
+    new MM("superInit`NewspeakASTs`SymbolAST", true, 1943),
+    new MM("instance`initializer", true, 1944),
+    new MM("isSymbolNode", false, 1945),
+    new MM("apply:", false, 1946)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -43843,15 +43984,15 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`TupleAST";
    this.name = "NewspeakASTs`TupleAST";
-   this.header = 1943;
+   this.header = 1947;
    this.slots = [new SM("elements", true, false)];
    this.methods = [
-    new MM("superInit`NewspeakASTs`TupleAST", true, 1944),
-    new MM("instance`initializer", true, 1945),
-    new MM("isExpressionNode", false, 1946),
-    new MM("isArrayNode", false, 1947),
-    new MM("isTupleNode", false, 1948),
-    new MM("apply:", false, 1949),
+    new MM("superInit`NewspeakASTs`TupleAST", true, 1948),
+    new MM("instance`initializer", true, 1949),
+    new MM("isExpressionNode", false, 1950),
+    new MM("isArrayNode", false, 1951),
+    new MM("isTupleNode", false, 1952),
+    new MM("apply:", false, 1953),
     new MM("init`elements:", true, 0),
     new MM("elements", true, 0),
     new MM("elements:", true, 0)
@@ -43955,13 +44096,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`TypeIdAST";
    this.name = "NewspeakASTs`TypeIdAST";
-   this.header = 1950;
+   this.header = 1954;
    this.slots = [new SM("name", true, false)];
    this.methods = [
-    new MM("superInit`NewspeakASTs`TypeIdAST", true, 1951),
-    new MM("instance`initializer", true, 1952),
-    new MM("isTypeNode", false, 1953),
-    new MM("apply:", false, 1954),
+    new MM("superInit`NewspeakASTs`TypeIdAST", true, 1955),
+    new MM("instance`initializer", true, 1956),
+    new MM("isTypeNode", false, 1957),
+    new MM("apply:", false, 1958),
     new MM("init`name:", true, 0),
     new MM("name", true, 0),
     new MM("name:", true, 0)
@@ -44055,15 +44196,15 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`UnaryTypeOpAST";
    this.name = "NewspeakASTs`UnaryTypeOpAST";
-   this.header = 1955;
+   this.header = 1959;
    this.slots = [
     new SM("operand", true, false),
     new SM("operator", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`UnaryTypeOpAST", true, 1956),
-    new MM("instance`initializer", true, 1957),
-    new MM("apply:", false, 1958),
+    new MM("superInit`NewspeakASTs`UnaryTypeOpAST", true, 1960),
+    new MM("instance`initializer", true, 1961),
+    new MM("apply:", false, 1962),
     new MM("init`operand:", true, 0),
     new MM("operand", true, 0),
     new MM("operand:", true, 0),
@@ -44170,18 +44311,18 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`VarDeclAST";
    this.name = "NewspeakASTs`VarDeclAST";
-   this.header = 1959;
+   this.header = 1963;
    this.slots = [
     new SM("name", false, false),
     new SM("type", false, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakASTs`VarDeclAST", true, 1960),
-    new MM("instance`initializer", true, 1961),
-    new MM("isTemporaryAST", false, 1962),
-    new MM("concreteEnd", false, 1963),
-    new MM("isVarDeclNode", false, 1964),
-    new MM("apply:", false, 1965),
+    new MM("superInit`NewspeakASTs`VarDeclAST", true, 1964),
+    new MM("instance`initializer", true, 1965),
+    new MM("isTemporaryAST", false, 1966),
+    new MM("concreteEnd", false, 1967),
+    new MM("isVarDeclNode", false, 1968),
+    new MM("apply:", false, 1969),
     new MM("init`name:", true, 0),
     new MM("name", true, 0),
     new MM("init`type:", true, 0),
@@ -44298,14 +44439,14 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`VariableAST";
    this.name = "NewspeakASTs`VariableAST";
-   this.header = 1966;
+   this.header = 1970;
    this.slots = [new SM("name", true, false)];
    this.methods = [
-    new MM("superInit`NewspeakASTs`VariableAST", true, 1967),
-    new MM("instance`initializer", true, 1968),
-    new MM("isExpressionNode", false, 1969),
-    new MM("isVariableNode", false, 1970),
-    new MM("apply:", false, 1971),
+    new MM("superInit`NewspeakASTs`VariableAST", true, 1971),
+    new MM("instance`initializer", true, 1972),
+    new MM("isExpressionNode", false, 1973),
+    new MM("isVariableNode", false, 1974),
+    new MM("apply:", false, 1975),
     new MM("init`name:", true, 0),
     new MM("name", true, 0),
     new MM("name:", true, 0)
@@ -44404,13 +44545,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`VariablePatternAST";
    this.name = "NewspeakASTs`VariablePatternAST";
-   this.header = 1972;
+   this.header = 1976;
    this.slots = [new SM("variableName", true, false)];
    this.methods = [
-    new MM("superInit`NewspeakASTs`VariablePatternAST", true, 1973),
-    new MM("instance`initializer", true, 1974),
-    new MM("apply:", false, 1975),
-    new MM("isVariablePatternNode", false, 1976),
+    new MM("superInit`NewspeakASTs`VariablePatternAST", true, 1977),
+    new MM("instance`initializer", true, 1978),
+    new MM("apply:", false, 1979),
+    new MM("isVariablePatternNode", false, 1980),
     new MM("init`variableName:", true, 0),
     new MM("variableName", true, 0),
     new MM("variableName:", true, 0)
@@ -44507,13 +44648,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakASTs`WildcardPatternAST";
    this.name = "NewspeakASTs`WildcardPatternAST";
-   this.header = 1977;
+   this.header = 1981;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakASTs`WildcardPatternAST", true, 1978),
-    new MM("instance`initializer", true, 1979),
-    new MM("apply:", false, 1980),
-    new MM("isWildcardPatternNode", false, 1981)
+    new MM("superInit`NewspeakASTs`WildcardPatternAST", true, 1982),
+    new MM("instance`initializer", true, 1983),
+    new MM("apply:", false, 1984),
+    new MM("isWildcardPatternNode", false, 1985)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -44919,7 +45060,7 @@ var mixins = new function () {
   var $0 = this;
   this.debug = "Runtime mixin for NewspeakParsing";
   this.name = "NewspeakParsing";
-  this.header = 1982;
+  this.header = 1986;
   this.slots = [
    new SM("OrderedCollection", false, false),
    new SM("TypedGrammar", false, false),
@@ -44967,8 +45108,8 @@ var mixins = new function () {
    new SM("NewspeakParsing`Parser", true, true)
   ];
   this.methods = [
-   new MM("superInit`NewspeakParsing", true, 1983),
-   new MM("instance`initializer", true, 1984),
+   new MM("superInit`NewspeakParsing", true, 1987),
+   new MM("instance`initializer", true, 1988),
    new MM("InternalParser", true, 0),
    new MM("Parser", true, 0),
    new MM("init`OrderedCollection:", true, 0),
@@ -45460,15 +45601,15 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakParsing`InternalParser";
    this.name = "NewspeakParsing`InternalParser";
-   this.header = 1985;
+   this.header = 1989;
    this.slots = [
     new SM("backTick", false, false),
     new SM("backTickIdentifier", false, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakParsing`InternalParser", true, 1986),
-    new MM("instance`initializer", true, 1987),
-    new MM("identifier", false, 1988),
+    new MM("superInit`NewspeakParsing`InternalParser", true, 1990),
+    new MM("instance`initializer", true, 1991),
+    new MM("identifier", false, 1992),
     new MM("init`backTick:", true, 0),
     new MM("backTick", true, 0),
     new MM("init`backTickIdentifier:", true, 0),
@@ -45571,116 +45712,116 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakParsing`Parser";
    this.name = "NewspeakParsing`Parser";
-   this.header = 1989;
+   this.header = 1993;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakParsing`Parser", true, 1990),
-    new MM("instance`initializer", true, 1991),
-    new MM("blockTypeArgList", false, 1992),
-    new MM("classBody", false, 1993),
-    new MM("classComment", false, 1994),
-    new MM("classDecl", false, 1995),
-    new MM("classPrefix", false, 1996),
-    new MM("computeDigits:radix:", false, 1997),
-    new MM("computeFraction:radix:", false, 1998),
-    new MM("defaultSuperclassAndBody", false, 1999),
-    new MM("explicitInheritanceListAndOrBody", false, 2000),
-    new MM("hereSetterSendFromMsg:", false, 2001),
-    new MM("instanceInitializer", false, 2002),
-    new MM("keywordMessages", false, 2003),
-    new MM("keywordPattern", false, 2004),
-    new MM("kwPatternPair", false, 2005),
-    new MM("literalMessage", false, 2006),
-    new MM("literalMessageComment", false, 2007),
-    new MM("literalPattern", false, 2008),
-    new MM("nestedPatternLiteral", false, 2009),
-    new MM("newBlockArgType", false, 2010),
-    new MM("newBlockType", false, 2011),
-    new MM("newChar", false, 2012),
-    new MM("newNonEmptyBlockArgList", false, 2013),
-    new MM("nontrivialBinaryMessages", false, 2014),
-    new MM("oldChar", false, 2015),
-    new MM("outerReceiver", false, 2016),
-    new MM("pattern", false, 2017),
-    new MM("sendMessages:to:", false, 2018),
-    new MM("seqSlotDecls", false, 2019),
-    new MM("simSlotDecls", false, 2020),
-    new MM("superclassPrefix", false, 2021),
-    new MM("tupleType", false, 2022),
-    new MM("unaryMsg", false, 2023),
-    new MM("variablePattern", false, 2024),
-    new MM("wildcardPattern", false, 2025),
-    new MM("binaryExpression", false, 2026),
-    new MM("binaryMsg", false, 2027),
-    new MM("binaryMsgPattern", false, 2028),
-    new MM("block", false, 2029),
-    new MM("blockParameter", false, 2030),
-    new MM("blockParameters", false, 2031),
-    new MM("cascadeMsg", false, 2032),
-    new MM("cascadedMessageExpression", false, 2033),
-    new MM("category", false, 2034),
-    new MM("classDeclaration", false, 2035),
-    new MM("classDefinition", false, 2036),
-    new MM("classHeader", false, 2037),
-    new MM("classSideDecl", false, 2038),
-    new MM("codeBody", false, 2039),
-    new MM("compilationUnit", false, 2040),
-    new MM("doItExpression", false, 2041),
-    new MM("expression", false, 2042),
-    new MM("furtherStatements", false, 2043),
-    new MM("keywordExpression", false, 2044),
-    new MM("keywordHereSend", false, 2045),
-    new MM("keywordMsg", false, 2046),
-    new MM("keywordMsgPattern", false, 2047),
-    new MM("messagePattern", false, 2048),
-    new MM("method", false, 2049),
-    new MM("methodDecl", false, 2050),
-    new MM("mixinApplication", false, 2051),
-    new MM("nestedClassDecl", false, 2052),
-    new MM("parenthesizedExpression", false, 2053),
-    new MM("returnStatement", false, 2054),
-    new MM("sideDecl", false, 2055),
-    new MM("slotDecl", false, 2056),
-    new MM("slotDef", false, 2057),
-    new MM("slotName", false, 2058),
-    new MM("statementSequence", false, 2059),
-    new MM("superclassClause", false, 2060),
-    new MM("symbolConstant", false, 2061),
-    new MM("toplevelClass", false, 2062),
-    new MM("tuple", false, 2063),
-    new MM("unaryExpression", false, 2064),
-    new MM("unaryMsgPattern", false, 2065),
-    new MM("accessModifier", false, 2066),
-    new MM("decimalNum", false, 2067),
-    new MM("exponent", false, 2068),
-    new MM("extendedFraction", false, 2069),
-    new MM("fraction", false, 2070),
-    new MM("number", false, 2071),
-    new MM("radix", false, 2072),
-    new MM("radixNum", false, 2073),
-    new MM("string", false, 2074),
-    new MM("symbol", false, 2075),
-    new MM("parse:inContext:ifError:", false, 2076),
-    new MM("computeDigits:", false, 2077),
-    new MM("computeFraction:", false, 2078),
-    new MM("defaultConstructorCall", false, 2079),
-    new MM("defaultConstructorPattern", false, 2080),
-    new MM("defaultConstructorSelector", false, 2081),
-    new MM("defaultSuperCallAt:ending:", false, 2082),
-    new MM("hereNode", false, 2083),
-    new MM("hereSendFromMsg:", false, 2084),
-    new MM("pseudoVariableNode:", false, 2085),
-    new MM("blockReturnType", false, 2086),
-    new MM("blockType", false, 2087),
-    new MM("newBlockTypeArgList", false, 2088),
-    new MM("nonEmptyBlockTypeArgList", false, 2089),
-    new MM("parenthesizedTypeExpression", false, 2090),
-    new MM("returnType", false, 2091),
-    new MM("type", false, 2092),
-    new MM("typeArguments", false, 2093),
-    new MM("typeExpr", false, 2094),
-    new MM("typePrimary", false, 2095),
-    new MM("typeTerm", false, 2096)
+    new MM("superInit`NewspeakParsing`Parser", true, 1994),
+    new MM("instance`initializer", true, 1995),
+    new MM("blockTypeArgList", false, 1996),
+    new MM("classBody", false, 1997),
+    new MM("classComment", false, 1998),
+    new MM("classDecl", false, 1999),
+    new MM("classPrefix", false, 2000),
+    new MM("computeDigits:radix:", false, 2001),
+    new MM("computeFraction:radix:", false, 2002),
+    new MM("defaultSuperclassAndBody", false, 2003),
+    new MM("explicitInheritanceListAndOrBody", false, 2004),
+    new MM("hereSetterSendFromMsg:", false, 2005),
+    new MM("instanceInitializer", false, 2006),
+    new MM("keywordMessages", false, 2007),
+    new MM("keywordPattern", false, 2008),
+    new MM("kwPatternPair", false, 2009),
+    new MM("literalMessage", false, 2010),
+    new MM("literalMessageComment", false, 2011),
+    new MM("literalPattern", false, 2012),
+    new MM("nestedPatternLiteral", false, 2013),
+    new MM("newBlockArgType", false, 2014),
+    new MM("newBlockType", false, 2015),
+    new MM("newChar", false, 2016),
+    new MM("newNonEmptyBlockArgList", false, 2017),
+    new MM("nontrivialBinaryMessages", false, 2018),
+    new MM("oldChar", false, 2019),
+    new MM("outerReceiver", false, 2020),
+    new MM("pattern", false, 2021),
+    new MM("sendMessages:to:", false, 2022),
+    new MM("seqSlotDecls", false, 2023),
+    new MM("simSlotDecls", false, 2024),
+    new MM("superclassPrefix", false, 2025),
+    new MM("tupleType", false, 2026),
+    new MM("unaryMsg", false, 2027),
+    new MM("variablePattern", false, 2028),
+    new MM("wildcardPattern", false, 2029),
+    new MM("binaryExpression", false, 2030),
+    new MM("binaryMsg", false, 2031),
+    new MM("binaryMsgPattern", false, 2032),
+    new MM("block", false, 2033),
+    new MM("blockParameter", false, 2034),
+    new MM("blockParameters", false, 2035),
+    new MM("cascadeMsg", false, 2036),
+    new MM("cascadedMessageExpression", false, 2037),
+    new MM("category", false, 2038),
+    new MM("classDeclaration", false, 2039),
+    new MM("classDefinition", false, 2040),
+    new MM("classHeader", false, 2041),
+    new MM("classSideDecl", false, 2042),
+    new MM("codeBody", false, 2043),
+    new MM("compilationUnit", false, 2044),
+    new MM("doItExpression", false, 2045),
+    new MM("expression", false, 2046),
+    new MM("furtherStatements", false, 2047),
+    new MM("keywordExpression", false, 2048),
+    new MM("keywordHereSend", false, 2049),
+    new MM("keywordMsg", false, 2050),
+    new MM("keywordMsgPattern", false, 2051),
+    new MM("messagePattern", false, 2052),
+    new MM("method", false, 2053),
+    new MM("methodDecl", false, 2054),
+    new MM("mixinApplication", false, 2055),
+    new MM("nestedClassDecl", false, 2056),
+    new MM("parenthesizedExpression", false, 2057),
+    new MM("returnStatement", false, 2058),
+    new MM("sideDecl", false, 2059),
+    new MM("slotDecl", false, 2060),
+    new MM("slotDef", false, 2061),
+    new MM("slotName", false, 2062),
+    new MM("statementSequence", false, 2063),
+    new MM("superclassClause", false, 2064),
+    new MM("symbolConstant", false, 2065),
+    new MM("toplevelClass", false, 2066),
+    new MM("tuple", false, 2067),
+    new MM("unaryExpression", false, 2068),
+    new MM("unaryMsgPattern", false, 2069),
+    new MM("accessModifier", false, 2070),
+    new MM("decimalNum", false, 2071),
+    new MM("exponent", false, 2072),
+    new MM("extendedFraction", false, 2073),
+    new MM("fraction", false, 2074),
+    new MM("number", false, 2075),
+    new MM("radix", false, 2076),
+    new MM("radixNum", false, 2077),
+    new MM("string", false, 2078),
+    new MM("symbol", false, 2079),
+    new MM("parse:inContext:ifError:", false, 2080),
+    new MM("computeDigits:", false, 2081),
+    new MM("computeFraction:", false, 2082),
+    new MM("defaultConstructorCall", false, 2083),
+    new MM("defaultConstructorPattern", false, 2084),
+    new MM("defaultConstructorSelector", false, 2085),
+    new MM("defaultSuperCallAt:ending:", false, 2086),
+    new MM("hereNode", false, 2087),
+    new MM("hereSendFromMsg:", false, 2088),
+    new MM("pseudoVariableNode:", false, 2089),
+    new MM("blockReturnType", false, 2090),
+    new MM("blockType", false, 2091),
+    new MM("newBlockTypeArgList", false, 2092),
+    new MM("nonEmptyBlockTypeArgList", false, 2093),
+    new MM("parenthesizedTypeExpression", false, 2094),
+    new MM("returnType", false, 2095),
+    new MM("type", false, 2096),
+    new MM("typeArguments", false, 2097),
+    new MM("typeExpr", false, 2098),
+    new MM("typePrimary", false, 2099),
+    new MM("typeTerm", false, 2100)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -46791,7 +46932,7 @@ var mixins = new function () {
      var $msg = nil;
      var $sn = nil;
      $sn = $n.$token().$asSymbol();
-     return ($sn.$$equal("self") || ($sn.$$equal("super") || ($sn.$$equal("outer") || $sn.$$equal("thisContext")))).$ifTrue$ifFalse$(function () {
+     return ($sn.$$equal("self") || ($sn.$$equal("super") || $sn.$$equal("outer"))).$ifTrue$ifFalse$(function () {
       return (function (cascadeReceiver) {
        cascadeReceiver.$start$($n.$start());
        return cascadeReceiver.$end$($n.$end());
@@ -47116,8 +47257,7 @@ var mixins = new function () {
      return [
       "self",
       "super",
-      "outer",
-      "thisContext"
+      "outer"
      ].$includes$($psvName);
     }, "Assert failed");
     return (function (cascadeReceiver) {
@@ -47785,7 +47925,7 @@ var mixins = new function () {
   var $0 = this;
   this.debug = "Runtime mixin for JavascriptGeneration";
   this.name = "JavascriptGeneration";
-  this.header = 2097;
+  this.header = 2101;
   this.slots = [
    new SM("List", false, false),
    new SM("Dictionary", false, false),
@@ -47797,9 +47937,9 @@ var mixins = new function () {
    new SM("JavascriptGeneration`Writer", true, true)
   ];
   this.methods = [
-   new MM("superInit`JavascriptGeneration", true, 2098),
-   new MM("instance`initializer", true, 2099),
-   new MM("isLegalIdentifier:", false, 2100),
+   new MM("superInit`JavascriptGeneration", true, 2102),
+   new MM("instance`initializer", true, 2103),
+   new MM("isLegalIdentifier:", false, 2104),
    new MM("Factory", true, 0),
    new MM("Syntax", true, 0),
    new MM("Writer", true, 0),
@@ -47973,43 +48113,43 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for JavascriptGeneration`Factory";
    this.name = "JavascriptGeneration`Factory";
-   this.header = 2101;
+   this.header = 2105;
    this.slots = [];
    this.methods = [
-    new MM("superInit`JavascriptGeneration`Factory", true, 2102),
-    new MM("instance`initializer", true, 2103),
-    new MM("array:", false, 2104),
-    new MM("assign:toBe:", false, 2105),
-    new MM("block:", false, 2106),
-    new MM("call:with:", false, 2107),
-    new MM("for:in:do:", false, 2108),
-    new MM("for:while:step:do:", false, 2109),
-    new MM("function:of:body:", false, 2110),
-    new MM("functionOf:body:", false, 2111),
-    new MM("ident:", false, 2112),
-    new MM("if:then:", false, 2113),
-    new MM("if:then:else:", false, 2114),
-    new MM("literal:", false, 2115),
-    new MM("new:with:", false, 2116),
-    new MM("objectLiteral", false, 2117),
-    new MM("objectLiteral:", false, 2118),
-    new MM("objectLiteralSlotNames:values:", false, 2119),
-    new MM("operator:with:and:", false, 2120),
-    new MM("postfixOperator:on:", false, 2121),
-    new MM("prefixOperator:on:", false, 2122),
-    new MM("propertyOf:at:", false, 2123),
-    new MM("propertyOf:atPath:", false, 2124),
-    new MM("return", false, 2125),
-    new MM("return:", false, 2126),
-    new MM("script:", false, 2127),
-    new MM("ternaryIf:then:else:", false, 2128),
-    new MM("throw:", false, 2129),
-    new MM("try:catch:with:", false, 2130),
-    new MM("try:catch:with:finally:", false, 2131),
-    new MM("try:finally:", false, 2132),
-    new MM("var:", false, 2133),
-    new MM("var:value:", false, 2134),
-    new MM("verbatim:", false, 2135)
+    new MM("superInit`JavascriptGeneration`Factory", true, 2106),
+    new MM("instance`initializer", true, 2107),
+    new MM("array:", false, 2108),
+    new MM("assign:toBe:", false, 2109),
+    new MM("block:", false, 2110),
+    new MM("call:with:", false, 2111),
+    new MM("for:in:do:", false, 2112),
+    new MM("for:while:step:do:", false, 2113),
+    new MM("function:of:body:", false, 2114),
+    new MM("functionOf:body:", false, 2115),
+    new MM("ident:", false, 2116),
+    new MM("if:then:", false, 2117),
+    new MM("if:then:else:", false, 2118),
+    new MM("literal:", false, 2119),
+    new MM("new:with:", false, 2120),
+    new MM("objectLiteral", false, 2121),
+    new MM("objectLiteral:", false, 2122),
+    new MM("objectLiteralSlotNames:values:", false, 2123),
+    new MM("operator:with:and:", false, 2124),
+    new MM("postfixOperator:on:", false, 2125),
+    new MM("prefixOperator:on:", false, 2126),
+    new MM("propertyOf:at:", false, 2127),
+    new MM("propertyOf:atPath:", false, 2128),
+    new MM("return", false, 2129),
+    new MM("return:", false, 2130),
+    new MM("script:", false, 2131),
+    new MM("ternaryIf:then:else:", false, 2132),
+    new MM("throw:", false, 2133),
+    new MM("try:catch:with:", false, 2134),
+    new MM("try:catch:with:finally:", false, 2135),
+    new MM("try:finally:", false, 2136),
+    new MM("var:", false, 2137),
+    new MM("var:value:", false, 2138),
+    new MM("verbatim:", false, 2139)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -48409,7 +48549,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for JavascriptGeneration`Syntax";
    this.name = "JavascriptGeneration`Syntax";
-   this.header = 2136;
+   this.header = 2140;
    this.slots = [
     new SM("JavascriptGeneration`Syntax`ArrayExpression", true, true),
     new SM("JavascriptGeneration`Syntax`AssignmentExpression", true, true),
@@ -48439,8 +48579,8 @@ var mixins = new function () {
     new SM("JavascriptGeneration`Syntax`VerbatimNode", true, true)
    ];
    this.methods = [
-    new MM("superInit`JavascriptGeneration`Syntax", true, 2137),
-    new MM("instance`initializer", true, 2138),
+    new MM("superInit`JavascriptGeneration`Syntax", true, 2141),
+    new MM("instance`initializer", true, 2142),
     new MM("ArrayExpression", true, 0),
     new MM("AssignmentExpression", true, 0),
     new MM("Block", true, 0),
@@ -49136,14 +49276,14 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`ArrayExpression";
     this.name = "JavascriptGeneration`Syntax`ArrayExpression";
-    this.header = 2139;
+    this.header = 2143;
     this.slots = [new SM("elements_", false, false)];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`ArrayExpression", true, 2140),
-     new MM("instance`initializer", true, 2141),
-     new MM("=", false, 2142),
-     new MM("elements", false, 2143),
-     new MM("visitBy:", false, 2144),
+     new MM("superInit`JavascriptGeneration`Syntax`ArrayExpression", true, 2144),
+     new MM("instance`initializer", true, 2145),
+     new MM("=", false, 2146),
+     new MM("elements", false, 2147),
+     new MM("visitBy:", false, 2148),
      new MM("init`elements_:", true, 0),
      new MM("elements_", true, 0)
     ];
@@ -49239,18 +49379,18 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`AssignmentExpression";
     this.name = "JavascriptGeneration`Syntax`AssignmentExpression";
-    this.header = 2145;
+    this.header = 2149;
     this.slots = [
      new SM("leftHandSide", false, false),
      new SM("rightHandSide", false, false)
     ];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`AssignmentExpression", true, 2146),
-     new MM("instance`initializer", true, 2147),
-     new MM("=", false, 2148),
-     new MM("isOperatorExpression", false, 2149),
-     new MM("printOn:", false, 2150),
-     new MM("visitBy:", false, 2151),
+     new MM("superInit`JavascriptGeneration`Syntax`AssignmentExpression", true, 2150),
+     new MM("instance`initializer", true, 2151),
+     new MM("=", false, 2152),
+     new MM("isOperatorExpression", false, 2153),
+     new MM("printOn:", false, 2154),
+     new MM("visitBy:", false, 2155),
      new MM("init`leftHandSide:", true, 0),
      new MM("leftHandSide", true, 0),
      new MM("init`rightHandSide:", true, 0),
@@ -49368,15 +49508,15 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`Block";
     this.name = "JavascriptGeneration`Syntax`Block";
-    this.header = 2152;
+    this.header = 2156;
     this.slots = [new SM("statementsS", false, false)];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`Block", true, 2153),
-     new MM("instance`initializer", true, 2154),
-     new MM("=", false, 2155),
-     new MM("asBlock", false, 2156),
-     new MM("statements", false, 2157),
-     new MM("visitBy:", false, 2158),
+     new MM("superInit`JavascriptGeneration`Syntax`Block", true, 2157),
+     new MM("instance`initializer", true, 2158),
+     new MM("=", false, 2159),
+     new MM("asBlock", false, 2160),
+     new MM("statements", false, 2161),
+     new MM("visitBy:", false, 2162),
      new MM("init`statementsS:", true, 0),
      new MM("statementsS", true, 0)
     ];
@@ -49450,7 +49590,7 @@ var mixins = new function () {
      this.slots = [];
      this.methods = [
       new MM("statements:", true, 0),
-      new MM("empty", false, 2159)
+      new MM("empty", false, 2163)
      ];
      this.nestedClasses = [];
      this.$statements$ = function ($s) {
@@ -49485,15 +49625,15 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`BooleanLiteral";
     this.name = "JavascriptGeneration`Syntax`BooleanLiteral";
-    this.header = 2160;
+    this.header = 2164;
     this.slots = [new SM("valueS", false, false)];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`BooleanLiteral", true, 2161),
-     new MM("instance`initializer", true, 2162),
-     new MM("=", false, 2163),
-     new MM("printOn:", false, 2164),
-     new MM("value", false, 2165),
-     new MM("visitBy:", false, 2166),
+     new MM("superInit`JavascriptGeneration`Syntax`BooleanLiteral", true, 2165),
+     new MM("instance`initializer", true, 2166),
+     new MM("=", false, 2167),
+     new MM("printOn:", false, 2168),
+     new MM("value", false, 2169),
+     new MM("visitBy:", false, 2170),
      new MM("init`valueS:", true, 0),
      new MM("valueS", true, 0)
     ];
@@ -49598,16 +49738,16 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`CallExpression";
     this.name = "JavascriptGeneration`Syntax`CallExpression";
-    this.header = 2167;
+    this.header = 2171;
     this.slots = [
      new SM("function", false, false),
      new SM("arguments", false, false)
     ];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`CallExpression", true, 2168),
-     new MM("instance`initializer", true, 2169),
-     new MM("=", false, 2170),
-     new MM("visitBy:", false, 2171),
+     new MM("superInit`JavascriptGeneration`Syntax`CallExpression", true, 2172),
+     new MM("instance`initializer", true, 2173),
+     new MM("=", false, 2174),
+     new MM("visitBy:", false, 2175),
      new MM("init`function:", true, 0),
      new MM("function", true, 0),
      new MM("init`arguments:", true, 0),
@@ -49709,17 +49849,17 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`ForInStatement";
     this.name = "JavascriptGeneration`Syntax`ForInStatement";
-    this.header = 2172;
+    this.header = 2176;
     this.slots = [
      new SM("varName", false, false),
      new SM("expression", false, false),
      new SM("body", false, false)
     ];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`ForInStatement", true, 2173),
-     new MM("instance`initializer", true, 2174),
-     new MM("=", false, 2175),
-     new MM("visitBy:", false, 2176),
+     new MM("superInit`JavascriptGeneration`Syntax`ForInStatement", true, 2177),
+     new MM("instance`initializer", true, 2178),
+     new MM("=", false, 2179),
+     new MM("visitBy:", false, 2180),
      new MM("init`varName:", true, 0),
      new MM("varName", true, 0),
      new MM("init`expression:", true, 0),
@@ -49834,7 +49974,7 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`ForStatement";
     this.name = "JavascriptGeneration`Syntax`ForStatement";
-    this.header = 2177;
+    this.header = 2181;
     this.slots = [
      new SM("initExpression", false, false),
      new SM("testExpression", false, false),
@@ -49842,10 +49982,10 @@ var mixins = new function () {
      new SM("body", false, false)
     ];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`ForStatement", true, 2178),
-     new MM("instance`initializer", true, 2179),
-     new MM("=", false, 2180),
-     new MM("visitBy:", false, 2181),
+     new MM("superInit`JavascriptGeneration`Syntax`ForStatement", true, 2182),
+     new MM("instance`initializer", true, 2183),
+     new MM("=", false, 2184),
+     new MM("visitBy:", false, 2185),
      new MM("init`initExpression:", true, 0),
      new MM("initExpression", true, 0),
      new MM("init`testExpression:", true, 0),
@@ -49973,18 +50113,18 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`FunctionExpression";
     this.name = "JavascriptGeneration`Syntax`FunctionExpression";
-    this.header = 2182;
+    this.header = 2186;
     this.slots = [
      new SM("name", false, false),
      new SM("parameters", false, false),
      new SM("body", false, false)
     ];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`FunctionExpression", true, 2183),
-     new MM("instance`initializer", true, 2184),
-     new MM("=", false, 2185),
-     new MM("isFunctionExpression", false, 2186),
-     new MM("visitBy:", false, 2187),
+     new MM("superInit`JavascriptGeneration`Syntax`FunctionExpression", true, 2187),
+     new MM("instance`initializer", true, 2188),
+     new MM("=", false, 2189),
+     new MM("isFunctionExpression", false, 2190),
+     new MM("visitBy:", false, 2191),
      new MM("init`name:", true, 0),
      new MM("name", true, 0),
      new MM("init`parameters:", true, 0),
@@ -50077,7 +50217,7 @@ var mixins = new function () {
      this.slots = [];
      this.methods = [
       new MM("name:parameters:body:", true, 0),
-      new MM("parameters:body:", false, 2188)
+      new MM("parameters:body:", false, 2192)
      ];
      this.nestedClasses = [];
      this.$name$parameters$body$ = function ($s, $names, $b) {
@@ -50112,12 +50252,12 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`FunctionStatement";
     this.name = "JavascriptGeneration`Syntax`FunctionStatement";
-    this.header = 2189;
+    this.header = 2193;
     this.slots = [];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`FunctionStatement", true, 2190),
-     new MM("instance`initializer", true, 2191),
-     new MM("visitBy:", false, 2192)
+     new MM("superInit`JavascriptGeneration`Syntax`FunctionStatement", true, 2194),
+     new MM("instance`initializer", true, 2195),
+     new MM("visitBy:", false, 2196)
     ];
     this.nestedClasses = [];
     this.applications = [];
@@ -50188,15 +50328,15 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`IdentifierExpression";
     this.name = "JavascriptGeneration`Syntax`IdentifierExpression";
-    this.header = 2193;
+    this.header = 2197;
     this.slots = [new SM("nameS", false, false)];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`IdentifierExpression", true, 2194),
-     new MM("instance`initializer", true, 2195),
-     new MM("=", false, 2196),
-     new MM("name", false, 2197),
-     new MM("printOn:", false, 2198),
-     new MM("visitBy:", false, 2199),
+     new MM("superInit`JavascriptGeneration`Syntax`IdentifierExpression", true, 2198),
+     new MM("instance`initializer", true, 2199),
+     new MM("=", false, 2200),
+     new MM("name", false, 2201),
+     new MM("printOn:", false, 2202),
+     new MM("visitBy:", false, 2203),
      new MM("init`nameS:", true, 0),
      new MM("nameS", true, 0)
     ];
@@ -50301,17 +50441,17 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`IfStatement";
     this.name = "JavascriptGeneration`Syntax`IfStatement";
-    this.header = 2200;
+    this.header = 2204;
     this.slots = [
      new SM("expression", false, false),
      new SM("thenStatement", false, false),
      new SM("elseStatement", false, false)
     ];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`IfStatement", true, 2201),
-     new MM("instance`initializer", true, 2202),
-     new MM("=", false, 2203),
-     new MM("visitBy:", false, 2204),
+     new MM("superInit`JavascriptGeneration`Syntax`IfStatement", true, 2205),
+     new MM("instance`initializer", true, 2206),
+     new MM("=", false, 2207),
+     new MM("visitBy:", false, 2208),
      new MM("init`expression:", true, 0),
      new MM("expression", true, 0),
      new MM("init`thenStatement:", true, 0),
@@ -50399,7 +50539,7 @@ var mixins = new function () {
      this.slots = [];
      this.methods = [
       new MM("expression:then:else:", true, 0),
-      new MM("expression:then:", false, 2205)
+      new MM("expression:then:", false, 2209)
      ];
      this.nestedClasses = [];
      this.$expression$then$else$ = function ($expr, $then, $else) {
@@ -50434,16 +50574,16 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`MemberExpression";
     this.name = "JavascriptGeneration`Syntax`MemberExpression";
-    this.header = 2206;
+    this.header = 2210;
     this.slots = [
      new SM("primary", false, false),
      new SM("property", false, false)
     ];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`MemberExpression", true, 2207),
-     new MM("instance`initializer", true, 2208),
-     new MM("=", false, 2209),
-     new MM("visitBy:", false, 2210),
+     new MM("superInit`JavascriptGeneration`Syntax`MemberExpression", true, 2211),
+     new MM("instance`initializer", true, 2212),
+     new MM("=", false, 2213),
+     new MM("visitBy:", false, 2214),
      new MM("init`primary:", true, 0),
      new MM("primary", true, 0),
      new MM("init`property:", true, 0),
@@ -50545,16 +50685,16 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`NewExpression";
     this.name = "JavascriptGeneration`Syntax`NewExpression";
-    this.header = 2211;
+    this.header = 2215;
     this.slots = [
      new SM("expression", false, false),
      new SM("arguments", false, false)
     ];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`NewExpression", true, 2212),
-     new MM("instance`initializer", true, 2213),
-     new MM("=", false, 2214),
-     new MM("visitBy:", false, 2215),
+     new MM("superInit`JavascriptGeneration`Syntax`NewExpression", true, 2216),
+     new MM("instance`initializer", true, 2217),
+     new MM("=", false, 2218),
+     new MM("visitBy:", false, 2219),
      new MM("init`expression:", true, 0),
      new MM("expression", true, 0),
      new MM("init`arguments:", true, 0),
@@ -50656,17 +50796,17 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`Node";
     this.name = "JavascriptGeneration`Syntax`Node";
-    this.header = 2216;
+    this.header = 2220;
     this.slots = [new SM("comment", true, false)];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`Node", true, 2217),
-     new MM("instance`initializer", true, 2218),
-     new MM("=", false, 2219),
-     new MM("asBlock", false, 2220),
-     new MM("isFunctionExpression", false, 2221),
-     new MM("isJsNode", false, 2222),
-     new MM("isNumberLiteral", false, 2223),
-     new MM("isOperatorExpression", false, 2224),
+     new MM("superInit`JavascriptGeneration`Syntax`Node", true, 2221),
+     new MM("instance`initializer", true, 2222),
+     new MM("=", false, 2223),
+     new MM("asBlock", false, 2224),
+     new MM("isFunctionExpression", false, 2225),
+     new MM("isJsNode", false, 2226),
+     new MM("isNumberLiteral", false, 2227),
+     new MM("isOperatorExpression", false, 2228),
      new MM("init`comment:", true, 0),
      new MM("comment", true, 0),
      new MM("comment:", true, 0)
@@ -50780,16 +50920,16 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`NumberLiteral";
     this.name = "JavascriptGeneration`Syntax`NumberLiteral";
-    this.header = 2225;
+    this.header = 2229;
     this.slots = [new SM("valueS", false, false)];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`NumberLiteral", true, 2226),
-     new MM("instance`initializer", true, 2227),
-     new MM("=", false, 2228),
-     new MM("isNumberLiteral", false, 2229),
-     new MM("printOn:", false, 2230),
-     new MM("value", false, 2231),
-     new MM("visitBy:", false, 2232),
+     new MM("superInit`JavascriptGeneration`Syntax`NumberLiteral", true, 2230),
+     new MM("instance`initializer", true, 2231),
+     new MM("=", false, 2232),
+     new MM("isNumberLiteral", false, 2233),
+     new MM("printOn:", false, 2234),
+     new MM("value", false, 2235),
+     new MM("visitBy:", false, 2236),
      new MM("init`valueS:", true, 0),
      new MM("valueS", true, 0)
     ];
@@ -50899,20 +51039,20 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`ObjectLiteral";
     this.name = "JavascriptGeneration`Syntax`ObjectLiteral";
-    this.header = 2233;
+    this.header = 2237;
     this.slots = [
      new SM("slotNames", false, false),
      new SM("slotValues", false, false)
     ];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`ObjectLiteral", true, 2234),
-     new MM("instance`initializer", true, 2235),
-     new MM("=", false, 2236),
-     new MM("addSlot:value:", false, 2237),
-     new MM("slotCount", false, 2238),
-     new MM("slotsDo:", false, 2239),
-     new MM("slotsDo:betweenDo:", false, 2240),
-     new MM("visitBy:", false, 2241),
+     new MM("superInit`JavascriptGeneration`Syntax`ObjectLiteral", true, 2238),
+     new MM("instance`initializer", true, 2239),
+     new MM("=", false, 2240),
+     new MM("addSlot:value:", false, 2241),
+     new MM("slotCount", false, 2242),
+     new MM("slotsDo:", false, 2243),
+     new MM("slotsDo:betweenDo:", false, 2244),
+     new MM("visitBy:", false, 2245),
      new MM("init`slotNames:", true, 0),
      new MM("slotNames", true, 0),
      new MM("init`slotValues:", true, 0),
@@ -51027,8 +51167,8 @@ var mixins = new function () {
      this.slots = [];
      this.methods = [
       new MM("new", true, 0),
-      new MM("slotNames:values:", false, 2242),
-      new MM("slots:", false, 2243)
+      new MM("slotNames:values:", false, 2246),
+      new MM("slots:", false, 2247)
      ];
      this.nestedClasses = [];
      this.$new = function () {
@@ -51091,18 +51231,18 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`OperatorExpression";
     this.name = "JavascriptGeneration`Syntax`OperatorExpression";
-    this.header = 2244;
+    this.header = 2248;
     this.slots = [
      new SM("operatorName", false, false),
      new SM("left", false, false),
      new SM("right", false, false)
     ];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`OperatorExpression", true, 2245),
-     new MM("instance`initializer", true, 2246),
-     new MM("=", false, 2247),
-     new MM("isOperatorExpression", false, 2248),
-     new MM("visitBy:", false, 2249),
+     new MM("superInit`JavascriptGeneration`Syntax`OperatorExpression", true, 2249),
+     new MM("instance`initializer", true, 2250),
+     new MM("=", false, 2251),
+     new MM("isOperatorExpression", false, 2252),
+     new MM("visitBy:", false, 2253),
      new MM("init`operatorName:", true, 0),
      new MM("operatorName", true, 0),
      new MM("init`left:", true, 0),
@@ -51222,15 +51362,15 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`ReturnStatement";
     this.name = "JavascriptGeneration`Syntax`ReturnStatement";
-    this.header = 2250;
+    this.header = 2254;
     this.slots = [new SM("expressionS", false, false)];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`ReturnStatement", true, 2251),
-     new MM("instance`initializer", true, 2252),
-     new MM("=", false, 2253),
-     new MM("expression", false, 2254),
-     new MM("printOn:", false, 2255),
-     new MM("visitBy:", false, 2256),
+     new MM("superInit`JavascriptGeneration`Syntax`ReturnStatement", true, 2255),
+     new MM("instance`initializer", true, 2256),
+     new MM("=", false, 2257),
+     new MM("expression", false, 2258),
+     new MM("printOn:", false, 2259),
+     new MM("visitBy:", false, 2260),
      new MM("init`expressionS:", true, 0),
      new MM("expressionS", true, 0)
     ];
@@ -51335,14 +51475,14 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`Script";
     this.name = "JavascriptGeneration`Syntax`Script";
-    this.header = 2257;
+    this.header = 2261;
     this.slots = [new SM("statements_", false, false)];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`Script", true, 2258),
-     new MM("instance`initializer", true, 2259),
-     new MM("=", false, 2260),
-     new MM("statements", false, 2261),
-     new MM("visitBy:", false, 2262),
+     new MM("superInit`JavascriptGeneration`Syntax`Script", true, 2262),
+     new MM("instance`initializer", true, 2263),
+     new MM("=", false, 2264),
+     new MM("statements", false, 2265),
+     new MM("visitBy:", false, 2266),
      new MM("init`statements_:", true, 0),
      new MM("statements_", true, 0)
     ];
@@ -51438,16 +51578,16 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`StringLiteral";
     this.name = "JavascriptGeneration`Syntax`StringLiteral";
-    this.header = 2263;
+    this.header = 2267;
     this.slots = [new SM("valueS", false, false)];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`StringLiteral", true, 2264),
-     new MM("instance`initializer", true, 2265),
-     new MM("=", false, 2266),
-     new MM("isStringLiteral", false, 2267),
-     new MM("printOn:", false, 2268),
-     new MM("value", false, 2269),
-     new MM("visitBy:", false, 2270),
+     new MM("superInit`JavascriptGeneration`Syntax`StringLiteral", true, 2268),
+     new MM("instance`initializer", true, 2269),
+     new MM("=", false, 2270),
+     new MM("isStringLiteral", false, 2271),
+     new MM("printOn:", false, 2272),
+     new MM("value", false, 2273),
+     new MM("visitBy:", false, 2274),
      new MM("init`valueS:", true, 0),
      new MM("valueS", true, 0)
     ];
@@ -51557,17 +51697,17 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`TernaryOperatorExpression";
     this.name = "JavascriptGeneration`Syntax`TernaryOperatorExpression";
-    this.header = 2271;
+    this.header = 2275;
     this.slots = [
      new SM("condition", false, false),
      new SM("then", false, false),
      new SM("else", false, false)
     ];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`TernaryOperatorExpression", true, 2272),
-     new MM("instance`initializer", true, 2273),
-     new MM("=", false, 2274),
-     new MM("visitBy:", false, 2275),
+     new MM("superInit`JavascriptGeneration`Syntax`TernaryOperatorExpression", true, 2276),
+     new MM("instance`initializer", true, 2277),
+     new MM("=", false, 2278),
+     new MM("visitBy:", false, 2279),
      new MM("init`condition:", true, 0),
      new MM("condition", true, 0),
      new MM("init`then:", true, 0),
@@ -51682,14 +51822,14 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`ThrowStatement";
     this.name = "JavascriptGeneration`Syntax`ThrowStatement";
-    this.header = 2276;
+    this.header = 2280;
     this.slots = [new SM("expressionS", false, false)];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`ThrowStatement", true, 2277),
-     new MM("instance`initializer", true, 2278),
-     new MM("=", false, 2279),
-     new MM("expression", false, 2280),
-     new MM("visitBy:", false, 2281),
+     new MM("superInit`JavascriptGeneration`Syntax`ThrowStatement", true, 2281),
+     new MM("instance`initializer", true, 2282),
+     new MM("=", false, 2283),
+     new MM("expression", false, 2284),
+     new MM("visitBy:", false, 2285),
      new MM("init`expressionS:", true, 0),
      new MM("expressionS", true, 0)
     ];
@@ -51785,7 +51925,7 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`TryStatement";
     this.name = "JavascriptGeneration`Syntax`TryStatement";
-    this.header = 2282;
+    this.header = 2286;
     this.slots = [
      new SM("protectedBlock", false, false),
      new SM("catchVar", false, false),
@@ -51793,10 +51933,10 @@ var mixins = new function () {
      new SM("finallyBlock", false, false)
     ];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`TryStatement", true, 2283),
-     new MM("instance`initializer", true, 2284),
-     new MM("=", false, 2285),
-     new MM("visitBy:", false, 2286),
+     new MM("superInit`JavascriptGeneration`Syntax`TryStatement", true, 2287),
+     new MM("instance`initializer", true, 2288),
+     new MM("=", false, 2289),
+     new MM("visitBy:", false, 2290),
      new MM("init`protectedBlock:", true, 0),
      new MM("protectedBlock", true, 0),
      new MM("init`catchVar:", true, 0),
@@ -51924,17 +52064,17 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`UnaryOperatorExpression";
     this.name = "JavascriptGeneration`Syntax`UnaryOperatorExpression";
-    this.header = 2287;
+    this.header = 2291;
     this.slots = [
      new SM("operatorName", false, false),
      new SM("isPostfix", false, false),
      new SM("operand", false, false)
     ];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`UnaryOperatorExpression", true, 2288),
-     new MM("instance`initializer", true, 2289),
-     new MM("=", false, 2290),
-     new MM("visitBy:", false, 2291),
+     new MM("superInit`JavascriptGeneration`Syntax`UnaryOperatorExpression", true, 2292),
+     new MM("instance`initializer", true, 2293),
+     new MM("=", false, 2294),
+     new MM("visitBy:", false, 2295),
      new MM("init`operatorName:", true, 0),
      new MM("operatorName", true, 0),
      new MM("init`isPostfix:", true, 0),
@@ -52049,17 +52189,17 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`VariableStatement";
     this.name = "JavascriptGeneration`Syntax`VariableStatement";
-    this.header = 2292;
+    this.header = 2296;
     this.slots = [
      new SM("name", false, false),
      new SM("initializer", false, false)
     ];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`VariableStatement", true, 2293),
-     new MM("instance`initializer", true, 2294),
-     new MM("=", false, 2295),
-     new MM("printOn:", false, 2296),
-     new MM("visitBy:", false, 2297),
+     new MM("superInit`JavascriptGeneration`Syntax`VariableStatement", true, 2297),
+     new MM("instance`initializer", true, 2298),
+     new MM("=", false, 2299),
+     new MM("printOn:", false, 2300),
+     new MM("visitBy:", false, 2301),
      new MM("init`name:", true, 0),
      new MM("name", true, 0),
      new MM("init`initializer:", true, 0),
@@ -52145,7 +52285,7 @@ var mixins = new function () {
      this.slots = [];
      this.methods = [
       new MM("name:initializer:", true, 0),
-      new MM("name:", false, 2298)
+      new MM("name:", false, 2302)
      ];
      this.nestedClasses = [];
      this.$name$initializer$ = function ($n, $expr) {
@@ -52180,13 +52320,13 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for JavascriptGeneration`Syntax`VerbatimNode";
     this.name = "JavascriptGeneration`Syntax`VerbatimNode";
-    this.header = 2299;
+    this.header = 2303;
     this.slots = [new SM("text", false, false)];
     this.methods = [
-     new MM("superInit`JavascriptGeneration`Syntax`VerbatimNode", true, 2300),
-     new MM("instance`initializer", true, 2301),
-     new MM("=", false, 2302),
-     new MM("visitBy:", false, 2303),
+     new MM("superInit`JavascriptGeneration`Syntax`VerbatimNode", true, 2304),
+     new MM("instance`initializer", true, 2305),
+     new MM("=", false, 2306),
+     new MM("visitBy:", false, 2307),
      new MM("init`text:", true, 0),
      new MM("text", true, 0)
     ];
@@ -52479,50 +52619,50 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for JavascriptGeneration`Writer";
    this.name = "JavascriptGeneration`Writer";
-   this.header = 2304;
+   this.header = 2308;
    this.slots = [
     new SM("output", true, false),
     new SM("tabLevel", true, false),
     new SM("stringTranslation", false, false)
    ];
    this.methods = [
-    new MM("superInit`JavascriptGeneration`Writer", true, 2305),
-    new MM("instance`initializer", true, 2306),
-    new MM("contents", false, 2307),
-    new MM("generateSourceFor:", false, 2308),
-    new MM("generateSourceFor:on:", false, 2309),
-    new MM("visitArrayExpression:", false, 2310),
-    new MM("visitForInStatement:", false, 2311),
-    new MM("visitForStatement:", false, 2312),
-    new MM("visitFunctionStatement:", false, 2313),
-    new MM("visitOperatorExpression:", false, 2314),
-    new MM("visitScript:", false, 2315),
-    new MM("visitStringLiteral:", false, 2316),
-    new MM("visitTernaryOperatorExpression:", false, 2317),
-    new MM("visitThrowStatement:", false, 2318),
-    new MM("visitUnaryOperatorExpression:", false, 2319),
-    new MM("visitVerbatimNode:", false, 2320),
-    new MM("visitAssignmentExpression:", false, 2321),
-    new MM("visitBlock:", false, 2322),
-    new MM("visitBooleanLiteral:", false, 2323),
-    new MM("visitCallExpression:", false, 2324),
-    new MM("visitFunctionExpression:", false, 2325),
-    new MM("visitIdentifierExpression:", false, 2326),
-    new MM("visitIfStatement:", false, 2327),
-    new MM("visitMemberExpression:", false, 2328),
-    new MM("visitNewExpression:", false, 2329),
-    new MM("visitNumberLiteral:", false, 2330),
-    new MM("visitObjectLiteral:", false, 2331),
-    new MM("visitReturnStatement:", false, 2332),
-    new MM("visitTryStatement:", false, 2333),
-    new MM("visitVariableStatement:", false, 2334),
-    new MM("beginNewWriteCycleUsing:", false, 2335),
-    new MM("cr", false, 2336),
-    new MM("inIndentedBlock:", false, 2337),
-    new MM("indentCr", false, 2338),
-    new MM("unindentCr", false, 2339),
-    new MM("write:", false, 2340),
-    new MM("writeBlock:", false, 2341),
+    new MM("superInit`JavascriptGeneration`Writer", true, 2309),
+    new MM("instance`initializer", true, 2310),
+    new MM("contents", false, 2311),
+    new MM("generateSourceFor:", false, 2312),
+    new MM("generateSourceFor:on:", false, 2313),
+    new MM("visitArrayExpression:", false, 2314),
+    new MM("visitForInStatement:", false, 2315),
+    new MM("visitForStatement:", false, 2316),
+    new MM("visitFunctionStatement:", false, 2317),
+    new MM("visitOperatorExpression:", false, 2318),
+    new MM("visitScript:", false, 2319),
+    new MM("visitStringLiteral:", false, 2320),
+    new MM("visitTernaryOperatorExpression:", false, 2321),
+    new MM("visitThrowStatement:", false, 2322),
+    new MM("visitUnaryOperatorExpression:", false, 2323),
+    new MM("visitVerbatimNode:", false, 2324),
+    new MM("visitAssignmentExpression:", false, 2325),
+    new MM("visitBlock:", false, 2326),
+    new MM("visitBooleanLiteral:", false, 2327),
+    new MM("visitCallExpression:", false, 2328),
+    new MM("visitFunctionExpression:", false, 2329),
+    new MM("visitIdentifierExpression:", false, 2330),
+    new MM("visitIfStatement:", false, 2331),
+    new MM("visitMemberExpression:", false, 2332),
+    new MM("visitNewExpression:", false, 2333),
+    new MM("visitNumberLiteral:", false, 2334),
+    new MM("visitObjectLiteral:", false, 2335),
+    new MM("visitReturnStatement:", false, 2336),
+    new MM("visitTryStatement:", false, 2337),
+    new MM("visitVariableStatement:", false, 2338),
+    new MM("beginNewWriteCycleUsing:", false, 2339),
+    new MM("cr", false, 2340),
+    new MM("inIndentedBlock:", false, 2341),
+    new MM("indentCr", false, 2342),
+    new MM("unindentCr", false, 2343),
+    new MM("write:", false, 2344),
+    new MM("writeBlock:", false, 2345),
     new MM("init`output:", true, 0),
     new MM("output", true, 0),
     new MM("output:", true, 0),
@@ -53205,7 +53345,7 @@ var mixins = new function () {
   var $0 = this;
   this.debug = "Runtime mixin for Newspeak2V8Compilation";
   this.name = "Newspeak2V8Compilation";
-  this.header = 2342;
+  this.header = 2346;
   this.slots = [
    new SM("asts", false, false),
    new SM("Collection", false, false),
@@ -53253,16 +53393,16 @@ var mixins = new function () {
    new SM("Newspeak2V8Compilation`ProgramBuilder", true, true)
   ];
   this.methods = [
-   new MM("superInit`Newspeak2V8Compilation", true, 2343),
-   new MM("instance`initializer", true, 2344),
-   new MM("LocalEntry", false, 2345),
-   new MM("Scope", false, 2346),
-   new MM("assert:", false, 2347),
-   new MM("mixinNameOfClassNamed:", false, 2348),
-   new MM("mixinSlotNameFor:", false, 2349),
-   new MM("split:at:", false, 2350),
-   new MM("splitFullyQualifiedName:", false, 2351),
-   new MM("syntheticNameSeparator", false, 2352),
+   new MM("superInit`Newspeak2V8Compilation", true, 2347),
+   new MM("instance`initializer", true, 2348),
+   new MM("LocalEntry", false, 2349),
+   new MM("Scope", false, 2350),
+   new MM("assert:", false, 2351),
+   new MM("mixinNameOfClassNamed:", false, 2352),
+   new MM("mixinSlotNameFor:", false, 2353),
+   new MM("split:at:", false, 2354),
+   new MM("splitFullyQualifiedName:", false, 2355),
+   new MM("syntheticNameSeparator", false, 2356),
    new MM("CachedCompilation", true, 0),
    new MM("Compiler", true, 0),
    new MM("IntermediateClassDeclaration", true, 0),
@@ -53927,7 +54067,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Newspeak2V8Compilation`CachedCompilation";
    this.name = "Newspeak2V8Compilation`CachedCompilation";
-   this.header = 2353;
+   this.header = 2357;
    this.slots = [
     new SM("source", true, false),
     new SM("enableIntrinsics", true, false),
@@ -53935,8 +54075,8 @@ var mixins = new function () {
     new SM("sentSelectors", true, false)
    ];
    this.methods = [
-    new MM("superInit`Newspeak2V8Compilation`CachedCompilation", true, 2354),
-    new MM("instance`initializer", true, 2355),
+    new MM("superInit`Newspeak2V8Compilation`CachedCompilation", true, 2358),
+    new MM("instance`initializer", true, 2359),
     new MM("init`source:", true, 0),
     new MM("source", true, 0),
     new MM("source:", true, 0),
@@ -54074,7 +54214,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Newspeak2V8Compilation`Compiler";
    this.name = "Newspeak2V8Compilation`Compiler";
-   this.header = 2356;
+   this.header = 2360;
    this.slots = [
     new SM("scopeStack", true, false),
     new SM("input", true, false),
@@ -54093,51 +54233,51 @@ var mixins = new function () {
     new SM("Newspeak2V8Compilation`Compiler`Translator", true, true)
    ];
    this.methods = [
-    new MM("superInit`Newspeak2V8Compilation`Compiler", true, 2357),
-    new MM("instance`initializer", true, 2358),
-    new MM("accessorForNestedClassNamed:in:superCall:", false, 2359),
-    new MM("accessorForSuperclass:inScope:", false, 2360),
-    new MM("checkForDuplicateNames:", false, 2361),
-    new MM("classNode:", false, 2362),
-    new MM("compileClassSource:within:", false, 2363),
-    new MM("compileExpressionSource:inMixin:", false, 2364),
-    new MM("compileMethodSource:within:", false, 2365),
-    new MM("compileNestedClasses:within:", false, 2366),
-    new MM("compileNestedClassesOf:within:", false, 2367),
-    new MM("computeMethod:inScope:", false, 2368),
-    new MM("computeMixinFrom:", false, 2369),
-    new MM("createNestedClassAccessorFrom:within:", false, 2370),
-    new MM("currentScope", false, 2371),
-    new MM("dnuHandlers", false, 2372),
-    new MM("generateSlotAccessorsFor:", false, 2373),
-    new MM("generateSlotGetterFor:in:", false, 2374),
-    new MM("generateSlotInitializerFor:in:", false, 2375),
-    new MM("generateSlotSetterFor:in:", false, 2376),
-    new MM("hereNode", false, 2377),
-    new MM("hereSendFrom:", false, 2378),
-    new MM("initializerFor:", false, 2379),
-    new MM("initializerSelectorForSlot:", false, 2380),
-    new MM("language", false, 2381),
-    new MM("methodNode:", false, 2382),
-    new MM("nestScope:", false, 2383),
-    new MM("nestedMixinWrapperFor:in:", false, 2384),
-    new MM("popScope", false, 2385),
-    new MM("processClassSideOf:ofMixin:", false, 2386),
-    new MM("processFactoryFor:in:", false, 2387),
-    new MM("processInitializerFor:in:", false, 2388),
-    new MM("processInstanceSideOf:ofMixin:", false, 2389),
-    new MM("processMethod:inScope:in:", false, 2390),
-    new MM("processSide:ofMixin:", false, 2391),
-    new MM("pushScope:", false, 2392),
-    new MM("selfNode", false, 2393),
-    new MM("setInput:", false, 2394),
-    new MM("setScopeFor:in:", false, 2395),
-    new MM("setterSelectorFor:", false, 2396),
-    new MM("sourceForNode:", false, 2397),
-    new MM("superConstructorCallFor:", false, 2398),
-    new MM("superConstructorMethodFor:", false, 2399),
-    new MM("superConstructorNameFor:", false, 2400),
-    new MM("scopeMap", false, 2401),
+    new MM("superInit`Newspeak2V8Compilation`Compiler", true, 2361),
+    new MM("instance`initializer", true, 2362),
+    new MM("accessorForNestedClassNamed:in:superCall:", false, 2363),
+    new MM("accessorForSuperclass:inScope:", false, 2364),
+    new MM("checkForDuplicateNames:", false, 2365),
+    new MM("classNode:", false, 2366),
+    new MM("compileClassSource:within:", false, 2367),
+    new MM("compileExpressionSource:inMixin:", false, 2368),
+    new MM("compileMethodSource:within:", false, 2369),
+    new MM("compileNestedClasses:within:", false, 2370),
+    new MM("compileNestedClassesOf:within:", false, 2371),
+    new MM("computeMethod:inScope:", false, 2372),
+    new MM("computeMixinFrom:", false, 2373),
+    new MM("createNestedClassAccessorFrom:within:", false, 2374),
+    new MM("currentScope", false, 2375),
+    new MM("dnuHandlers", false, 2376),
+    new MM("generateSlotAccessorsFor:", false, 2377),
+    new MM("generateSlotGetterFor:in:", false, 2378),
+    new MM("generateSlotInitializerFor:in:", false, 2379),
+    new MM("generateSlotSetterFor:in:", false, 2380),
+    new MM("hereNode", false, 2381),
+    new MM("hereSendFrom:", false, 2382),
+    new MM("initializerFor:", false, 2383),
+    new MM("initializerSelectorForSlot:", false, 2384),
+    new MM("language", false, 2385),
+    new MM("methodNode:", false, 2386),
+    new MM("nestScope:", false, 2387),
+    new MM("nestedMixinWrapperFor:in:", false, 2388),
+    new MM("popScope", false, 2389),
+    new MM("processClassSideOf:ofMixin:", false, 2390),
+    new MM("processFactoryFor:in:", false, 2391),
+    new MM("processInitializerFor:in:", false, 2392),
+    new MM("processInstanceSideOf:ofMixin:", false, 2393),
+    new MM("processMethod:inScope:in:", false, 2394),
+    new MM("processSide:ofMixin:", false, 2395),
+    new MM("pushScope:", false, 2396),
+    new MM("selfNode", false, 2397),
+    new MM("setInput:", false, 2398),
+    new MM("setScopeFor:in:", false, 2399),
+    new MM("setterSelectorFor:", false, 2400),
+    new MM("sourceForNode:", false, 2401),
+    new MM("superConstructorCallFor:", false, 2402),
+    new MM("superConstructorMethodFor:", false, 2403),
+    new MM("superConstructorNameFor:", false, 2404),
+    new MM("scopeMap", false, 2405),
     new MM("PropertyCallAST", true, 0),
     new MM("Rewriter", true, 0),
     new MM("ScopeBuilder", true, 0),
@@ -55052,12 +55192,12 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for Newspeak2V8Compilation`Compiler`PropertyCallAST";
     this.name = "Newspeak2V8Compilation`Compiler`PropertyCallAST";
-    this.header = 2402;
+    this.header = 2406;
     this.slots = [];
     this.methods = [
-     new MM("superInit`Newspeak2V8Compilation`Compiler`PropertyCallAST", true, 2403),
-     new MM("instance`initializer", true, 2404),
-     new MM("apply:", false, 2405)
+     new MM("superInit`Newspeak2V8Compilation`Compiler`PropertyCallAST", true, 2407),
+     new MM("instance`initializer", true, 2408),
+     new MM("apply:", false, 2409)
     ];
     this.nestedClasses = [];
     this.applications = [];
@@ -55128,7 +55268,7 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for Newspeak2V8Compilation`Compiler`Rewriter";
     this.name = "Newspeak2V8Compilation`Compiler`Rewriter";
-    this.header = 2406;
+    this.header = 2410;
     this.slots = [
      new SM("inlinableOperators", false, false),
      new SM("inlinableNumericOperators", false, false),
@@ -55136,20 +55276,20 @@ var mixins = new function () {
      new SM("Newspeak2V8Compilation`Compiler`Rewriter`SchedulerAST", true, true)
     ];
     this.methods = [
-     new MM("superInit`Newspeak2V8Compilation`Compiler`Rewriter", true, 2407),
-     new MM("instance`initializer", true, 2408),
-     new MM("__isInlinableAsExpressionConditional:", false, 2409),
-     new MM("canInlineSeqexps", false, 2410),
-     new MM("currentScope", false, 2411),
-     new MM("inline:as:selector:rewriteArgsAs:", false, 2412),
-     new MM("isInlinableBooleanOperator:", false, 2413),
-     new MM("isInlinableNumericOperator:", false, 2414),
-     new MM("isInlinableOperator:", false, 2415),
-     new MM("processEventualSend:", false, 2416),
-     new MM("setterBlockArgName", false, 2417),
-     new MM("normalSendNode:", false, 2418),
-     new MM("propertyCallNode:", false, 2419),
-     new MM("setterSendNode:", false, 2420),
+     new MM("superInit`Newspeak2V8Compilation`Compiler`Rewriter", true, 2411),
+     new MM("instance`initializer", true, 2412),
+     new MM("__isInlinableAsExpressionConditional:", false, 2413),
+     new MM("canInlineSeqexps", false, 2414),
+     new MM("currentScope", false, 2415),
+     new MM("inline:as:selector:rewriteArgsAs:", false, 2416),
+     new MM("isInlinableBooleanOperator:", false, 2417),
+     new MM("isInlinableNumericOperator:", false, 2418),
+     new MM("isInlinableOperator:", false, 2419),
+     new MM("processEventualSend:", false, 2420),
+     new MM("setterBlockArgName", false, 2421),
+     new MM("normalSendNode:", false, 2422),
+     new MM("propertyCallNode:", false, 2423),
+     new MM("setterSendNode:", false, 2424),
      new MM("InlinedOperatorAST", true, 0),
      new MM("SchedulerAST", true, 0),
      new MM("init`inlinableOperators:", true, 0),
@@ -55473,12 +55613,12 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for Newspeak2V8Compilation`Compiler`Rewriter`InlinedOperatorAST";
      this.name = "Newspeak2V8Compilation`Compiler`Rewriter`InlinedOperatorAST";
-     this.header = 2421;
+     this.header = 2425;
      this.slots = [];
      this.methods = [
-      new MM("superInit`Newspeak2V8Compilation`Compiler`Rewriter`InlinedOperatorAST", true, 2422),
-      new MM("instance`initializer", true, 2423),
-      new MM("apply:", false, 2424)
+      new MM("superInit`Newspeak2V8Compilation`Compiler`Rewriter`InlinedOperatorAST", true, 2426),
+      new MM("instance`initializer", true, 2427),
+      new MM("apply:", false, 2428)
      ];
      this.nestedClasses = [];
      this.applications = [];
@@ -55549,12 +55689,12 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for Newspeak2V8Compilation`Compiler`Rewriter`SchedulerAST";
      this.name = "Newspeak2V8Compilation`Compiler`Rewriter`SchedulerAST";
-     this.header = 2425;
+     this.header = 2429;
      this.slots = [];
      this.methods = [
-      new MM("superInit`Newspeak2V8Compilation`Compiler`Rewriter`SchedulerAST", true, 2426),
-      new MM("instance`initializer", true, 2427),
-      new MM("apply:", false, 2428)
+      new MM("superInit`Newspeak2V8Compilation`Compiler`Rewriter`SchedulerAST", true, 2430),
+      new MM("instance`initializer", true, 2431),
+      new MM("apply:", false, 2432)
      ];
      this.nestedClasses = [];
      this.applications = [];
@@ -55717,12 +55857,12 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for Newspeak2V8Compilation`Compiler`ScopeBuilder";
     this.name = "Newspeak2V8Compilation`Compiler`ScopeBuilder";
-    this.header = 2429;
+    this.header = 2433;
     this.slots = [];
     this.methods = [
-     new MM("superInit`Newspeak2V8Compilation`Compiler`ScopeBuilder", true, 2430),
-     new MM("instance`initializer", true, 2431),
-     new MM("propertyCallNode:", false, 2432)
+     new MM("superInit`Newspeak2V8Compilation`Compiler`ScopeBuilder", true, 2434),
+     new MM("instance`initializer", true, 2435),
+     new MM("propertyCallNode:", false, 2436)
     ];
     this.nestedClasses = [];
     this.applications = [];
@@ -55767,7 +55907,7 @@ var mixins = new function () {
      this.slots = [];
      this.methods = [
       new MM("nestedIn:atLevel:", true, 0),
-      new MM("new", false, 2433)
+      new MM("new", false, 2437)
      ];
      this.nestedClasses = [];
      this.$nestedIn$atLevel$ = function ($initialScope, $initialDepth) {
@@ -55802,7 +55942,7 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for Newspeak2V8Compilation`Compiler`Translator";
     this.name = "Newspeak2V8Compilation`Compiler`Translator";
-    this.header = 2434;
+    this.header = 2438;
     this.slots = [
      new SM("scopeStack", true, false),
      new SM("currentSelector", true, false),
@@ -55810,60 +55950,59 @@ var mixins = new function () {
      new SM("methodIsPrivate", true, false)
     ];
     this.methods = [
-     new MM("superInit`Newspeak2V8Compilation`Compiler`Translator", true, 2435),
-     new MM("instance`initializer", true, 2436),
-     new MM("addCascadedSend:to:", false, 2437),
-     new MM("beginNewTranslationCycle", false, 2438),
-     new MM("maybeCaptureReceiver", false, 2439),
-     new MM("nlrName", false, 2440),
-     new MM("nlrValuePropertyName", false, 2441),
-     new MM("processIntrinsic:", false, 2442),
-     new MM("processIntrinsicArg:", false, 2443),
-     new MM("processLexicalSend:to:binding:", false, 2444),
-     new MM("processOuterReceiverAtDepth:", false, 2445),
-     new MM("protectedMessage:", false, 2446),
-     new MM("publicMessage:", false, 2447),
-     new MM("selfName", false, 2448),
-     new MM("wrapBodyForNlrHandling:", false, 2449),
-     new MM("wrapBodyNoNlrHandling:", false, 2450),
-     new MM("blockLocalReturnNode:", false, 2451),
-     new MM("blockNode:", false, 2452),
-     new MM("boolNode:", false, 2453),
-     new MM("cascadedSendNode:", false, 2454),
-     new MM("charNode:", false, 2455),
-     new MM("codeBodyNode:", false, 2456),
-     new MM("conditionalNode:", false, 2457),
-     new MM("contextNode:", false, 2458),
-     new MM("enclosingObjectNode:", false, 2459),
-     new MM("explicitOuterReceiverNode:", false, 2460),
-     new MM("implicitReceiverSendNode:", false, 2461),
-     new MM("inlinableAsExpressionConditionalNode:", false, 2462),
-     new MM("inlinableConditionalNode:", false, 2463),
-     new MM("inlinedOperatorNode:", false, 2464),
-     new MM("localReadNode:", false, 2465),
-     new MM("localWriteNode:", false, 2466),
-     new MM("loopNode:", false, 2467),
-     new MM("messageNode:", false, 2468),
-     new MM("messagePatternNode:", false, 2469),
-     new MM("methodLocalReturnNode:", false, 2470),
-     new MM("methodNode:", false, 2471),
-     new MM("nilNode:", false, 2472),
-     new MM("nonLocalReturnNode:", false, 2473),
-     new MM("numberNode:", false, 2474),
-     new MM("ordinarySendNode:", false, 2475),
-     new MM("outerSendNode:", false, 2476),
-     new MM("parameterDeclNode:", false, 2477),
-     new MM("propertyCallNode:", false, 2478),
-     new MM("receiverNode:", false, 2479),
-     new MM("returnStatNode:", false, 2480),
-     new MM("schedulerNode:", false, 2481),
-     new MM("selfSendNode:", false, 2482),
-     new MM("stringNode:", false, 2483),
-     new MM("superSendNode:", false, 2484),
-     new MM("symbolNode:", false, 2485),
-     new MM("temporaryDeclNode:", false, 2486),
-     new MM("tupleNode:", false, 2487),
-     new MM("varDeclNode:", false, 2488),
+     new MM("superInit`Newspeak2V8Compilation`Compiler`Translator", true, 2439),
+     new MM("instance`initializer", true, 2440),
+     new MM("addCascadedSend:to:", false, 2441),
+     new MM("beginNewTranslationCycle", false, 2442),
+     new MM("maybeCaptureReceiver", false, 2443),
+     new MM("nlrName", false, 2444),
+     new MM("nlrValuePropertyName", false, 2445),
+     new MM("processIntrinsic:", false, 2446),
+     new MM("processIntrinsicArg:", false, 2447),
+     new MM("processLexicalSend:to:binding:", false, 2448),
+     new MM("processOuterReceiverAtDepth:", false, 2449),
+     new MM("protectedMessage:", false, 2450),
+     new MM("publicMessage:", false, 2451),
+     new MM("selfName", false, 2452),
+     new MM("wrapBodyForNlrHandling:", false, 2453),
+     new MM("wrapBodyNoNlrHandling:", false, 2454),
+     new MM("blockLocalReturnNode:", false, 2455),
+     new MM("blockNode:", false, 2456),
+     new MM("boolNode:", false, 2457),
+     new MM("cascadedSendNode:", false, 2458),
+     new MM("charNode:", false, 2459),
+     new MM("codeBodyNode:", false, 2460),
+     new MM("conditionalNode:", false, 2461),
+     new MM("enclosingObjectNode:", false, 2462),
+     new MM("explicitOuterReceiverNode:", false, 2463),
+     new MM("implicitReceiverSendNode:", false, 2464),
+     new MM("inlinableAsExpressionConditionalNode:", false, 2465),
+     new MM("inlinableConditionalNode:", false, 2466),
+     new MM("inlinedOperatorNode:", false, 2467),
+     new MM("localReadNode:", false, 2468),
+     new MM("localWriteNode:", false, 2469),
+     new MM("loopNode:", false, 2470),
+     new MM("messageNode:", false, 2471),
+     new MM("messagePatternNode:", false, 2472),
+     new MM("methodLocalReturnNode:", false, 2473),
+     new MM("methodNode:", false, 2474),
+     new MM("nilNode:", false, 2475),
+     new MM("nonLocalReturnNode:", false, 2476),
+     new MM("numberNode:", false, 2477),
+     new MM("ordinarySendNode:", false, 2478),
+     new MM("outerSendNode:", false, 2479),
+     new MM("parameterDeclNode:", false, 2480),
+     new MM("propertyCallNode:", false, 2481),
+     new MM("receiverNode:", false, 2482),
+     new MM("returnStatNode:", false, 2483),
+     new MM("schedulerNode:", false, 2484),
+     new MM("selfSendNode:", false, 2485),
+     new MM("stringNode:", false, 2486),
+     new MM("superSendNode:", false, 2487),
+     new MM("symbolNode:", false, 2488),
+     new MM("temporaryDeclNode:", false, 2489),
+     new MM("tupleNode:", false, 2490),
+     new MM("varDeclNode:", false, 2491),
      new MM("init`scopeStack:", true, 0),
      new MM("scopeStack", true, 0),
      new MM("scopeStack:", true, 0),
@@ -56048,11 +56187,6 @@ var mixins = new function () {
     this.$conditionalNode$ = function ($node) {
      var self = this;
      return self._$inlinableConditionalNode$($node);
-    };
-    this.$contextNode$ = function ($node) {
-     var self = this;
-     self._$Error().$signal$("NS2V8 does not support thisContext");
-     return self;
     };
     this.$enclosingObjectNode$ = function ($node) {
      var self = this;
@@ -56380,7 +56514,6 @@ var mixins = new function () {
       this.$charNode$ = this._$charNode$ = $.$charNode$;
       this.$codeBodyNode$ = this._$codeBodyNode$ = $.$codeBodyNode$;
       this.$conditionalNode$ = this._$conditionalNode$ = $.$conditionalNode$;
-      this.$contextNode$ = this._$contextNode$ = $.$contextNode$;
       this.$enclosingObjectNode$ = this._$enclosingObjectNode$ = $.$enclosingObjectNode$;
       this.$explicitOuterReceiverNode$ = this._$explicitOuterReceiverNode$ = $.$explicitOuterReceiverNode$;
       this.$implicitReceiverSendNode$ = this._$implicitReceiverSendNode$ = $.$implicitReceiverSendNode$;
@@ -56698,7 +56831,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Newspeak2V8Compilation`IntermediateClassDeclaration";
    this.name = "Newspeak2V8Compilation`IntermediateClassDeclaration";
-   this.header = 2489;
+   this.header = 2492;
    this.slots = [
     new SM("qualifiedName", true, false),
     new SM("headerSource", true, false),
@@ -56709,23 +56842,23 @@ var mixins = new function () {
     new SM("accessModifier", true, false)
    ];
    this.methods = [
-    new MM("superInit`Newspeak2V8Compilation`IntermediateClassDeclaration", true, 2490),
-    new MM("instance`initializer", true, 2491),
-    new MM("basicNew", false, 2492),
-    new MM("basicNewMeta", false, 2493),
-    new MM("classMethodsMetadata", false, 2494),
-    new MM("copyMethods:", false, 2495),
-    new MM("dnuCatcherFor:", false, 2496),
-    new MM("encodeSource:", false, 2497),
-    new MM("invoke", false, 2498),
-    new MM("invokeMeta", false, 2499),
-    new MM("makeMixin:", false, 2500),
-    new MM("methodsMetadata", false, 2501),
-    new MM("nestedClassesMetadata", false, 2502),
-    new MM("printOn:", false, 2503),
-    new MM("runtimeMetamixin", false, 2504),
-    new MM("runtimeMixin", false, 2505),
-    new MM("slotsMetadata", false, 2506),
+    new MM("superInit`Newspeak2V8Compilation`IntermediateClassDeclaration", true, 2493),
+    new MM("instance`initializer", true, 2494),
+    new MM("basicNew", false, 2495),
+    new MM("basicNewMeta", false, 2496),
+    new MM("classMethodsMetadata", false, 2497),
+    new MM("copyMethods:", false, 2498),
+    new MM("dnuCatcherFor:", false, 2499),
+    new MM("encodeSource:", false, 2500),
+    new MM("invoke", false, 2501),
+    new MM("invokeMeta", false, 2502),
+    new MM("makeMixin:", false, 2503),
+    new MM("methodsMetadata", false, 2504),
+    new MM("nestedClassesMetadata", false, 2505),
+    new MM("printOn:", false, 2506),
+    new MM("runtimeMetamixin", false, 2507),
+    new MM("runtimeMixin", false, 2508),
+    new MM("slotsMetadata", false, 2509),
     new MM("init`qualifiedName:", true, 0),
     new MM("qualifiedName", true, 0),
     new MM("qualifiedName:", true, 0),
@@ -57102,7 +57235,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Newspeak2V8Compilation`IntermediateMethod";
    this.name = "Newspeak2V8Compilation`IntermediateMethod";
-   this.header = 2507;
+   this.header = 2510;
    this.slots = [
     new SM("name", false, false),
     new SM("function", false, false),
@@ -57112,12 +57245,12 @@ var mixins = new function () {
     new SM("accessModifier", false, false)
    ];
    this.methods = [
-    new MM("superInit`Newspeak2V8Compilation`IntermediateMethod", true, 2508),
-    new MM("instance`initializer", true, 2509),
-    new MM("isPrivate", false, 2510),
-    new MM("isProtected", false, 2511),
-    new MM("isPublic", false, 2512),
-    new MM("printOn:", false, 2513),
+    new MM("superInit`Newspeak2V8Compilation`IntermediateMethod", true, 2511),
+    new MM("instance`initializer", true, 2512),
+    new MM("isPrivate", false, 2513),
+    new MM("isProtected", false, 2514),
+    new MM("isPublic", false, 2515),
+    new MM("printOn:", false, 2516),
     new MM("init`name:", true, 0),
     new MM("name", true, 0),
     new MM("init`function:", true, 0),
@@ -57303,7 +57436,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Newspeak2V8Compilation`IntermediateMixin";
    this.name = "Newspeak2V8Compilation`IntermediateMixin";
-   this.header = 2514;
+   this.header = 2517;
    this.slots = [
     new SM("declaration", false, false),
     new SM("isMeta", false, false),
@@ -57312,9 +57445,9 @@ var mixins = new function () {
     new SM("nestedClasses", false, false)
    ];
    this.methods = [
-    new MM("superInit`Newspeak2V8Compilation`IntermediateMixin", true, 2515),
-    new MM("instance`initializer", true, 2516),
-    new MM("qualifiedName", false, 2517),
+    new MM("superInit`Newspeak2V8Compilation`IntermediateMixin", true, 2518),
+    new MM("instance`initializer", true, 2519),
+    new MM("qualifiedName", false, 2520),
     new MM("init`declaration:", true, 0),
     new MM("declaration", true, 0),
     new MM("init`isMeta:", true, 0),
@@ -57450,7 +57583,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Newspeak2V8Compilation`IntermediateSlotDeclaration";
    this.name = "Newspeak2V8Compilation`IntermediateSlotDeclaration";
-   this.header = 2518;
+   this.header = 2521;
    this.slots = [
     new SM("name", false, false),
     new SM("isMutable", false, false),
@@ -57458,9 +57591,9 @@ var mixins = new function () {
     new SM("isSynthetic", true, false)
    ];
    this.methods = [
-    new MM("superInit`Newspeak2V8Compilation`IntermediateSlotDeclaration", true, 2519),
-    new MM("instance`initializer", true, 2520),
-    new MM("printOn:", false, 2521),
+    new MM("superInit`Newspeak2V8Compilation`IntermediateSlotDeclaration", true, 2522),
+    new MM("instance`initializer", true, 2523),
+    new MM("printOn:", false, 2524),
     new MM("init`name:", true, 0),
     new MM("name", true, 0),
     new MM("init`isMutable:", true, 0),
@@ -57591,20 +57724,20 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Newspeak2V8Compilation`NameMangler";
    this.name = "Newspeak2V8Compilation`NameMangler";
-   this.header = 2522;
+   this.header = 2525;
    this.slots = [new SM("specialCharacterManglings", false, false)];
    this.methods = [
-    new MM("superInit`Newspeak2V8Compilation`NameMangler", true, 2523),
-    new MM("instance`initializer", true, 2524),
-    new MM("_mangleSelector:", false, 2525),
-    new MM("fullyQualifiedNameToSimple:", false, 2526),
-    new MM("fullyQualifySimpleName:with:", false, 2527),
-    new MM("mangleLocal:", false, 2528),
-    new MM("mangleProtected:", false, 2529),
-    new MM("manglePublic:", false, 2530),
-    new MM("mangleSlot:", false, 2531),
-    new MM("mangleSynthetic:", false, 2532),
-    new MM("privateDnu", false, 2533),
+    new MM("superInit`Newspeak2V8Compilation`NameMangler", true, 2526),
+    new MM("instance`initializer", true, 2527),
+    new MM("_mangleSelector:", false, 2528),
+    new MM("fullyQualifiedNameToSimple:", false, 2529),
+    new MM("fullyQualifySimpleName:with:", false, 2530),
+    new MM("mangleLocal:", false, 2531),
+    new MM("mangleProtected:", false, 2532),
+    new MM("manglePublic:", false, 2533),
+    new MM("mangleSlot:", false, 2534),
+    new MM("mangleSynthetic:", false, 2535),
+    new MM("privateDnu", false, 2536),
     new MM("init`specialCharacterManglings:", true, 0),
     new MM("specialCharacterManglings", true, 0)
    ];
@@ -57754,7 +57887,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Newspeak2V8Compilation`ProgramBuilder";
    this.name = "Newspeak2V8Compilation`ProgramBuilder";
-   this.header = 2534;
+   this.header = 2537;
    this.slots = [
     new SM("compiler", false, false),
     new SM("mixins", false, false),
@@ -57764,21 +57897,21 @@ var mixins = new function () {
     new SM("resources", false, false)
    ];
    this.methods = [
-    new MM("superInit`Newspeak2V8Compilation`ProgramBuilder", true, 2535),
-    new MM("instance`initializer", true, 2536),
-    new MM("addImageResource:under:", false, 2537),
-    new MM("addStringResource:under:", false, 2538),
-    new MM("applicationSources:", false, 2539),
-    new MM("compileSource:enableIntrinsics:", false, 2540),
-    new MM("main", false, 2541),
-    new MM("namespace", false, 2542),
-    new MM("outputSourcesTo:", false, 2543),
-    new MM("outputTo:", false, 2544),
-    new MM("runtimeMixinNamespace", false, 2545),
-    new MM("runtimeSources:", false, 2546),
-    new MM("script", false, 2547),
-    new MM("sourcesScript", false, 2548),
-    new MM("vmmirror", false, 2549),
+    new MM("superInit`Newspeak2V8Compilation`ProgramBuilder", true, 2538),
+    new MM("instance`initializer", true, 2539),
+    new MM("addImageResource:under:", false, 2540),
+    new MM("addStringResource:under:", false, 2541),
+    new MM("applicationSources:", false, 2542),
+    new MM("compileSource:enableIntrinsics:", false, 2543),
+    new MM("main", false, 2544),
+    new MM("namespace", false, 2545),
+    new MM("outputSourcesTo:", false, 2546),
+    new MM("outputTo:", false, 2547),
+    new MM("runtimeMixinNamespace", false, 2548),
+    new MM("runtimeSources:", false, 2549),
+    new MM("script", false, 2550),
+    new MM("sourcesScript", false, 2551),
+    new MM("vmmirror", false, 2552),
     new MM("init`compiler:", true, 0),
     new MM("compiler", true, 0),
     new MM("init`mixins:", true, 0),
@@ -58328,7 +58461,7 @@ var mixins = new function () {
   var $0 = this;
   this.debug = "Runtime mixin for NewspeakCompilation";
   this.name = "NewspeakCompilation";
-  this.header = 2550;
+  this.header = 2553;
   this.slots = [
    new SM("Dictionary", false, false),
    new SM("OrderedCollection", false, false),
@@ -58356,8 +58489,8 @@ var mixins = new function () {
    new SM("NewspeakCompilation`SymbolTableEntry", true, true)
   ];
   this.methods = [
-   new MM("superInit`NewspeakCompilation", true, 2551),
-   new MM("instance`initializer", true, 2552),
+   new MM("superInit`NewspeakCompilation", true, 2554),
+   new MM("instance`initializer", true, 2555),
    new MM("ClassEntry", true, 0),
    new MM("Compiler", true, 0),
    new MM("LocalEntry", true, 0),
@@ -58745,13 +58878,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakCompilation`ClassEntry";
    this.name = "NewspeakCompilation`ClassEntry";
-   this.header = 2553;
+   this.header = 2556;
    this.slots = [new SM("enclosingClass", true, false)];
    this.methods = [
-    new MM("superInit`NewspeakCompilation`ClassEntry", true, 2554),
-    new MM("instance`initializer", true, 2555),
-    new MM("isClassBinding", false, 2556),
-    new MM("name", false, 2557),
+    new MM("superInit`NewspeakCompilation`ClassEntry", true, 2557),
+    new MM("instance`initializer", true, 2558),
+    new MM("isClassBinding", false, 2559),
+    new MM("name", false, 2560),
     new MM("init`enclosingClass:", true, 0),
     new MM("enclosingClass", true, 0),
     new MM("enclosingClass:", true, 0)
@@ -58845,21 +58978,21 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakCompilation`Compiler";
    this.name = "NewspeakCompilation`Compiler";
-   this.header = 2558;
+   this.header = 2561;
    this.slots = [
     new SM("scopeMap", true, false),
     new SM("NewspeakCompilation`Compiler`Rewriter", true, true),
     new SM("NewspeakCompilation`Compiler`ScopeBuilder", true, true)
    ];
    this.methods = [
-    new MM("superInit`NewspeakCompilation`Compiler", true, 2559),
-    new MM("instance`initializer", true, 2560),
-    new MM("checkForReservedWord:", false, 2561),
-    new MM("setterSelectorFor:", false, 2562),
-    new MM("compileClassHeader:of:into:within:", false, 2563),
-    new MM("compileClassSource:within:", false, 2564),
-    new MM("compileExpressionSource:inContext:inMixin:allowBlackMarket:", false, 2565),
-    new MM("compileMethodSource:within:", false, 2566),
+    new MM("superInit`NewspeakCompilation`Compiler", true, 2562),
+    new MM("instance`initializer", true, 2563),
+    new MM("checkForReservedWord:", false, 2564),
+    new MM("setterSelectorFor:", false, 2565),
+    new MM("compileClassHeader:of:into:within:", false, 2566),
+    new MM("compileClassSource:within:", false, 2567),
+    new MM("compileExpressionSource:inContext:inMixin:allowBlackMarket:", false, 2568),
+    new MM("compileMethodSource:within:", false, 2569),
     new MM("Rewriter", true, 0),
     new MM("ScopeBuilder", true, 0),
     new MM("init`scopeMap:", true, 0),
@@ -58980,7 +59113,7 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter";
     this.name = "NewspeakCompilation`Compiler`Rewriter";
-    this.header = 2567;
+    this.header = 2570;
     this.slots = [
      new SM("scopeStack", false, false),
      new SM("valueExpected", true, false),
@@ -58988,7 +59121,6 @@ var mixins = new function () {
      new SM("NewspeakCompilation`Compiler`Rewriter`BlockLocalReturnAST", true, true),
      new SM("NewspeakCompilation`Compiler`Rewriter`BooleanAST", true, true),
      new SM("NewspeakCompilation`Compiler`Rewriter`ConditionalAST", true, true),
-     new SM("NewspeakCompilation`Compiler`Rewriter`ContextAST", true, true),
      new SM("NewspeakCompilation`Compiler`Rewriter`EnclosingObjectAST", true, true),
      new SM("NewspeakCompilation`Compiler`Rewriter`ImplicitReceiverSendAST", true, true),
      new SM("NewspeakCompilation`Compiler`Rewriter`LocalReadAST", true, true),
@@ -59008,63 +59140,62 @@ var mixins = new function () {
      new SM("NewspeakCompilation`Compiler`Rewriter`TemporaryAST", true, true)
     ];
     this.methods = [
-     new MM("superInit`NewspeakCompilation`Compiler`Rewriter", true, 2568),
-     new MM("instance`initializer", true, 2569),
-     new MM("applyForEffectTo:", false, 2570),
-     new MM("applyForValueTo:", false, 2571),
-     new MM("canInlineSeqexps", false, 2572),
-     new MM("depthOfEnclosingClass:", false, 2573),
-     new MM("emptyBody", false, 2574),
-     new MM("futureFor:", false, 2575),
-     new MM("implicitReceiverNode", false, 2576),
-     new MM("inClosureDuring:", false, 2577),
-     new MM("isImplicitReceiverNode:", false, 2578),
-     new MM("isInlineableConditional:", false, 2579),
-     new MM("isInlineableLoop:", false, 2580),
-     new MM("isOuterNode:", false, 2581),
-     new MM("isRemovableBlock:withArgs:", false, 2582),
-     new MM("isSelfNode:", false, 2583),
-     new MM("isSuperNode:", false, 2584),
-     new MM("offsetOfEnclosingObjectForClass:", false, 2585),
-     new MM("offsetOfImplicitReceiverTarget:", false, 2586),
-     new MM("processEventualSend:", false, 2587),
-     new MM("processImplicitReceiverSend:", false, 2588),
-     new MM("processImplicitReceiverSend:binding:", false, 2589),
-     new MM("processInlineableConditional:", false, 2590),
-     new MM("processInlineableLoop:", false, 2591),
-     new MM("processLocalAccess:of:", false, 2592),
-     new MM("processLocalRead:from:", false, 2593),
-     new MM("processLocalWrite:to:", false, 2594),
-     new MM("processOuterExpression:", false, 2595),
-     new MM("processOuterSend:", false, 2596),
-     new MM("processSelfSend:", false, 2597),
-     new MM("processSetterSend:binding:", false, 2598),
-     new MM("processSuperSend:", false, 2599),
-     new MM("rewriteBlockNode:forValue:", false, 2600),
-     new MM("rewriteInlinedBlockNode:forValue:", false, 2601),
-     new MM("blockNode:", false, 2602),
-     new MM("cascadedSendNode:", false, 2603),
-     new MM("charNode:", false, 2604),
-     new MM("codeBodyNode:", false, 2605),
-     new MM("messageNode:", false, 2606),
-     new MM("messagePatternNode:", false, 2607),
-     new MM("methodNode:", false, 2608),
-     new MM("normalSendNode:", false, 2609),
-     new MM("numberNode:", false, 2610),
-     new MM("returnStatNode:", false, 2611),
-     new MM("setterSendNode:", false, 2612),
-     new MM("stringNode:", false, 2613),
-     new MM("symbolNode:", false, 2614),
-     new MM("tupleNode:", false, 2615),
-     new MM("variableNode:", false, 2616),
-     new MM("currentScope", false, 2617),
-     new MM("popScope", false, 2618),
-     new MM("pushScope:", false, 2619),
-     new MM("pushScopeForNode:", false, 2620),
+     new MM("superInit`NewspeakCompilation`Compiler`Rewriter", true, 2571),
+     new MM("instance`initializer", true, 2572),
+     new MM("applyForEffectTo:", false, 2573),
+     new MM("applyForValueTo:", false, 2574),
+     new MM("canInlineSeqexps", false, 2575),
+     new MM("depthOfEnclosingClass:", false, 2576),
+     new MM("emptyBody", false, 2577),
+     new MM("futureFor:", false, 2578),
+     new MM("implicitReceiverNode", false, 2579),
+     new MM("inClosureDuring:", false, 2580),
+     new MM("isImplicitReceiverNode:", false, 2581),
+     new MM("isInlineableConditional:", false, 2582),
+     new MM("isInlineableLoop:", false, 2583),
+     new MM("isOuterNode:", false, 2584),
+     new MM("isRemovableBlock:withArgs:", false, 2585),
+     new MM("isSelfNode:", false, 2586),
+     new MM("isSuperNode:", false, 2587),
+     new MM("offsetOfEnclosingObjectForClass:", false, 2588),
+     new MM("offsetOfImplicitReceiverTarget:", false, 2589),
+     new MM("processEventualSend:", false, 2590),
+     new MM("processImplicitReceiverSend:", false, 2591),
+     new MM("processImplicitReceiverSend:binding:", false, 2592),
+     new MM("processInlineableConditional:", false, 2593),
+     new MM("processInlineableLoop:", false, 2594),
+     new MM("processLocalAccess:of:", false, 2595),
+     new MM("processLocalRead:from:", false, 2596),
+     new MM("processLocalWrite:to:", false, 2597),
+     new MM("processOuterExpression:", false, 2598),
+     new MM("processOuterSend:", false, 2599),
+     new MM("processSelfSend:", false, 2600),
+     new MM("processSetterSend:binding:", false, 2601),
+     new MM("processSuperSend:", false, 2602),
+     new MM("rewriteBlockNode:forValue:", false, 2603),
+     new MM("rewriteInlinedBlockNode:forValue:", false, 2604),
+     new MM("blockNode:", false, 2605),
+     new MM("cascadedSendNode:", false, 2606),
+     new MM("charNode:", false, 2607),
+     new MM("codeBodyNode:", false, 2608),
+     new MM("messageNode:", false, 2609),
+     new MM("messagePatternNode:", false, 2610),
+     new MM("methodNode:", false, 2611),
+     new MM("normalSendNode:", false, 2612),
+     new MM("numberNode:", false, 2613),
+     new MM("returnStatNode:", false, 2614),
+     new MM("setterSendNode:", false, 2615),
+     new MM("stringNode:", false, 2616),
+     new MM("symbolNode:", false, 2617),
+     new MM("tupleNode:", false, 2618),
+     new MM("variableNode:", false, 2619),
+     new MM("currentScope", false, 2620),
+     new MM("popScope", false, 2621),
+     new MM("pushScope:", false, 2622),
+     new MM("pushScopeForNode:", false, 2623),
      new MM("BlockLocalReturnAST", true, 0),
      new MM("BooleanAST", true, 0),
      new MM("ConditionalAST", true, 0),
-     new MM("ContextAST", true, 0),
      new MM("EnclosingObjectAST", true, 0),
      new MM("ImplicitReceiverSendAST", true, 0),
      new MM("LocalReadAST", true, 0),
@@ -59099,9 +59230,6 @@ var mixins = new function () {
      new MM("init`NewspeakCompilation`Compiler`Rewriter`ConditionalAST:", true, 0),
      new MM("NewspeakCompilation`Compiler`Rewriter`ConditionalAST", true, 0),
      new MM("NewspeakCompilation`Compiler`Rewriter`ConditionalAST:", true, 0),
-     new MM("init`NewspeakCompilation`Compiler`Rewriter`ContextAST:", true, 0),
-     new MM("NewspeakCompilation`Compiler`Rewriter`ContextAST", true, 0),
-     new MM("NewspeakCompilation`Compiler`Rewriter`ContextAST:", true, 0),
      new MM("init`NewspeakCompilation`Compiler`Rewriter`EnclosingObjectAST:", true, 0),
      new MM("NewspeakCompilation`Compiler`Rewriter`EnclosingObjectAST", true, 0),
      new MM("NewspeakCompilation`Compiler`Rewriter`EnclosingObjectAST:", true, 0),
@@ -59158,7 +59286,6 @@ var mixins = new function () {
      "NewspeakCompilation`Compiler`Rewriter`BlockLocalReturnAST",
      "NewspeakCompilation`Compiler`Rewriter`BooleanAST",
      "NewspeakCompilation`Compiler`Rewriter`ConditionalAST",
-     "NewspeakCompilation`Compiler`Rewriter`ContextAST",
      "NewspeakCompilation`Compiler`Rewriter`EnclosingObjectAST",
      "NewspeakCompilation`Compiler`Rewriter`ImplicitReceiverSendAST",
      "NewspeakCompilation`Compiler`Rewriter`LocalReadAST",
@@ -59526,11 +59653,6 @@ var mixins = new function () {
      };
      if ($selector.$$equal("true")) {
       return self._$BooleanAST().$withValue$(true).$copyPositionFrom$($message);
-     } else {
-      nil;
-     };
-     if ($selector.$$equal("thisContext")) {
-      return self._$ContextAST().$new().$copyPositionFrom$($message);
      } else {
       nil;
      };
@@ -60103,11 +60225,6 @@ var mixins = new function () {
      } else {
       nil;
      };
-     if ($aNode.$name().$$equal("thisContext")) {
-      return self._$ContextAST().$new().$copyPositionFrom$($aNode);
-     } else {
-      nil;
-     };
      self._$assert$message$(function () {
       return $aNode.$name().$$equal("super").$not();
      }, "\"super\" is not a valid expression");
@@ -60162,16 +60279,6 @@ var mixins = new function () {
       this.$NewspeakCompilation$Compiler$Rewriter$ConditionalAST$slot = vmmirror.$applyMixin$toSuperclass$withEnclosingObjects$(mixin, superclass, enclosingObjects);
      };
      return this.$NewspeakCompilation$Compiler$Rewriter$ConditionalAST$slot;
-    };
-    this.$ContextAST = function () {
-     if (nil === this.$NewspeakCompilation$Compiler$Rewriter$ContextAST$slot) {
-      var self = this;
-      var superclass = self.$enclosingObjects$NewspeakCompilation$Compiler$Rewriter[1]._$AST();
-      var enclosingObjects = [this].concat(this.$enclosingObjects$NewspeakCompilation$Compiler$Rewriter);
-      var mixin = $.$NewspeakCompilation$Compiler$Rewriter$ContextAST;
-      this.$NewspeakCompilation$Compiler$Rewriter$ContextAST$slot = vmmirror.$applyMixin$toSuperclass$withEnclosingObjects$(mixin, superclass, enclosingObjects);
-     };
-     return this.$NewspeakCompilation$Compiler$Rewriter$ContextAST$slot;
     };
     this.$EnclosingObjectAST = function () {
      if (nil === this.$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST$slot) {
@@ -60405,17 +60512,6 @@ var mixins = new function () {
      this.$NewspeakCompilation$Compiler$Rewriter$ConditionalAST$slot = v;
      return this;
     };
-    this.$init$NewspeakCompilation$Compiler$Rewriter$ContextAST$ = function (v) {
-     this.$NewspeakCompilation$Compiler$Rewriter$ContextAST$slot = v;
-     return this;
-    };
-    this.$NewspeakCompilation$Compiler$Rewriter$ContextAST = function () {
-     return this.$NewspeakCompilation$Compiler$Rewriter$ContextAST$slot;
-    };
-    this.$NewspeakCompilation$Compiler$Rewriter$ContextAST$ = function (v) {
-     this.$NewspeakCompilation$Compiler$Rewriter$ContextAST$slot = v;
-     return this;
-    };
     this.$init$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST$ = function (v) {
      this.$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST$slot = v;
      return this;
@@ -60608,12 +60704,12 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`BlockLocalReturnAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`BlockLocalReturnAST";
-     this.header = 2621;
+     this.header = 2624;
      this.slots = [];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`BlockLocalReturnAST", true, 2622),
-      new MM("instance`initializer", true, 2623),
-      new MM("apply:", false, 2624)
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`BlockLocalReturnAST", true, 2625),
+      new MM("instance`initializer", true, 2626),
+      new MM("apply:", false, 2627)
      ];
      this.nestedClasses = [];
      this.applications = [];
@@ -60684,15 +60780,15 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`BooleanAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`BooleanAST";
-     this.header = 2625;
+     this.header = 2628;
      this.slots = [new SM("value", false, false)];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`BooleanAST", true, 2626),
-      new MM("instance`initializer", true, 2627),
-      new MM("apply:", false, 2628),
-      new MM("isBoolNode", false, 2629),
-      new MM("name", false, 2630),
-      new MM("printOn:", false, 2631),
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`BooleanAST", true, 2629),
+      new MM("instance`initializer", true, 2630),
+      new MM("apply:", false, 2631),
+      new MM("isBoolNode", false, 2632),
+      new MM("name", false, 2633),
+      new MM("printOn:", false, 2634),
       new MM("init`value:", true, 0),
       new MM("value", true, 0)
      ];
@@ -60794,7 +60890,7 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`ConditionalAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`ConditionalAST";
-     this.header = 2632;
+     this.header = 2635;
      this.slots = [
       new SM("condition", false, false),
       new SM("ifTrue", false, false),
@@ -60803,10 +60899,10 @@ var mixins = new function () {
       new SM("forValue", true, false)
      ];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`ConditionalAST", true, 2633),
-      new MM("instance`initializer", true, 2634),
-      new MM("isExpressionNode", false, 2635),
-      new MM("apply:", false, 2636),
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`ConditionalAST", true, 2636),
+      new MM("instance`initializer", true, 2637),
+      new MM("isExpressionNode", false, 2638),
+      new MM("apply:", false, 2639),
       new MM("init`condition:", true, 0),
       new MM("condition", true, 0),
       new MM("init`ifTrue:", true, 0),
@@ -60937,7 +61033,7 @@ var mixins = new function () {
       this.slots = [];
       this.methods = [
        new MM("if:is:then:else:", true, 0),
-       new MM("if:is:then:", false, 2637)
+       new MM("if:is:then:", false, 2640)
       ];
       this.nestedClasses = [];
       this.$if$is$then$else$ = function ($cond, $ifTrue_, $t, $e) {
@@ -60967,108 +61063,19 @@ var mixins = new function () {
      }();
      this.meta.nonMeta = this;
     }();
-    this.$NewspeakCompilation$Compiler$Rewriter$ContextAST = new function () {
-     var $ = this;
-     var $3 = this;
-     this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`ContextAST";
-     this.name = "NewspeakCompilation`Compiler`Rewriter`ContextAST";
-     this.header = 2638;
-     this.slots = [];
-     this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`ContextAST", true, 2639),
-      new MM("instance`initializer", true, 2640),
-      new MM("apply:", false, 2641),
-      new MM("isContextNode", false, 2642),
-      new MM("printOn:", false, 2643)
-     ];
-     this.nestedClasses = [];
-     this.applications = [];
-     this.$superInit$NewspeakCompilation$Compiler$Rewriter$ContextAST = function () {
-      var self = this;
-      self.$super$NewspeakCompilation$Compiler$Rewriter$ContextAST$slot._$instance$initializer.call(self);
-      return self;
-     };
-     this.$instance$initializer = function () {
-      var self = this;
-      self._$superInit$NewspeakCompilation$Compiler$Rewriter$ContextAST();
-      return self;
-     };
-     this.$apply$ = function ($tool) {
-      var self = this;
-      return $tool.$contextNode$(self);
-     };
-     this.$isContextNode = function () {
-      var self = this;
-      return true;
-     };
-     this.$printOn$ = function ($stream) {
-      var self = this;
-      $stream.$nextPutAll$("ContextAST");
-      return self;
-     };
-     this.invoke = function (runtimeSuperclass, enclosingObjects) {
-      function constructRuntimeClass (superBasicNew) {
-       this.debug = "Runtime class for NewspeakCompilation`Compiler`Rewriter`ContextAST";
-       this._$superInit$NewspeakCompilation$Compiler$Rewriter$ContextAST = $.$superInit$NewspeakCompilation$Compiler$Rewriter$ContextAST;
-       this.$superInit$NewspeakCompilation$Compiler$Rewriter$ContextAST = dnuCatcher("$superInit$NewspeakCompilation$Compiler$Rewriter$ContextAST");
-       this.$instance$initializer = this._$instance$initializer = $.$instance$initializer;
-       this.$apply$ = this._$apply$ = $.$apply$;
-       this.$isContextNode = this._$isContextNode = $.$isContextNode;
-       this.$printOn$ = this._$printOn$ = $.$printOn$;
-       this.$enclosingObjects$NewspeakCompilation$Compiler$Rewriter$ContextAST = enclosingObjects;
-       this.$super$NewspeakCompilation$Compiler$Rewriter$ContextAST$slot = runtimeSuperclass;
-       this["NewspeakCompilation`Compiler`Rewriter`ContextAST"] = function () {
-        superBasicNew.call(this);
-       };
-       this.basicNew = this["NewspeakCompilation`Compiler`Rewriter`ContextAST"];
-       this.basicNew.prototype = this;
-       this.meta = null;
-       this.newspeakClass = null;
-      };
-      constructRuntimeClass.prototype = runtimeSuperclass;
-      return new constructRuntimeClass(runtimeSuperclass.basicNew);
-     };
-     this.meta = new function () {
-      var $ = this;
-      this.debug = "Runtime meta mixin for NewspeakCompilation`Compiler`Rewriter`ContextAST";
-      this.slots = [];
-      this.methods = [new MM("new", true, 0)];
-      this.nestedClasses = [];
-      this.$new = function () {
-       return (new this.nonMeta.basicNew()).$instance$initializer();
-      };
-      this.invoke = function (runtimeSuperclass, enclosingObjects) {
-       function constructRuntimeClass (superBasicNew) {
-        this.debug = "Runtime meta class for NewspeakCompilation`Compiler`Rewriter`ContextAST";
-        this.$new = this._$new = $.$new;
-        this.$enclosingObjects$NewspeakCompilation$Compiler$Rewriter$ContextAST = enclosingObjects;
-        this.$super$NewspeakCompilation$Compiler$Rewriter$ContextAST = runtimeSuperclass;
-        this.basicNew = function () {
-         superBasicNew.call(this);
-        };
-        this.basicNew.prototype = this;
-        this.nonMeta = null;
-        this.newspeakClass = null;
-       };
-       constructRuntimeClass.prototype = runtimeSuperclass;
-       return new constructRuntimeClass(runtimeSuperclass.basicNew);
-      };
-     }();
-     this.meta.nonMeta = this;
-    }();
     this.$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST = new function () {
      var $ = this;
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`EnclosingObjectAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`EnclosingObjectAST";
-     this.header = 2644;
+     this.header = 2641;
      this.slots = [new SM("depth", true, false)];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`EnclosingObjectAST", true, 2645),
-      new MM("instance`initializer", true, 2646),
-      new MM("isExplicitRcvrNode", false, 2647),
-      new MM("isExpressionNode", false, 2648),
-      new MM("apply:", false, 2649),
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`EnclosingObjectAST", true, 2642),
+      new MM("instance`initializer", true, 2643),
+      new MM("isExplicitRcvrNode", false, 2644),
+      new MM("isExpressionNode", false, 2645),
+      new MM("apply:", false, 2646),
       new MM("init`depth:", true, 0),
       new MM("depth", true, 0),
       new MM("depth:", true, 0)
@@ -61167,16 +61174,16 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`ImplicitReceiverSendAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`ImplicitReceiverSendAST";
-     this.header = 2650;
+     this.header = 2647;
      this.slots = [
       new SM("depth", true, false),
       new SM("binding", true, false)
      ];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`ImplicitReceiverSendAST", true, 2651),
-      new MM("instance`initializer", true, 2652),
-      new MM("isImplicitReceiverSendNode", false, 2653),
-      new MM("apply:", false, 2654),
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`ImplicitReceiverSendAST", true, 2648),
+      new MM("instance`initializer", true, 2649),
+      new MM("isImplicitReceiverSendNode", false, 2650),
+      new MM("apply:", false, 2651),
       new MM("init`depth:", true, 0),
       new MM("depth", true, 0),
       new MM("depth:", true, 0),
@@ -61288,14 +61295,14 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`LocalReadAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`LocalReadAST";
-     this.header = 2655;
+     this.header = 2652;
      this.slots = [new SM("variable", false, false)];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`LocalReadAST", true, 2656),
-      new MM("instance`initializer", true, 2657),
-      new MM("apply:", false, 2658),
-      new MM("isExpressionNode", false, 2659),
-      new MM("name", false, 2660),
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`LocalReadAST", true, 2653),
+      new MM("instance`initializer", true, 2654),
+      new MM("apply:", false, 2655),
+      new MM("isExpressionNode", false, 2656),
+      new MM("name", false, 2657),
       new MM("init`variable:", true, 0),
       new MM("variable", true, 0)
      ];
@@ -61389,17 +61396,17 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`LocalWriteAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`LocalWriteAST";
-     this.header = 2661;
+     this.header = 2658;
      this.slots = [
       new SM("variable", false, false),
       new SM("value", false, false)
      ];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`LocalWriteAST", true, 2662),
-      new MM("instance`initializer", true, 2663),
-      new MM("apply:", false, 2664),
-      new MM("isExpressionNode", false, 2665),
-      new MM("name", false, 2666),
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`LocalWriteAST", true, 2659),
+      new MM("instance`initializer", true, 2660),
+      new MM("apply:", false, 2661),
+      new MM("isExpressionNode", false, 2662),
+      new MM("name", false, 2663),
       new MM("init`variable:", true, 0),
       new MM("variable", true, 0),
       new MM("init`value:", true, 0),
@@ -61506,7 +61513,7 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`LoopAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`LoopAST";
-     this.header = 2667;
+     this.header = 2664;
      this.slots = [
       new SM("prologue", true, false),
       new SM("condition", true, false),
@@ -61515,16 +61522,16 @@ var mixins = new function () {
       new SM("forValue", true, false)
      ];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`LoopAST", true, 2668),
-      new MM("instance`initializer", true, 2669),
-      new MM("do:timesRepeat:", false, 2670),
-      new MM("from:to:by:do:", false, 2671),
-      new MM("from:to:do:", false, 2672),
-      new MM("repeat:", false, 2673),
-      new MM("while:do:", false, 2674),
-      new MM("while:is:do:", false, 2675),
-      new MM("isExpressionNode", false, 2676),
-      new MM("apply:", false, 2677),
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`LoopAST", true, 2665),
+      new MM("instance`initializer", true, 2666),
+      new MM("do:timesRepeat:", false, 2667),
+      new MM("from:to:by:do:", false, 2668),
+      new MM("from:to:do:", false, 2669),
+      new MM("repeat:", false, 2670),
+      new MM("while:do:", false, 2671),
+      new MM("while:is:do:", false, 2672),
+      new MM("isExpressionNode", false, 2673),
+      new MM("apply:", false, 2674),
       new MM("init`prologue:", true, 0),
       new MM("prologue", true, 0),
       new MM("prologue:", true, 0),
@@ -61866,12 +61873,12 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`MethodLocalReturnAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`MethodLocalReturnAST";
-     this.header = 2678;
+     this.header = 2675;
      this.slots = [];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`MethodLocalReturnAST", true, 2679),
-      new MM("instance`initializer", true, 2680),
-      new MM("apply:", false, 2681)
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`MethodLocalReturnAST", true, 2676),
+      new MM("instance`initializer", true, 2677),
+      new MM("apply:", false, 2678)
      ];
      this.nestedClasses = [];
      this.applications = [];
@@ -61942,14 +61949,14 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`NilAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`NilAST";
-     this.header = 2682;
+     this.header = 2679;
      this.slots = [];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`NilAST", true, 2683),
-      new MM("instance`initializer", true, 2684),
-      new MM("apply:", false, 2685),
-      new MM("isNilNode", false, 2686),
-      new MM("name", false, 2687)
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`NilAST", true, 2680),
+      new MM("instance`initializer", true, 2681),
+      new MM("apply:", false, 2682),
+      new MM("isNilNode", false, 2683),
+      new MM("name", false, 2684)
      ];
      this.nestedClasses = [];
      this.applications = [];
@@ -62030,12 +62037,12 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`NonlocalReturnAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`NonlocalReturnAST";
-     this.header = 2688;
+     this.header = 2685;
      this.slots = [];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`NonlocalReturnAST", true, 2689),
-      new MM("instance`initializer", true, 2690),
-      new MM("apply:", false, 2691)
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`NonlocalReturnAST", true, 2686),
+      new MM("instance`initializer", true, 2687),
+      new MM("apply:", false, 2688)
      ];
      this.nestedClasses = [];
      this.applications = [];
@@ -62106,16 +62113,16 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`OrdinarySendAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`OrdinarySendAST";
-     this.header = 2692;
+     this.header = 2689;
      this.slots = [
       new SM("receiver", false, false),
       new SM("message", false, false)
      ];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`OrdinarySendAST", true, 2693),
-      new MM("instance`initializer", true, 2694),
-      new MM("apply:", false, 2695),
-      new MM("isNormalSendNode", false, 2696),
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`OrdinarySendAST", true, 2690),
+      new MM("instance`initializer", true, 2691),
+      new MM("apply:", false, 2692),
+      new MM("isNormalSendNode", false, 2693),
       new MM("init`receiver:", true, 0),
       new MM("receiver", true, 0),
       new MM("init`message:", true, 0),
@@ -62217,16 +62224,16 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`OuterSendAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`OuterSendAST";
-     this.header = 2697;
+     this.header = 2694;
      this.slots = [
       new SM("depth", true, false),
       new SM("binding", true, false)
      ];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`OuterSendAST", true, 2698),
-      new MM("instance`initializer", true, 2699),
-      new MM("isOuterSendNode", false, 2700),
-      new MM("apply:", false, 2701),
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`OuterSendAST", true, 2695),
+      new MM("instance`initializer", true, 2696),
+      new MM("isOuterSendNode", false, 2697),
+      new MM("apply:", false, 2698),
       new MM("init`depth:", true, 0),
       new MM("depth", true, 0),
       new MM("depth:", true, 0),
@@ -62338,17 +62345,17 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`ParameterAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`ParameterAST";
-     this.header = 2702;
+     this.header = 2699;
      this.slots = [
       new SM("name", false, false),
       new SM("type", false, false)
      ];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`ParameterAST", true, 2703),
-      new MM("instance`initializer", true, 2704),
-      new MM("apply:", false, 2705),
-      new MM("isVarDeclNode", false, 2706),
-      new MM("printOn:", false, 2707),
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`ParameterAST", true, 2700),
+      new MM("instance`initializer", true, 2701),
+      new MM("apply:", false, 2702),
+      new MM("isVarDeclNode", false, 2703),
+      new MM("printOn:", false, 2704),
       new MM("init`name:", true, 0),
       new MM("name", true, 0),
       new MM("init`type:", true, 0),
@@ -62460,14 +62467,14 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`ReceiverAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`ReceiverAST";
-     this.header = 2708;
+     this.header = 2705;
      this.slots = [];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`ReceiverAST", true, 2709),
-      new MM("instance`initializer", true, 2710),
-      new MM("apply:", false, 2711),
-      new MM("isExpressionNode", false, 2712),
-      new MM("isReceiverNode", false, 2713)
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`ReceiverAST", true, 2706),
+      new MM("instance`initializer", true, 2707),
+      new MM("apply:", false, 2708),
+      new MM("isExpressionNode", false, 2709),
+      new MM("isReceiverNode", false, 2710)
      ];
      this.nestedClasses = [];
      this.applications = [];
@@ -62548,13 +62555,13 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`ReturnAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`ReturnAST";
-     this.header = 2714;
+     this.header = 2711;
      this.slots = [new SM("expression", false, false)];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`ReturnAST", true, 2715),
-      new MM("instance`initializer", true, 2716),
-      new MM("isExpressionNode", false, 2717),
-      new MM("isReturnStatNode", false, 2718),
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`ReturnAST", true, 2712),
+      new MM("instance`initializer", true, 2713),
+      new MM("isExpressionNode", false, 2714),
+      new MM("isReturnStatNode", false, 2715),
       new MM("init`expression:", true, 0),
       new MM("expression", true, 0)
      ];
@@ -62643,14 +62650,14 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`SelfSendAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`SelfSendAST";
-     this.header = 2719;
+     this.header = 2716;
      this.slots = [new SM("binding", true, false)];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`SelfSendAST", true, 2720),
-      new MM("instance`initializer", true, 2721),
-      new MM("isSelfSendNode", false, 2722),
-      new MM("receiver", false, 2723),
-      new MM("apply:", false, 2724),
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`SelfSendAST", true, 2717),
+      new MM("instance`initializer", true, 2718),
+      new MM("isSelfSendNode", false, 2719),
+      new MM("receiver", false, 2720),
+      new MM("apply:", false, 2721),
       new MM("init`binding:", true, 0),
       new MM("binding", true, 0),
       new MM("binding:", true, 0)
@@ -62749,13 +62756,13 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`SendAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`SendAST";
-     this.header = 2725;
+     this.header = 2722;
      this.slots = [new SM("message", true, false)];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`SendAST", true, 2726),
-      new MM("instance`initializer", true, 2727),
-      new MM("isExpressionNode", false, 2728),
-      new MM("isSendNode", false, 2729),
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`SendAST", true, 2723),
+      new MM("instance`initializer", true, 2724),
+      new MM("isExpressionNode", false, 2725),
+      new MM("isSendNode", false, 2726),
       new MM("init`message:", true, 0),
       new MM("message", true, 0),
       new MM("message:", true, 0)
@@ -62849,13 +62856,13 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`SuperSendAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`SuperSendAST";
-     this.header = 2730;
+     this.header = 2727;
      this.slots = [];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`SuperSendAST", true, 2731),
-      new MM("instance`initializer", true, 2732),
-      new MM("isSuperSendNode", false, 2733),
-      new MM("apply:", false, 2734)
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`SuperSendAST", true, 2728),
+      new MM("instance`initializer", true, 2729),
+      new MM("isSuperSendNode", false, 2730),
+      new MM("apply:", false, 2731)
      ];
      this.nestedClasses = [];
      this.applications = [];
@@ -62931,18 +62938,18 @@ var mixins = new function () {
      var $3 = this;
      this.debug = "Runtime mixin for NewspeakCompilation`Compiler`Rewriter`TemporaryAST";
      this.name = "NewspeakCompilation`Compiler`Rewriter`TemporaryAST";
-     this.header = 2735;
+     this.header = 2732;
      this.slots = [
       new SM("name", false, false),
       new SM("type", false, false)
      ];
      this.methods = [
-      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`TemporaryAST", true, 2736),
-      new MM("instance`initializer", true, 2737),
-      new MM("apply:", false, 2738),
-      new MM("isTemporaryAST", false, 2739),
-      new MM("isVarDeclNode", false, 2740),
-      new MM("printOn:", false, 2741),
+      new MM("superInit`NewspeakCompilation`Compiler`Rewriter`TemporaryAST", true, 2733),
+      new MM("instance`initializer", true, 2734),
+      new MM("apply:", false, 2735),
+      new MM("isTemporaryAST", false, 2736),
+      new MM("isVarDeclNode", false, 2737),
+      new MM("printOn:", false, 2738),
       new MM("init`name:", true, 0),
       new MM("name", true, 0),
       new MM("init`type:", true, 0),
@@ -63058,7 +63065,6 @@ var mixins = new function () {
     this.$NewspeakCompilation$Compiler$Rewriter$BlockLocalReturnAST.enclosingMixin = this;
     this.$NewspeakCompilation$Compiler$Rewriter$BooleanAST.enclosingMixin = this;
     this.$NewspeakCompilation$Compiler$Rewriter$ConditionalAST.enclosingMixin = this;
-    this.$NewspeakCompilation$Compiler$Rewriter$ContextAST.enclosingMixin = this;
     this.$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST.enclosingMixin = this;
     this.$NewspeakCompilation$Compiler$Rewriter$ImplicitReceiverSendAST.enclosingMixin = this;
     this.$NewspeakCompilation$Compiler$Rewriter$LocalReadAST.enclosingMixin = this;
@@ -63170,7 +63176,6 @@ var mixins = new function () {
       this.$BlockLocalReturnAST = this._$BlockLocalReturnAST = $.$BlockLocalReturnAST;
       this.$BooleanAST = this._$BooleanAST = $.$BooleanAST;
       this.$ConditionalAST = this._$ConditionalAST = $.$ConditionalAST;
-      this.$ContextAST = this._$ContextAST = $.$ContextAST;
       this._$EnclosingObjectAST = $.$EnclosingObjectAST;
       this.$EnclosingObjectAST = dnuCatcher("$EnclosingObjectAST");
       this.$ImplicitReceiverSendAST = this._$ImplicitReceiverSendAST = $.$ImplicitReceiverSendAST;
@@ -63217,9 +63222,6 @@ var mixins = new function () {
       this.$init$NewspeakCompilation$Compiler$Rewriter$ConditionalAST$ = this._$init$NewspeakCompilation$Compiler$Rewriter$ConditionalAST$ = $.$init$NewspeakCompilation$Compiler$Rewriter$ConditionalAST$;
       this.$NewspeakCompilation$Compiler$Rewriter$ConditionalAST = this._$NewspeakCompilation$Compiler$Rewriter$ConditionalAST = $.$NewspeakCompilation$Compiler$Rewriter$ConditionalAST;
       this.$NewspeakCompilation$Compiler$Rewriter$ConditionalAST$ = this._$NewspeakCompilation$Compiler$Rewriter$ConditionalAST$ = $.$NewspeakCompilation$Compiler$Rewriter$ConditionalAST$;
-      this.$init$NewspeakCompilation$Compiler$Rewriter$ContextAST$ = this._$init$NewspeakCompilation$Compiler$Rewriter$ContextAST$ = $.$init$NewspeakCompilation$Compiler$Rewriter$ContextAST$;
-      this.$NewspeakCompilation$Compiler$Rewriter$ContextAST = this._$NewspeakCompilation$Compiler$Rewriter$ContextAST = $.$NewspeakCompilation$Compiler$Rewriter$ContextAST;
-      this.$NewspeakCompilation$Compiler$Rewriter$ContextAST$ = this._$NewspeakCompilation$Compiler$Rewriter$ContextAST$ = $.$NewspeakCompilation$Compiler$Rewriter$ContextAST$;
       this.$init$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST$ = this._$init$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST$ = $.$init$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST$;
       this.$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST = this._$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST = $.$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST;
       this.$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST$ = this._$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST$ = $.$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST$;
@@ -63281,7 +63283,6 @@ var mixins = new function () {
        this.$NewspeakCompilation$Compiler$Rewriter$BlockLocalReturnAST$slot = nil;
        this.$NewspeakCompilation$Compiler$Rewriter$BooleanAST$slot = nil;
        this.$NewspeakCompilation$Compiler$Rewriter$ConditionalAST$slot = nil;
-       this.$NewspeakCompilation$Compiler$Rewriter$ContextAST$slot = nil;
        this.$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST$slot = nil;
        this.$NewspeakCompilation$Compiler$Rewriter$ImplicitReceiverSendAST$slot = nil;
        this.$NewspeakCompilation$Compiler$Rewriter$LocalReadAST$slot = nil;
@@ -63341,46 +63342,46 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for NewspeakCompilation`Compiler`ScopeBuilder";
     this.name = "NewspeakCompilation`Compiler`ScopeBuilder";
-    this.header = 2742;
+    this.header = 2739;
     this.slots = [
      new SM("scopeStack", false, false),
      new SM("currentDepth", true, false)
     ];
     this.methods = [
-     new MM("superInit`NewspeakCompilation`Compiler`ScopeBuilder", true, 2743),
-     new MM("instance`initializer", true, 2744),
-     new MM("buildScopeFor:", false, 2745),
-     new MM("incrementalScopeFor:", false, 2746),
-     new MM("blockNode:", false, 2747),
-     new MM("cascadedSendNode:", false, 2748),
-     new MM("charNode:", false, 2749),
-     new MM("classHeaderNode:", false, 2750),
-     new MM("classNode:", false, 2751),
-     new MM("codeBodyNode:", false, 2752),
-     new MM("keywordPatternNode:", false, 2753),
-     new MM("literalPatternNode:", false, 2754),
-     new MM("messageNode:", false, 2755),
-     new MM("messagePatternNode:", false, 2756),
-     new MM("methodNode:", false, 2757),
-     new MM("mixinApplication:", false, 2758),
-     new MM("mixinApplicationClass:", false, 2759),
-     new MM("mixinClassNode:", false, 2760),
-     new MM("normalSendNode:", false, 2761),
-     new MM("numberNode:", false, 2762),
-     new MM("returnStatNode:", false, 2763),
-     new MM("setterSendNode:", false, 2764),
-     new MM("sideNode:", false, 2765),
-     new MM("stringNode:", false, 2766),
-     new MM("symbolNode:", false, 2767),
-     new MM("tupleNode:", false, 2768),
-     new MM("varDeclNode:", false, 2769),
-     new MM("variableNode:", false, 2770),
-     new MM("wildcardPatternNode:", false, 2771),
-     new MM("currentScope", false, 2772),
-     new MM("isPseudoVariableNode:", false, 2773),
-     new MM("nestScope:", false, 2774),
-     new MM("popScope", false, 2775),
-     new MM("pushScope:", false, 2776),
+     new MM("superInit`NewspeakCompilation`Compiler`ScopeBuilder", true, 2740),
+     new MM("instance`initializer", true, 2741),
+     new MM("buildScopeFor:", false, 2742),
+     new MM("incrementalScopeFor:", false, 2743),
+     new MM("blockNode:", false, 2744),
+     new MM("cascadedSendNode:", false, 2745),
+     new MM("charNode:", false, 2746),
+     new MM("classHeaderNode:", false, 2747),
+     new MM("classNode:", false, 2748),
+     new MM("codeBodyNode:", false, 2749),
+     new MM("keywordPatternNode:", false, 2750),
+     new MM("literalPatternNode:", false, 2751),
+     new MM("messageNode:", false, 2752),
+     new MM("messagePatternNode:", false, 2753),
+     new MM("methodNode:", false, 2754),
+     new MM("mixinApplication:", false, 2755),
+     new MM("mixinApplicationClass:", false, 2756),
+     new MM("mixinClassNode:", false, 2757),
+     new MM("normalSendNode:", false, 2758),
+     new MM("numberNode:", false, 2759),
+     new MM("returnStatNode:", false, 2760),
+     new MM("setterSendNode:", false, 2761),
+     new MM("sideNode:", false, 2762),
+     new MM("stringNode:", false, 2763),
+     new MM("symbolNode:", false, 2764),
+     new MM("tupleNode:", false, 2765),
+     new MM("varDeclNode:", false, 2766),
+     new MM("variableNode:", false, 2767),
+     new MM("wildcardPatternNode:", false, 2768),
+     new MM("currentScope", false, 2769),
+     new MM("isPseudoVariableNode:", false, 2770),
+     new MM("nestScope:", false, 2771),
+     new MM("popScope", false, 2772),
+     new MM("pushScope:", false, 2773),
      new MM("init`scopeStack:", true, 0),
      new MM("scopeStack", true, 0),
      new MM("init`currentDepth:", true, 0),
@@ -63691,7 +63692,7 @@ var mixins = new function () {
     };
     this.$isPseudoVariableNode$ = function ($aNode) {
      var self = this;
-     return $aNode.$name().$$equal("self") || ($aNode.$name().$$equal("super") || ($aNode.$name().$$equal("outer") || $aNode.$name().$$equal("thisContext")));
+     return $aNode.$name().$$equal("self") || ($aNode.$name().$$equal("super") || $aNode.$name().$$equal("outer"));
     };
     this.$nestScope$ = function ($s) {
      var self = this;
@@ -63801,7 +63802,7 @@ var mixins = new function () {
      this.slots = [];
      this.methods = [
       new MM("nestedIn:atLevel:", true, 0),
-      new MM("new", false, 2777)
+      new MM("new", false, 2774)
      ];
      this.nestedClasses = [];
      this.$nestedIn$atLevel$ = function ($initialScope, $initialDepth) {
@@ -63912,7 +63913,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakCompilation`LocalEntry";
    this.name = "NewspeakCompilation`LocalEntry";
-   this.header = 2778;
+   this.header = 2775;
    this.slots = [
     new SM("offset", true, false),
     new SM("remote", true, false),
@@ -63920,11 +63921,11 @@ var mixins = new function () {
     new SM("used", true, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakCompilation`LocalEntry", true, 2779),
-    new MM("instance`initializer", true, 2780),
-    new MM("isLocalBinding", false, 2781),
-    new MM("isTemporaryAST", false, 2782),
-    new MM("name", false, 2783),
+    new MM("superInit`NewspeakCompilation`LocalEntry", true, 2776),
+    new MM("instance`initializer", true, 2777),
+    new MM("isLocalBinding", false, 2778),
+    new MM("isTemporaryAST", false, 2779),
+    new MM("name", false, 2780),
     new MM("init`offset:", true, 0),
     new MM("offset", true, 0),
     new MM("offset:", true, 0),
@@ -64079,12 +64080,12 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakCompilation`MethodEntry";
    this.name = "NewspeakCompilation`MethodEntry";
-   this.header = 2784;
+   this.header = 2781;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakCompilation`MethodEntry", true, 2785),
-    new MM("instance`initializer", true, 2786),
-    new MM("isMethodBinding", false, 2787)
+    new MM("superInit`NewspeakCompilation`MethodEntry", true, 2782),
+    new MM("instance`initializer", true, 2783),
+    new MM("isMethodBinding", false, 2784)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -64155,21 +64156,21 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakCompilation`Namer";
    this.name = "NewspeakCompilation`Namer";
-   this.header = 2788;
+   this.header = 2785;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakCompilation`Namer", true, 2789),
-    new MM("instance`initializer", true, 2790),
-    new MM("fullyQualifiedNameToSimple:", false, 2791),
-    new MM("fullyQualifySimpleName:with:", false, 2792),
-    new MM("initializerSelectorForSlot:", false, 2793),
-    new MM("isReservedWord:", false, 2794),
-    new MM("mixinNameOfClassNamed:", false, 2795),
-    new MM("mixinSlotNameFor:", false, 2796),
-    new MM("setterSelectorFor:", false, 2797),
-    new MM("setterTemp", false, 2798),
-    new MM("slotNameForNestedClassNamed:within:", false, 2799),
-    new MM("syntheticNameSeparator", false, 2800)
+    new MM("superInit`NewspeakCompilation`Namer", true, 2786),
+    new MM("instance`initializer", true, 2787),
+    new MM("fullyQualifiedNameToSimple:", false, 2788),
+    new MM("fullyQualifySimpleName:with:", false, 2789),
+    new MM("initializerSelectorForSlot:", false, 2790),
+    new MM("isReservedWord:", false, 2791),
+    new MM("mixinNameOfClassNamed:", false, 2792),
+    new MM("mixinSlotNameFor:", false, 2793),
+    new MM("setterSelectorFor:", false, 2794),
+    new MM("setterTemp", false, 2795),
+    new MM("slotNameForNestedClassNamed:within:", false, 2796),
+    new MM("syntheticNameSeparator", false, 2797)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -64210,8 +64211,7 @@ var mixins = new function () {
      "outer",
      "true",
      "false",
-     "nil",
-     "thisContext"
+     "nil"
     ].$includes$($selector);
    };
    this.$mixinNameOfClassNamed$ = function ($className) {
@@ -64311,22 +64311,22 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakCompilation`Scope";
    this.name = "NewspeakCompilation`Scope";
-   this.header = 2801;
+   this.header = 2798;
    this.slots = [
     new SM("superScope", true, false),
     new SM("bindings", false, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakCompilation`Scope", true, 2802),
-    new MM("instance`initializer", true, 2803),
-    new MM("at:", false, 2804),
-    new MM("at:depth:", false, 2805),
-    new MM("at:ifAbsent:", false, 2806),
-    new MM("at:put:", false, 2807),
-    new MM("at:put:ifThere:", false, 2808),
-    new MM("depth", false, 2809),
-    new MM("printOn:", false, 2810),
-    new MM("setSuperScope:", false, 2811),
+    new MM("superInit`NewspeakCompilation`Scope", true, 2799),
+    new MM("instance`initializer", true, 2800),
+    new MM("at:", false, 2801),
+    new MM("at:depth:", false, 2802),
+    new MM("at:ifAbsent:", false, 2803),
+    new MM("at:put:", false, 2804),
+    new MM("at:put:ifThere:", false, 2805),
+    new MM("depth", false, 2806),
+    new MM("printOn:", false, 2807),
+    new MM("setSuperScope:", false, 2808),
     new MM("init`superScope:", true, 0),
     new MM("superScope", true, 0),
     new MM("superScope:", true, 0),
@@ -64528,13 +64528,13 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakCompilation`SlotEntry";
    this.name = "NewspeakCompilation`SlotEntry";
-   this.header = 2812;
+   this.header = 2809;
    this.slots = [];
    this.methods = [
-    new MM("superInit`NewspeakCompilation`SlotEntry", true, 2813),
-    new MM("instance`initializer", true, 2814),
-    new MM("isSlotBinding", false, 2815),
-    new MM("name", false, 2816)
+    new MM("superInit`NewspeakCompilation`SlotEntry", true, 2810),
+    new MM("instance`initializer", true, 2811),
+    new MM("isSlotBinding", false, 2812),
+    new MM("name", false, 2813)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -64610,16 +64610,16 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for NewspeakCompilation`SymbolTableEntry";
    this.name = "NewspeakCompilation`SymbolTableEntry";
-   this.header = 2817;
+   this.header = 2814;
    this.slots = [
     new SM("ast", true, false),
     new SM("depth", false, false)
    ];
    this.methods = [
-    new MM("superInit`NewspeakCompilation`SymbolTableEntry", true, 2818),
-    new MM("instance`initializer", true, 2819),
-    new MM("isMessagePatternNode", false, 2820),
-    new MM("isVarDeclNode", false, 2821),
+    new MM("superInit`NewspeakCompilation`SymbolTableEntry", true, 2815),
+    new MM("instance`initializer", true, 2816),
+    new MM("isMessagePatternNode", false, 2817),
+    new MM("isVarDeclNode", false, 2818),
     new MM("init`ast:", true, 0),
     new MM("ast", true, 0),
     new MM("ast:", true, 0),
@@ -64908,15 +64908,15 @@ var mixins = new function () {
   var $0 = this;
   this.debug = "Runtime mixin for Ampleforth";
   this.name = "Ampleforth";
-  this.header = 2822;
+  this.header = 2819;
   this.slots = [
    new SM("BrowsingForHTML", false, false),
    new SM("Ampleforth`Embedder", true, true)
   ];
   this.methods = [
-   new MM("superInit`Ampleforth", true, 2823),
-   new MM("instance`initializer", true, 2824),
-   new MM("main:args:", false, 2825),
+   new MM("superInit`Ampleforth", true, 2820),
+   new MM("instance`initializer", true, 2821),
+   new MM("main:args:", false, 2822),
    new MM("Embedder", true, 0),
    new MM("init`BrowsingForHTML:", true, 0),
    new MM("BrowsingForHTML", true, 0),
@@ -64985,7 +64985,7 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for Ampleforth`Embedder";
    this.name = "Ampleforth`Embedder";
-   this.header = 2826;
+   this.header = 2823;
    this.slots = [
     new SM("Subject", false, false),
     new SM("Presenter", false, false),
@@ -65007,14 +65007,14 @@ var mixins = new function () {
     new SM("Ampleforth`Embedder`SnippetSubject", true, true)
    ];
    this.methods = [
-    new MM("superInit`Ampleforth`Embedder", true, 2827),
-    new MM("instance`initializer", true, 2828),
-    new MM("evaluateSubject:", false, 2829),
-    new MM("processClassPresenters", false, 2830),
-    new MM("processEvaluators", false, 2831),
-    new MM("processHopscotchSubjects", false, 2832),
-    new MM("processMinibrowsers", false, 2833),
-    new MM("withoutNbsp:", false, 2834),
+    new MM("superInit`Ampleforth`Embedder", true, 2824),
+    new MM("instance`initializer", true, 2825),
+    new MM("evaluateSubject:", false, 2826),
+    new MM("processClassPresenters", false, 2827),
+    new MM("processEvaluators", false, 2828),
+    new MM("processHopscotchSubjects", false, 2829),
+    new MM("processMinibrowsers", false, 2830),
+    new MM("withoutNbsp:", false, 2831),
     new MM("ErrorPresenter", true, 0),
     new MM("ErrorSubject", true, 0),
     new MM("SnippetPresenter", true, 0),
@@ -65426,12 +65426,12 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for Ampleforth`Embedder`ErrorPresenter";
     this.name = "Ampleforth`Embedder`ErrorPresenter";
-    this.header = 2835;
+    this.header = 2832;
     this.slots = [];
     this.methods = [
-     new MM("superInit`Ampleforth`Embedder`ErrorPresenter", true, 2836),
-     new MM("instance`initializer", true, 2837),
-     new MM("definition", false, 2838)
+     new MM("superInit`Ampleforth`Embedder`ErrorPresenter", true, 2833),
+     new MM("instance`initializer", true, 2834),
+     new MM("definition", false, 2835)
     ];
     this.nestedClasses = [];
     this.applications = [];
@@ -65502,12 +65502,12 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for Ampleforth`Embedder`ErrorSubject";
     this.name = "Ampleforth`Embedder`ErrorSubject";
-    this.header = 2839;
+    this.header = 2836;
     this.slots = [new SM("errorMessage", false, false)];
     this.methods = [
-     new MM("superInit`Ampleforth`Embedder`ErrorSubject", true, 2840),
-     new MM("instance`initializer", true, 2841),
-     new MM("createPresenter", false, 2842),
+     new MM("superInit`Ampleforth`Embedder`ErrorSubject", true, 2837),
+     new MM("instance`initializer", true, 2838),
+     new MM("createPresenter", false, 2839),
      new MM("init`errorMessage:", true, 0),
      new MM("errorMessage", true, 0)
     ];
@@ -65591,13 +65591,13 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for Ampleforth`Embedder`SnippetPresenter";
     this.name = "Ampleforth`Embedder`SnippetPresenter";
-    this.header = 2843;
+    this.header = 2840;
     this.slots = [new SM("resultHolder", false, false)];
     this.methods = [
-     new MM("superInit`Ampleforth`Embedder`SnippetPresenter", true, 2844),
-     new MM("instance`initializer", true, 2845),
-     new MM("definition", false, 2846),
-     new MM("evaluate:", false, 2847),
+     new MM("superInit`Ampleforth`Embedder`SnippetPresenter", true, 2841),
+     new MM("instance`initializer", true, 2842),
+     new MM("definition", false, 2843),
+     new MM("evaluate:", false, 2844),
      new MM("init`resultHolder:", true, 0),
      new MM("resultHolder", true, 0)
     ];
@@ -65726,13 +65726,13 @@ var mixins = new function () {
     var $2 = this;
     this.debug = "Runtime mixin for Ampleforth`Embedder`SnippetSubject";
     this.name = "Ampleforth`Embedder`SnippetSubject";
-    this.header = 2848;
+    this.header = 2845;
     this.slots = [];
     this.methods = [
-     new MM("superInit`Ampleforth`Embedder`SnippetSubject", true, 2849),
-     new MM("instance`initializer", true, 2850),
-     new MM("createPresenter", false, 2851),
-     new MM("snippet", false, 2852)
+     new MM("superInit`Ampleforth`Embedder`SnippetSubject", true, 2846),
+     new MM("instance`initializer", true, 2847),
+     new MM("createPresenter", false, 2848),
+     new MM("snippet", false, 2849)
     ];
     this.nestedClasses = [];
     this.applications = [];
@@ -66021,7 +66021,7 @@ var mixins = new function () {
   var $0 = this;
   this.debug = "Runtime mixin for BrowsingForHTML";
   this.name = "BrowsingForHTML";
-  this.header = 2853;
+  this.header = 2850;
   this.slots = [
    new SM("Subject", false, false),
    new SM("Presenter", false, false),
@@ -66042,8 +66042,8 @@ var mixins = new function () {
    new SM("BrowsingForHTML`ObjectSubject", true, true)
   ];
   this.methods = [
-   new MM("superInit`BrowsingForHTML", true, 2854),
-   new MM("instance`initializer", true, 2855),
+   new MM("superInit`BrowsingForHTML", true, 2851),
+   new MM("instance`initializer", true, 2852),
    new MM("ClassPresenter", true, 0),
    new MM("ClassSubject", true, 0),
    new MM("Namespace", true, 0),
@@ -66314,21 +66314,21 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for BrowsingForHTML`ClassPresenter";
    this.name = "BrowsingForHTML`ClassPresenter";
-   this.header = 2856;
+   this.header = 2853;
    this.slots = [];
    this.methods = [
-    new MM("superInit`BrowsingForHTML`ClassPresenter", true, 2857),
-    new MM("instance`initializer", true, 2858),
-    new MM("collapsedHeadingDefinition", false, 2859),
-    new MM("crToLf:", false, 2860),
-    new MM("definition", false, 2861),
-    new MM("expandedHeadingDefinition", false, 2862),
-    new MM("headingDefinition", false, 2863),
-    new MM("inspectSelf", false, 2864),
-    new MM("method:", false, 2865),
-    new MM("minorClassHeadingBlock:", false, 2866),
-    new MM("minorClassHeadingColor", false, 2867),
-    new MM("nestedClass:", false, 2868)
+    new MM("superInit`BrowsingForHTML`ClassPresenter", true, 2854),
+    new MM("instance`initializer", true, 2855),
+    new MM("collapsedHeadingDefinition", false, 2856),
+    new MM("crToLf:", false, 2857),
+    new MM("definition", false, 2858),
+    new MM("expandedHeadingDefinition", false, 2859),
+    new MM("headingDefinition", false, 2860),
+    new MM("inspectSelf", false, 2861),
+    new MM("method:", false, 2862),
+    new MM("minorClassHeadingBlock:", false, 2863),
+    new MM("minorClassHeadingColor", false, 2864),
+    new MM("nestedClass:", false, 2865)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -66555,16 +66555,16 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for BrowsingForHTML`ClassSubject";
    this.name = "BrowsingForHTML`ClassSubject";
-   this.header = 2869;
+   this.header = 2866;
    this.slots = [];
    this.methods = [
-    new MM("superInit`BrowsingForHTML`ClassSubject", true, 2870),
-    new MM("instance`initializer", true, 2871),
-    new MM("classMirror", false, 2872),
-    new MM("createPresenter", false, 2873),
-    new MM("enclosingClassSubjects", false, 2874),
-    new MM("name", false, 2875),
-    new MM("title", false, 2876)
+    new MM("superInit`BrowsingForHTML`ClassSubject", true, 2867),
+    new MM("instance`initializer", true, 2868),
+    new MM("classMirror", false, 2869),
+    new MM("createPresenter", false, 2870),
+    new MM("enclosingClassSubjects", false, 2871),
+    new MM("name", false, 2872),
+    new MM("title", false, 2873)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -66666,17 +66666,17 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for BrowsingForHTML`Namespace";
    this.name = "BrowsingForHTML`Namespace";
-   this.header = 2877;
+   this.header = 2874;
    this.slots = [
     new SM("platformNamespace", false, false),
     new SM("map", false, false)
    ];
    this.methods = [
-    new MM("superInit`BrowsingForHTML`Namespace", true, 2878),
-    new MM("instance`initializer", true, 2879),
-    new MM("at:", false, 2880),
-    new MM("at:ifAbsent:", false, 2881),
-    new MM("at:put:", false, 2882),
+    new MM("superInit`BrowsingForHTML`Namespace", true, 2875),
+    new MM("instance`initializer", true, 2876),
+    new MM("at:", false, 2877),
+    new MM("at:ifAbsent:", false, 2878),
+    new MM("at:put:", false, 2879),
     new MM("init`platformNamespace:", true, 0),
     new MM("platformNamespace", true, 0),
     new MM("init`map:", true, 0),
@@ -66793,23 +66793,23 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for BrowsingForHTML`ObjectPresenter";
    this.name = "BrowsingForHTML`ObjectPresenter";
-   this.header = 2883;
+   this.header = 2880;
    this.slots = [new SM("resultHolder", true, false)];
    this.methods = [
-    new MM("superInit`BrowsingForHTML`ObjectPresenter", true, 2884),
-    new MM("instance`initializer", true, 2885),
-    new MM("captionBar:", false, 2886),
-    new MM("classInfoLine", false, 2887),
-    new MM("definition", false, 2888),
-    new MM("enclosingInfoLine", false, 2889),
-    new MM("evaluate:", false, 2890),
-    new MM("goToSelf", false, 2891),
-    new MM("inspectSelf", false, 2892),
-    new MM("objectDetails", false, 2893),
-    new MM("selfCaption", false, 2894),
-    new MM("selfInfoLine", false, 2895),
-    new MM("smallBlank", false, 2896),
-    new MM("withoutNbsp:", false, 2897),
+    new MM("superInit`BrowsingForHTML`ObjectPresenter", true, 2881),
+    new MM("instance`initializer", true, 2882),
+    new MM("captionBar:", false, 2883),
+    new MM("classInfoLine", false, 2884),
+    new MM("definition", false, 2885),
+    new MM("enclosingInfoLine", false, 2886),
+    new MM("evaluate:", false, 2887),
+    new MM("goToSelf", false, 2888),
+    new MM("inspectSelf", false, 2889),
+    new MM("objectDetails", false, 2890),
+    new MM("selfCaption", false, 2891),
+    new MM("selfInfoLine", false, 2892),
+    new MM("smallBlank", false, 2893),
+    new MM("withoutNbsp:", false, 2894),
     new MM("init`resultHolder:", true, 0),
     new MM("resultHolder", true, 0),
     new MM("resultHolder:", true, 0)
@@ -67081,18 +67081,18 @@ var mixins = new function () {
    var $1 = this;
    this.debug = "Runtime mixin for BrowsingForHTML`ObjectSubject";
    this.name = "BrowsingForHTML`ObjectSubject";
-   this.header = 2898;
+   this.header = 2895;
    this.slots = [];
    this.methods = [
-    new MM("superInit`BrowsingForHTML`ObjectSubject", true, 2899),
-    new MM("instance`initializer", true, 2900),
-    new MM("classMirror", false, 2901),
-    new MM("className", false, 2902),
-    new MM("classSubject", false, 2903),
-    new MM("createPresenter", false, 2904),
-    new MM("enclosingObjectName", false, 2905),
-    new MM("objectMirror", false, 2906),
-    new MM("title", false, 2907)
+    new MM("superInit`BrowsingForHTML`ObjectSubject", true, 2896),
+    new MM("instance`initializer", true, 2897),
+    new MM("classMirror", false, 2898),
+    new MM("className", false, 2899),
+    new MM("classSubject", false, 2900),
+    new MM("createPresenter", false, 2901),
+    new MM("enclosingObjectName", false, 2902),
+    new MM("objectMirror", false, 2903),
+    new MM("title", false, 2904)
    ];
    this.nestedClasses = [];
    this.applications = [];
@@ -67778,7 +67778,6 @@ function installDnuHandlersOn (p) {
   "$Composer",
   "$ConditionalAST",
   "$Context",
-  "$ContextAST",
   "$DOMActor",
   "$DeferredContentComposer",
   "$Dictionary",
@@ -68308,7 +68307,6 @@ function installDnuHandlersOn (p) {
   "$contentsWritten",
   "$contents_private",
   "$contents_private$",
-  "$contextNode$",
   "$controlBarColor",
   "$copy",
   "$copyFrom$to$",
@@ -69679,7 +69677,7 @@ function installDnuHandlersOn (p) {
   "$reflectee",
   "$reflecteeX",
   "$reflecting$",
-  "$reflecting$in$",
+  "$reflecting$in$source$",
   "$refresh",
   "$reject$",
   "$rem$",
@@ -69840,6 +69838,7 @@ function installDnuHandlersOn (p) {
   "$sourceActor",
   "$sourceForNode$",
   "$sourceIndex",
+  "$sourceIndexForMethod$ofMixin$",
   "$sourcesList",
   "$sourcesList$",
   "$sourcesScript",
@@ -70134,7 +70133,6 @@ function installDnuHandlersOn (p) {
   "$superInit$NewspeakCompilation$Compiler$Rewriter$BlockLocalReturnAST",
   "$superInit$NewspeakCompilation$Compiler$Rewriter$BooleanAST",
   "$superInit$NewspeakCompilation$Compiler$Rewriter$ConditionalAST",
-  "$superInit$NewspeakCompilation$Compiler$Rewriter$ContextAST",
   "$superInit$NewspeakCompilation$Compiler$Rewriter$EnclosingObjectAST",
   "$superInit$NewspeakCompilation$Compiler$Rewriter$ImplicitReceiverSendAST",
   "$superInit$NewspeakCompilation$Compiler$Rewriter$LocalReadAST",
@@ -70295,6 +70293,7 @@ function installDnuHandlersOn (p) {
   "$upTo$",
   "$updateBufferLocationAfterFlush",
   "$updateMixin$from$by$",
+  "$updateMixinFrom$",
   "$uppercaseLetter",
   "$used",
   "$used$",
